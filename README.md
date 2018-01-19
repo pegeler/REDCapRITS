@@ -1,8 +1,8 @@
 REDCap Repeating Instrument Table Splitter
 ===========================================
 
-Paul W. Egeler, M.S., GStat
-Spectrum Health Office of Research Administration
+Paul W. Egeler, M.S., GStat  
+Spectrum Health Office of Research Administration  
 13 July 2017
 
 ## Description
