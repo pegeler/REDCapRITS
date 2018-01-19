@@ -29,7 +29,7 @@ a solution to handle the problem in both SAS and R.
 1. Run the macro definition in the source editor or using `%include`.
 2. Run the SAS code provided by REDCap to import the data BUT COMMENT 
 THIS LINE:
-    `format redcap_repeat_instrument redcap_repeat_instrument_.;`
+    ```format redcap_repeat_instrument redcap_repeat_instrument_.;```
 3. Open the data dictionary in MS Excel. We will need to do some pre-
 processing to the data dictionary file before reading it in because
 some of the user entry points (such as **Field Label**) allows for newline
