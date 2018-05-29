@@ -21,13 +21,13 @@
 *      format redcap_repeat_instrument redcap_repeat_instrument_.;
 *
 * 2. Download the data dictionary for your project.
-
+*
 * 3. Run the macro definitions REDCAP_READ_DATA_DICT and REDCAP_SPLIT
 *
-* 3. Run the macro call for REDCAP_READ_DATA_DICT to load in the data dictionry.
+* 4. Run the macro call for REDCAP_READ_DATA_DICT to load in the data dictionry.
 *    This is necessary to split the tables correctly.
 * 
-* 4. Run the macro call for REDCAP_SPLIT. You will have an output dataset for
+* 5. Run the macro call for REDCAP_SPLIT. You will have an output dataset for
 *    your main table as well as for each repeating instrument.
 *
 ********************************************************************************/
@@ -44,7 +44,7 @@
 
             IF FIELD_TYPE EQ "descriptive" THEN DELETE;
 
-            DROP SECTION_HEADER X1-X14;
+            DROP SECTION_HEADER FIELD_TYPE X1-X14;
                 
         RUN;
 
@@ -53,7 +53,7 @@
 
 %MACRO REDCAP_SPLIT(
     DATA_DICTIONARY = REDCAP_DATA_DICTIONARY  /* The name of the SAS dataset of the data dictionary */, 
-    DATA_SET = REDCAP/* The name of the SAS dataset created by REDCap */,
+    DATA_SET = REDCAP /* The name of the SAS dataset created by REDCap */,
     KEY = RECORD_ID  /* Variable that links base table with other tables */
 );
 
