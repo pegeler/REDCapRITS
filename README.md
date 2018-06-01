@@ -52,7 +52,7 @@ records, so no pre-processing of metadata csv is needed.
 THIS LINE:
     ```format redcap_repeat_instrument redcap_repeat_instrument_.;```
 1. Run the RECapRITS macro definitions in the source editor or using `%include`.
-1. Run the macro call `%REDCAP_READ_DATA_DICT()` to load the data dictionry into your SAS session, pointing to the file location of your REDCap data dictionary.
+1. Run the macro call `%REDCAP_READ_DATA_DICT()` to load the data dictionary into your SAS session, pointing to the file location of your REDCap data dictionary.
 1. Run the macro call `%REDCAP_SPLIT()`. You will have an output dataset for
 your main table as well as for each repeating instrument.
 

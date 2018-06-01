@@ -4,8 +4,8 @@
 #' and give individual tables for each repeating instrument. Metadata
 #' is used to determine which fields should be included in each resultant table.
 #'
-#' @param records data.frame containing the records
-#' @param metadata data.frame containing the metadata
+#' @param records \code{data.frame} containing project records
+#' @param metadata \code{data.frame} containing project metadata (the data dictionary)
 #' @author Paul W. Egeler, M.S., GStat
 #' @examples
 #' \dontrun{
@@ -29,9 +29,11 @@
 #'     returnFormat = 'json'
 #' )
 #'
+#' # Convert JSON to data.frames
 #' records <- fromJSON(result.record)
 #' metadata <- fromJSON(result.meta)
 #'
+#' # Split the data.frame into a list of data.frames
 #' REDCap_split(records, metadata)
 #' }
 #' @return a list of data.frames
