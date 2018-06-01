@@ -26,12 +26,6 @@
 #'     token = api_token,
 #'     content = 'record',
 #'     format = 'json',
-#'     type = 'flat',
-#'     rawOrLabel = 'raw',
-#'     rawOrLabelHeaders = 'raw',
-#'     exportCheckboxLabel = 'false',
-#'     exportSurveyFields = 'false',
-#'     exportDataAccessGroups = 'false',
 #'     returnFormat = 'json'
 #' )
 #'
@@ -56,9 +50,38 @@ REDCap_split <- function(records, metadata) {
 
   }
 
-  # Clean the metadata
-  metadata <-
-    metadata[metadata$field_type != "descriptive", c("field_name", "form_name")]
+  # Find the fields and associated form
+  fields <- metadata[
+    !metadata$field_type %in% c("descriptive", "checkbox"),
+    c("field_name", "form_name")
+  ]
+
+  if (any(metadata$field_type == "checkbox")) {
+
+    checkbox_basenames <- metadata[
+      metadata$field_type == "checkbox",
+      c("field_name", "form_name")
+    ]
+
+    checkbox_fields <-
+      do.call(
+        "rbind",
+        apply(
+          checkbox_basenames,
+          1,
+          function(x)
+          data.frame(
+            field_name = names(records)[grepl(paste0("^", x[1], "___.+$"), names(records))],
+            form_name = x[2],
+            stringsAsFactors = FALSE,
+            row.names = NULL
+          )
+        )
+      )
+
+    fields <- rbind(fields, checkbox_fields)
+
+  }
 
   # Identify the subtables in the data
   subtables <- unique(records$redcap_repeat_instrument)
@@ -73,12 +96,12 @@ REDCap_split <- function(records, metadata) {
     if (i == "") {
 
       out[[which(names(out) == "")]] <-
-        out[[which(names(out) == "")]][metadata[!metadata[,2] %in% subtables, 1]]
+        out[[which(names(out) == "")]][fields[!fields[,2] %in% subtables, 1]]
 
     } else {
 
       out[[i]] <-
-        out[[i]][c(names(records[1:3]),metadata[metadata[,2] == i, 1])]
+        out[[i]][c(names(records[1:3]),fields[fields[,2] == i, 1])]
 
     }
 
