@@ -70,12 +70,12 @@ REDCap_split <- function(records, metadata) {
           checkbox_basenames,
           1,
           function(x)
-          data.frame(
-            field_name = names(records)[grepl(paste0("^", x[1], "___.+$"), names(records))],
-            form_name = x[2],
-            stringsAsFactors = FALSE,
-            row.names = NULL
-          )
+            data.frame(
+              field_name = names(records)[grepl(paste0("^", x[1], "___.+$"), names(records))],
+              form_name = x[2],
+              stringsAsFactors = FALSE,
+              row.names = NULL
+            )
         )
       )
 
