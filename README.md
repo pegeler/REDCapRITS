@@ -35,6 +35,8 @@ a solution to handle the problem in both SAS and R.
 ## Instructions
 ### R
 
+#### Installation
+
 First you must install the package. To do so, execute the following in your R console:
 
 ```r
@@ -42,14 +44,57 @@ if (!require(devtools)) install.packages("devtools")
 devtools::install_github("SpectrumHealthResearch/REDCapRITS/R")
 ```
 
+#### Usage
+
 After the package is installed, follow these instructions:
 
 1. Download the record dataset and metadata. This can
-be accomplished either by traditional methods or using the API. The
-`read.csv()` function should be able to handle newline characters within
-records, so no pre-processing of metadata csv is needed.
+be accomplished either by traditional methods or using the API. 
 1. Call the function, pointing it to your record dataset and metadata
-`data.frame`s or JSON character vectors.
+`data.frame`s or JSON character vectors. You may need to load the package via 
+`library()` or `require()`.
+
+#### Examples
+
+Here is an example usage in conjuction with an API call to your REDCap instance:
+
+```r
+library(RCurl)
+
+# Get the records
+records <- postForm(
+    uri = api_url,     # Supply your site-specific URI
+    token = api_token, # Supply your own API token
+    content = 'record',
+    format = 'json',
+    returnFormat = 'json'
+)
+
+# Get the metadata
+metadata <- postForm(
+    uri = api_url,
+    token = api_token,
+    content = 'metadata',
+    format = 'json'
+)
+
+# Convert exported JSON strings into a list of data.frames
+REDCapRITS::REDCap_split(records, metadata)
+```
+
+And here is an example of usage when downloading a REDCap export manually from your REDCap web interface:
+
+```r
+# Get the records
+records <- read.csv("/path/to/data/ExampleProject_DATA_2018-06-03_1700.csv")
+
+# Get the metadata
+metadata <- read.csv("/path/to/data/ExampleProject_DataDictionary_2018-06-03.csv")
+
+# Split the tables
+REDCapRITS::REDCap_split(records, metadata)
+```
+
 
 ### SAS
 
