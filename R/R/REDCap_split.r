@@ -14,21 +14,21 @@
 #' \dontrun{
 #' library(RCurl)
 #'
-#' # Get the metadata
-#' result.meta <- postForm(
-#'     api_url,
-#'     token = api_token,
-#'     content = 'metadata',
-#'     format = 'json'
-#' )
-#'
 #' # Get the records
-#' result.record <- postForm(
-#'     uri = api_url,
-#'     token = api_token,
+#' records <- postForm(
+#'     uri = api_url,     # Supply your site-specific URI
+#'     token = api_token, # Supply your own API token
 #'     content = 'record',
 #'     format = 'json',
 #'     returnFormat = 'json'
+#' )
+#'
+#' # Get the metadata
+#' metadata <- postForm(
+#'     uri = api_url,
+#'     token = api_token,
+#'     content = 'metadata',
+#'     format = 'json'
 #' )
 #'
 #' # Convert exported JSON strings into a list of data.frames
