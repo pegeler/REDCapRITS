@@ -1,15 +1,17 @@
 #' Split REDCap repeating instruments table into multiple tables
 #'
-#' This will take a raw \code{data.frame} from REDCap and split it into a base table
-#' and give individual tables for each repeating instrument. Metadata
+#' This will take output from a REDCap export and split it into a base table
+#' and child tables for each repeating instrument. Metadata
 #' is used to determine which fields should be included in each resultant table.
 #'
-#' @param records \code{data.frame} containing project records
-#' @param metadata \code{data.frame} containing project metadata (the data dictionary)
+#' @param records Exported project records. May be a \code{data.frame} or
+#'   \code{character} vector containing JSON from an API call.
+#' @param metadata Project metadata (the data dictionary). May be a
+#'   \code{data.frame} or \code{character} vector containing JSON from an API
+#'   call.
 #' @author Paul W. Egeler, M.S., GStat
 #' @examples
 #' \dontrun{
-#' library(jsonlite)
 #' library(RCurl)
 #'
 #' # Get the metadata
@@ -29,21 +31,19 @@
 #'     returnFormat = 'json'
 #' )
 #'
-#' # Convert JSON to data.frames
-#' records <- fromJSON(result.record)
-#' metadata <- fromJSON(result.meta)
-#'
-#' # Split the data.frame into a list of data.frames
+#' # Convert exported JSON strings into a list of data.frames
 #' REDCap_split(records, metadata)
 #' }
-#' @return a list of data.frames
+#' @return A list of \code{"data.frame"}s: one base table and zero or more
+#'   tables for each repeating instrument.
+#' @include JSON2data.frame.r
 #' @export
 REDCap_split <- function(records, metadata) {
 
-  stopifnot(all(sapply(list(records,metadata), inherits, "data.frame")))
+  records  <- JSON2data.frame(records)
+  metadata <- JSON2data.frame(metadata)
 
   # Check to see if there were any repeating instruments
-
   if (!any(names(records) == "redcap_repeat_instrument")) {
 
     message("There are no repeating instruments in this data.")
@@ -109,6 +109,6 @@ REDCap_split <- function(records, metadata) {
 
   }
 
-  return(out)
+  out
 
 }

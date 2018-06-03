@@ -1,0 +1,22 @@
+Package: REDCapRITS
+Title: REDCap Repeating Instrument Table Splitter
+Version: 0.0.0
+Authors@R: person(
+    "Paul", 
+    "Egeler", 
+    email = "paul.egeler@spectrumhealth.org", 
+    role = c("aut", "cre"))
+Description: Split REDCap repeating instruments output into multiple tables. 
+    This will take raw output from a REDCap export and split it into a base table
+    and child tables for each repeating instrument. 
+Depends: R (>= 3.4.0)
+Suggests: RCurl, 
+    jsonlite,
+    testthat
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Collate: 
+    'JSON2data.frame.r'
+    'REDCap_split.r'

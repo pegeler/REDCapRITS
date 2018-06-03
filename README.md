@@ -35,15 +35,21 @@ a solution to handle the problem in both SAS and R.
 ## Instructions
 ### R
 
-The function definition file contains [roxygen2](https://cran.r-project.org/package=roxygen2) comments to assist you.
+First you must install the package. To do so, execute the following in your R console:
 
-1. Run the function definition in the source editor or using `source()`.
+```r
+if (!require(devtools)) install.packages("devtools")
+devtools::install_github("SpectrumHealthResearch/REDCapRITS/R")
+```
+
+After the package is installed, follow these instructions:
+
 1. Download the record dataset and metadata. This can
 be accomplished either by traditional methods or using the API. The
 `read.csv()` function should be able to handle newline characters within
 records, so no pre-processing of metadata csv is needed.
 1. Call the function, pointing it to your record dataset and metadata
-`data.frame`s.
+`data.frame`s or JSON character vectors.
 
 ### SAS
 
