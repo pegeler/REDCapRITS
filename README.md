@@ -53,10 +53,8 @@ records, so no pre-processing of metadata csv is needed.
 
 ### SAS
 
-1. Download the data, SAS code to load the data, and the data dictionary from REDCap
-1. Run the SAS code provided by REDCap to import the data BUT COMMENT 
-THIS LINE:
-    ```format redcap_repeat_instrument redcap_repeat_instrument_.;```
+1. Download the data, SAS code to load the data, and the data dictionary from REDCap.
+1. Run the SAS code provided by REDCap to import the data.
 1. Run the RECapRITS macro definitions in the source editor or using `%include`.
 1. Run the macro call `%REDCAP_READ_DATA_DICT()` to load the data dictionary into your SAS session, pointing to the file location of your REDCap data dictionary.
 1. Run the macro call `%REDCAP_SPLIT()`. You will have an output dataset for
