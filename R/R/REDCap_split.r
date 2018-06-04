@@ -40,6 +40,7 @@
 #' @export
 REDCap_split <- function(records, metadata) {
 
+  # Process user input
   records  <- JSON2data.frame(records)
   metadata <- JSON2data.frame(metadata)
 
@@ -49,6 +50,24 @@ REDCap_split <- function(records, metadata) {
     message("There are no repeating instruments in this data.")
 
     return(list(records))
+
+  }
+
+  # Standardize variable names for metadata
+  names(metadata) <- c(
+    "field_name", "form_name", "section_header", "field_type",
+    "field_label", "select_choices_or_calculations", "field_note",
+    "text_validation_type_or_show_slider_number", "text_validation_min",
+    "text_validation_max", "identifier", "branching_logic", "required_field",
+    "custom_alignment", "question_number", "matrix_group_name", "matrix_ranking",
+    "field_annotation"
+  )
+
+  # Make sure that no metadata columns are factors
+  metadata_factors <- sapply(metadata, inherits, "factor")
+  if(any(metadata_factors)) {
+
+    metadata[metadata_factors] <- lapply(metadata[metadata_factors], as.character)
 
   }
 
