@@ -64,12 +64,7 @@ REDCap_split <- function(records, metadata) {
   )
 
   # Make sure that no metadata columns are factors
-  metadata_factors <- sapply(metadata, inherits, "factor")
-  if(any(metadata_factors)) {
-
-    metadata[metadata_factors] <- lapply(metadata[metadata_factors], as.character)
-
-  }
+  metadata <- rapply(metadata, as.character, classes = "factor", how = "replace")
 
   # Find the fields and associated form
   fields <- metadata[
