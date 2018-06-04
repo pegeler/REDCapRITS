@@ -15,10 +15,7 @@
 *
 * INSTRUCTIONS:
 * 
-* 1. Run the SAS code provided by REDCap to import the data 
-*    BUT COMMENT THIS LINE:
-*
-*      format redcap_repeat_instrument redcap_repeat_instrument_.;
+* 1. Run the SAS code provided by REDCap to load the records into your SAS session.
 *
 * 2. Download the data dictionary for your project.
 *
@@ -44,7 +41,7 @@
 
             IF FIELD_TYPE EQ "descriptive" THEN DELETE;
 
-            DROP SECTION_HEADER FIELD_TYPE X1-X14;
+            DROP SECTION_HEADER X1-X14;
                 
         RUN;
 
@@ -57,6 +54,13 @@
     KEY = RECORD_ID  /* Variable that links base table with other tables */
 );
 
+    /* Remove formatting from repeat instrument field */
+    DATA &DATA_SET.;
+    SET &DATA_SET.;
+      FORMAT REDCAP_REPEAT_INSTRUMENT;
+    RUN;
+    
+    /* Find the subtable names and number of subtables */
     PROC SQL NOPRINT;
 
         SELECT DISTINCT
@@ -79,11 +83,34 @@
 
     %IF &N_SUBTABLES GT 0 %THEN %DO;
     
+        /* Make a list of fields and their associated forms based on data dictionary */
+        PROC CONTENTS 
+          DATA = &DATA_SET. 
+          OUT = REDCAP_VARNAMES(KEEP=NAME)
+          NOPRINT;
+        RUN;
+        
+        DATA REDCAP_FIELDS(KEEP=VAR_NAME FORM_NAME);
+        SET &DATA_DICTIONARY.;
+          IF FIELD_TYPE EQ "checkbox" THEN DO;
+            BASENAME = VAR_NAME;
+            DO I = 1 TO N;
+              SET REDCAP_VARNAMES POINT=I NOBS=N;
+              IF PRXMATCH("/^"!!trim(BASENAME)!!"___.+$/", NAME) THEN DO;
+                VAR_NAME = NAME;
+                OUTPUT;
+              END;
+            END; 
+          END;
+          ELSE OUTPUT;
+        RUN;
+        
+        /* Sort out the field names */
         PROC SQL NOPRINT;
 
             SELECT VAR_NAME
             INTO :VARS_BASE SEPARATED BY ' '
-            FROM &DATA_DICTIONARY. AS A
+            FROM REDCAP_FIELDS AS A
             WHERE FORM_NAME NOT IN (&INSTRUMENT_LIST);
 
             %put Base vars: &VARS_BASE;
@@ -94,7 +121,7 @@
                 
                 SELECT VAR_NAME
                 INTO :VARS_&INSTRUMENT_I. SEPARATED BY ' '
-                FROM &DATA_DICTIONARY. AS A
+                FROM REDCAP_FIELDS AS A
                 WHERE FORM_NAME EQ "&INSTRUMENT_I.";
 
                 %put &INSTRUMENT_I. vars: &&VARS_&INSTRUMENT_I;
@@ -104,6 +131,7 @@
 
         QUIT;
 
+        /* Make new data sets based on field names above */
         DATA &DATA_SET._BASE (KEEP = &VARS_BASE);
             SET &DATA_SET;
             
