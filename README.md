@@ -72,8 +72,8 @@ records <- postForm(
 
 # Get the metadata
 metadata <- postForm(
-    uri = api_url,
-    token = api_token,
+    uri = api_url,     # Supply your site-specific URI
+    token = api_token, # Supply your own API token
     content = 'metadata',
     format = 'json'
 )
@@ -95,6 +95,23 @@ metadata <- read.csv("/path/to/data/ExampleProject_DataDictionary_2018-06-03.csv
 REDCapRITS::REDCap_split(records, metadata)
 ```
 
+REDCapRITS also works with the data export script (a.k.a., *syntax file*) supplied by REDCap. Here is an example of its usage:
+
+```r
+# You must set the working directory first since the REDCap data export script
+# contains relative file references.
+setwd("/path/to/data/")
+
+# Run the data export script supplied by REDCap. 
+# This will create a data.frame of your records called 'data'
+source("ExampleProject_R_2018-06-03_1700.r")
+
+# Get the metadata
+metadata <- read.csv("ExampleProject_DataDictionary_2018-06-03.csv")
+
+# Split the tables
+REDCapRITS::REDCap_split(data, metadata)
+```
 
 ### SAS
 
@@ -105,6 +122,24 @@ REDCapRITS::REDCap_split(records, metadata)
 1. Run the macro call `%REDCAP_SPLIT()`. You will have an output dataset for
 your main table as well as for each repeating instrument.
 
+#### Examples
+
+Please follow the instructions from REDCap on importing the data into SAS. REDCap provides the data in a *csv* format as well as *bat* and *sas* files. The instructions are available when exporting the data from the REDCap web interface. If you do not use the pathway mapper (*bat* file) provided, you will need to go into the *sas* file provided by REDCap and alter the file path in the `infile` statment (Line 2).
+
+```sas
+* Run the program to import the data file into a SAS dataset;
+%INCLUDE "c:\path\to\data\ExampleProject_SAS_2018-06-04_0950.sas";
+
+* Run the MACRO definitions from this repo;
+%INCLUDE "c:\path\to\macro\REDCap_split.sas";
+
+* Read in the data dictionary;
+%REDCAP_READ_DATA_DICT(c:\path\to\data\ExampleProject_DataDictionary_2018-06-04.csv);
+
+* Split the tables;
+%REDCAP_SPLIT();
+
+```
 
 ## Issues
 
