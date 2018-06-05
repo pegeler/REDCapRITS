@@ -72,6 +72,16 @@ REDCap_split <- function(records, metadata) {
     c("field_name", "form_name")
   ]
 
+  # Process instrument status fields
+  form_names <- unique(metadata$form_name)
+  form_complete_fields <- data.frame(
+    field_name = paste0(form_names, "_complete"),
+    form_name = form_names,
+    stringsAsFactors = FALSE
+  )
+
+  fields <- rbind(fields, form_complete_fields)
+
   # Process checkbox fields
   if (any(metadata$field_type == "checkbox")) {
 
@@ -101,16 +111,6 @@ REDCap_split <- function(records, metadata) {
 
   }
 
-  # Process form_complete fields
-  form_names <- unique(metadata$form_name)
-  form_complete_fields <- data.frame(
-    field_name = paste0(form_names, "_complete"),
-    form_name = form_names,
-    stringsAsFactors = FALSE
-  )
-
-  fields <- rbind(fields, form_complete_fields)
-
   # Process ".*\\.factor" fields supplied by REDCap's export data R script
   if (any(grepl("\\.factor$", names(records)))) {
 
@@ -135,6 +135,7 @@ REDCap_split <- function(records, metadata) {
       )
 
     fields <- rbind(fields, factor_fields)
+
   }
 
   # Identify the subtables in the data
