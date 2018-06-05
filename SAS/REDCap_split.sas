@@ -49,9 +49,8 @@
 
 
 %MACRO REDCAP_SPLIT(
-    DATA_DICTIONARY = REDCAP_DATA_DICTIONARY  /* The name of the SAS dataset of the data dictionary */, 
     DATA_SET = REDCAP /* The name of the SAS dataset created by REDCap */,
-    KEY = RECORD_ID  /* Variable that links base table with other tables */
+    DATA_DICTIONARY = REDCAP_DATA_DICTIONARY  /* The name of the SAS dataset of the data dictionary */
 );
 
     /* Remove formatting from repeat instrument field */
@@ -83,13 +82,23 @@
 
     %IF &N_SUBTABLES GT 0 %THEN %DO;
     
-        /* Make a list of fields and their associated forms based on data dictionary */
+        /* Get information on the variables in the dataset */
         PROC CONTENTS 
           DATA = &DATA_SET. 
-          OUT = REDCAP_VARNAMES(KEEP=NAME)
+          OUT = REDCAP_VARNAMES(KEEP=NAME VARNUM)
           NOPRINT;
         RUN;
+
+        /* Find the key that links the base table to child tables */
+        DATA _NULL_;
+        SET REDCAP_VARNAMES;
+          IF VARNUM EQ 1 THEN DO;
+            CALL SYMPUT("KEY", NAME);
+            STOP;
+          END;
+        RUN;
         
+        /* Make a list of fields and their associated forms based on data dictionary */
         DATA REDCAP_FIELDS(KEEP=VAR_NAME FORM_NAME);
         SET &DATA_DICTIONARY.;
           IF FIELD_TYPE EQ "checkbox" THEN DO;
@@ -103,6 +112,20 @@
             END; 
           END;
           ELSE OUTPUT;
+        RUN;
+
+        /* Add instrument status fields to list of fields */
+        PROC SQL;
+
+        CREATE TABLE REDCAP_INSTRUMENT_STATUS_FIELDS AS
+          SELECT DISTINCT TRIM(FORM_NAME)!!"_complete" AS VAR_NAME LENGTH=200, FORM_NAME
+          FROM REDCAP_DATA_DICTIONARY;
+
+        QUIT;
+
+        PROC APPEND 
+          BASE=REDCAP_FIELDS 
+          DATA=REDCAP_INSTRUMENT_STATUS_FIELDS;
         RUN;
         
         /* Sort out the field names */
@@ -150,6 +173,11 @@
             RUN;            
         
         %END;
+
+    /* Clean up temporary datasets */
+    PROC DATASETS MEMTYPE=DATA LIBRARY=WORK NOLIST;
+    DELETE REDCAP_FIELDS REDCAP_VARNAMES REDCAP_INSTRUMENT_STATUS_FIELDS;
+    RUN;
 
     %END;
 
