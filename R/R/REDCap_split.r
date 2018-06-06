@@ -44,8 +44,11 @@ REDCap_split <- function(records, metadata) {
   records  <- JSON2data.frame(records)
   metadata <- JSON2data.frame(metadata)
 
+  # Get the variable names in the dataset
+  vars_in_data <- names(records)
+
   # Check to see if there were any repeating instruments
-  if (!any(names(records) == "redcap_repeat_instrument")) {
+  if (!any(vars_in_data == "redcap_repeat_instrument")) {
 
     message("There are no repeating instruments in this data.")
 
@@ -98,12 +101,12 @@ REDCap_split <- function(records, metadata) {
           1,
           function(x, y)
             data.frame(
-              field_name = y[grepl(paste0("^", x[1], "___[0-9]+$"), y)],
+              field_name = y[grepl(paste0("^", x[1], "___((?!\\.factor).)+$"), y, perl = TRUE)],
               form_name = x[2],
               stringsAsFactors = FALSE,
               row.names = NULL
             ),
-          y = names(records)
+          y = vars_in_data
         )
       )
 
@@ -112,7 +115,7 @@ REDCap_split <- function(records, metadata) {
   }
 
   # Process ".*\\.factor" fields supplied by REDCap's export data R script
-  if (any(grepl("\\.factor$", names(records)))) {
+  if (any(grepl("\\.factor$", vars_in_data))) {
 
     factor_fields <-
       do.call(
@@ -130,7 +133,7 @@ REDCap_split <- function(records, metadata) {
                 row.names = NULL
               )
           },
-          y = names(records)
+          y = vars_in_data
         )
       )
 
@@ -142,6 +145,12 @@ REDCap_split <- function(records, metadata) {
   subtables <- unique(records$redcap_repeat_instrument)
   subtables <- subtables[subtables != ""]
 
+  # Variables to be at the beginning of each repeating instrument
+  repeat_instrument_fields <- c(
+    vars_in_data[1:3],
+    grep("redcap_repeat_instrument\\.factor", vars_in_data, value = TRUE)
+    )
+
   # Split the table based on instrument
   out <- split.data.frame(records, records$redcap_repeat_instrument)
 
@@ -150,13 +159,13 @@ REDCap_split <- function(records, metadata) {
 
     if (i == "") {
 
-      out[[which(names(out) == "")]] <-
-        out[[which(names(out) == "")]][fields[!fields[,2] %in% subtables, 1]]
+      out_fields <- fields[!fields[,2] %in% subtables, 1]
+      out[[which(names(out) == "")]] <- out[[which(names(out) == "")]][out_fields]
 
     } else {
 
-      out[[i]] <-
-        out[[i]][c(names(records[1:3]),fields[fields[,2] == i, 1])]
+      out_fields <- c(repeat_instrument_fields, fields[fields[,2] == i, 1])
+      out[[i]] <- out[[i]][out_fields]
 
     }
 
