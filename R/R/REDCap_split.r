@@ -159,12 +159,12 @@ REDCap_split <- function(records, metadata) {
 
     if (i == "") {
 
-      out_fields <- fields[!fields[,2] %in% subtables, 1]
+      out_fields <- which(vars_in_data %in% fields[!fields[,2] %in% subtables, 1])
       out[[which(names(out) == "")]] <- out[[which(names(out) == "")]][out_fields]
 
     } else {
 
-      out_fields <- c(repeat_instrument_fields, fields[fields[,2] == i, 1])
+      out_fields <- which(vars_in_data %in% c(repeat_instrument_fields, fields[fields[,2] == i, 1]))
       out[[i]] <- out[[i]][out_fields]
 
     }
