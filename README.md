@@ -49,7 +49,13 @@ devtools::install_github("SpectrumHealthResearch/REDCapRITS/R")
 After the package is installed, follow these instructions:
 
 1. Download the record dataset and metadata. This can
-be accomplished either by traditional methods or using the API. 
+be accomplished by several methods:
+    - Using the API. Check with your REDCap administrator for details.
+    - Exporting the data from the web interface by selecting *CSV / Microsoft Excel (raw data)*.
+    - Exporting the data from the web interface by selecting *R Statistical Software*.
+      If you use this method, you may run the R script supplied by REDCap prior to splitting the data.
+	- **Do NOT** export from the web interface with the *CSV / Microsoft Excel (labels)* option.
+      This will not work with REDCapRITS.
 1. Call the function, pointing it to your record dataset and metadata
 `data.frame`s or JSON character vectors. You may need to load the package via 
 `library()` or `require()`.
@@ -82,7 +88,7 @@ metadata <- postForm(
 REDCapRITS::REDCap_split(records, metadata)
 ```
 
-And here is an example of usage when downloading a REDCap export manually from your REDCap web interface:
+And here is an example of usage when downloading a REDCap export of the raw data (not labelled!) manually from your REDCap web interface:
 
 ```r
 # Get the records
