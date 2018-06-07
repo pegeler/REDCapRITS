@@ -19,18 +19,125 @@ might expect that the non-repeating instruments may constitute one table
 that would be related to Repeating Instruments tables via a one-to-many 
 relationship. In reality, the data is outputted as one table with all 
 possible fields; this has the effect of nesting the output table in a 
-way that is not useful in most analysis software. Therefore, I have made 
-a solution to handle the problem in both SAS and R.
+way that is not useful in most analysis software.
 
-## Supported Platforms
+The normalized data can be retrieved by downloading repeating instruments individually then doing a little
+data munging or by writing a few custom parameters in a series of API calls (then doing more data munging),
+but this is a lot of extra steps that can make reproducible research more difficult.
+Therefore, I have made a programmatic solution to handle the problem in both SAS and R.
+
+### Illustration
+
+For example, consider this mocked-up data involving some information about cars in
+R's built-in `mtcars` dataset as well as some sales data for some of the cars.
+
+| car_id|redcap_repeat_instrument |redcap_repeat_instance |make     |model       |mpg  |cyl |motor_trend_cars_complete |price    |color |customer |sale_complete |
+|------:|:------------------------|:----------------------|:--------|:-----------|:----|:---|:-------------------------|:--------|:-----|:--------|:-------------|
+|      1|                         |                       |AMC      |Javelin     |15.2 |8   |1                         |         |      |         |              |
+|      1|sale                     |1                      |         |            |     |    |                          |12000.50 |1     |Bob      |0             |
+|      1|sale                     |2                      |         |            |     |    |                          |13750.77 |3     |Sue      |2             |
+|      1|sale                     |3                      |         |            |     |    |                          |15004.57 |2     |Kim      |0             |
+|      2|                         |                       |Cadillac |Fleetwood   |10.4 |8   |0                         |         |      |         |              |
+|      3|                         |                       |Camaro   |Z28         |13.3 |8   |0                         |         |      |         |              |
+|      3|sale                     |1                      |         |            |     |    |                          |7800.00  |2     |Janice   |2             |
+|      3|sale                     |2                      |         |            |     |    |                          |8000.00  |3     |Tim      |0             |
+|      4|                         |                       |Chrysler |Imperial    |14.7 |8   |0                         |         |      |         |              |
+|      4|sale                     |1                      |         |            |     |    |                          |7500.00  |1     |Jim      |2             |
+|      5|                         |                       |Datsun   |710         |22.8 |4   |0                         |         |      |         |              |
+|      6|                         |                       |Dodge    |Challenger  |15.5 |8   |0                         |         |      |         |              |
+|      7|                         |                       |Duster   |360         |14.3 |8   |0                         |         |      |         |              |
+|      7|sale                     |1                      |         |            |     |    |                          |8756.40  |4     |Sarah    |1             |
+|      7|sale                     |2                      |         |            |     |    |                          |6800.88  |2     |Pablo    |0             |
+|      7|sale                     |3                      |         |            |     |    |                          |8888.88  |1     |Erica    |0             |
+|      7|sale                     |4                      |         |            |     |    |                          |970.00   |4     |Juan     |0             |
+|      8|                         |                       |Ferrari  |Dino        |19.7 |6   |0                         |         |      |         |              |
+|      9|                         |                       |Mazda    |RX4 Wag     |21   |6   |0                         |         |      |         |              |
+|     10|                         |                       |Merc     |230         |22.8 |4   |0                         |         |      |         |              |
+|     10|sale                     |1                      |         |            |     |    |                          |7800.98  |2     |Ted      |0             |
+|     10|sale                     |2                      |         |            |     |    |                          |7954.00  |1     |Quentin  |0             |
+|     10|sale                     |3                      |         |            |     |    |                          |6800.55  |3     |Sharon   |2             |
+
+*Data credit*: Henderson and Velleman (1981), Building multiple regression models interactively. *Biometrics*, **37**, 391--411.
+**Modified with fake data for the purpose of illustration**
+
+You can see that the data from the non-repeating forms (primary table) is interlaced with the data in the repeating forms,
+creating a checkerboard pattern. In order to do analysis, the data must be normalized and then the tables rejoined. 
+The normalized tables would look like this:
+
+**Primary table**
+
+| car_id|make     |model      |mpg  |cyl |motor_trend_cars_complete |
+|------:|:--------|:----------|:----|:---|:-------------------------|
+|      1|AMC      |Javelin    |15.2 |8   |1                         |
+|      2|Cadillac |Fleetwood  |10.4 |8   |0                         |
+|      3|Camaro   |Z28        |13.3 |8   |0                         |
+|      4|Chrysler |Imperial   |14.7 |8   |0                         |
+|      5|Datsun   |710        |22.8 |4   |0                         |
+|      6|Dodge    |Challenger |15.5 |8   |0                         |
+|      7|Duster   |360        |14.3 |8   |0                         |
+|      8|Ferrari  |Dino       |19.7 |6   |0                         |
+|      9|Mazda    |RX4 Wag    |21   |6   |0                         |
+|     10|Merc     |230        |22.8 |4   |0                         |
+
+**Child table**
+
+|car_id |redcap_repeat_instrument |redcap_repeat_instance |price    |color |customer |sale_complete |
+|:------|:------------------------|:----------------------|:--------|:-----|:--------|:-------------|
+|1      |sale                     |1                      |12000.50 |1     |Bob      |0             |
+|1      |sale                     |2                      |13750.77 |3     |Sue      |2             |
+|1      |sale                     |3                      |15004.57 |2     |Kim      |0             |
+|3      |sale                     |1                      |7800.00  |2     |Janice   |2             |
+|3      |sale                     |2                      |8000.00  |3     |Tim      |0             |
+|4      |sale                     |1                      |7500.00  |1     |Jim      |2             |
+|7      |sale                     |1                      |8756.40  |4     |Sarah    |1             |
+|7      |sale                     |2                      |6800.88  |2     |Pablo    |0             |
+|7      |sale                     |3                      |8888.88  |1     |Erica    |0             |
+|7      |sale                     |4                      |970.00   |4     |Juan     |0             |
+|10     |sale                     |1                      |7800.98  |2     |Ted      |0             |
+|10     |sale                     |2                      |7954.00  |1     |Quentin  |0             |
+|10     |sale                     |3                      |6800.55  |3     |Sharon   |2             |
+
+After inner joining the primary table to the child table on `car_id` and selecting only the fields you are interested in, 
+your resulting analytic dataset might look something like this:
+
+| car_id|make     |model    |price    |color |customer |
+|------:|:--------|:--------|:--------|:-----|:--------|
+|      1|AMC      |Javelin  |12000.50 |1     |Bob      |
+|      1|AMC      |Javelin  |13750.77 |3     |Sue      |
+|      1|AMC      |Javelin  |15004.57 |2     |Kim      |
+|      3|Camaro   |Z28      |7800.00  |2     |Janice   |
+|      3|Camaro   |Z28      |8000.00  |3     |Tim      |
+|      4|Chrysler |Imperial |7500.00  |1     |Jim      |
+|      7|Duster   |360      |8756.40  |4     |Sarah    |
+|      7|Duster   |360      |6800.88  |2     |Pablo    |
+|      7|Duster   |360      |8888.88  |1     |Erica    |
+|      7|Duster   |360      |970.00   |4     |Juan     |
+|     10|Merc     |230      |7800.98  |2     |Ted      |
+|     10|Merc     |230      |7954.00  |1     |Quentin  |
+|     10|Merc     |230      |6800.55  |3     |Sharon   |
+
+### Supported Platforms
+
+Currently, the R and SAS code is well-tested with mocked-up data. 
 
 - R
 - SAS
 
-### Coming Soon
+I have made some effort to replicate the
+messiness of real-world data and have tried to include as many special cases and data types as possible.
+However, this code may not account for all contingencies or changes in the native REDCap export format.
+If you find a bug, please feel free to open an issue or pull request.
+
+#### Coming Soon
+
+Currently, we have given some consideration to expand the capabilities into the following languages.
 
 - Python
 - VBA
+
+If you have some talents in these or other languages, please feel free to open a pull request! We
+welcome your contributions!
+
 
 ## Instructions
 ### R
@@ -48,7 +155,7 @@ devtools::install_github("SpectrumHealthResearch/REDCapRITS/R")
 
 After the package is installed, follow these instructions:
 
-1. Download the record dataset and metadata. This can
+1. Download the record dataset and metadata (data dictionary). This can
 be accomplished by several methods:
     - Using the API. Check with your REDCap administrator for details.
     - Exporting the data from the web interface by selecting *CSV / Microsoft Excel (raw data)*.
