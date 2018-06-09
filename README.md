@@ -28,8 +28,9 @@ Therefore, I have made a programmatic solution to handle the problem in both SAS
 
 ### Illustration
 
-For example, consider this mocked-up data involving some information about cars in
-R's built-in `mtcars` dataset as well as some sales data for some of the cars.
+For example, consider this mocked-up data involving some information about a subset 
+of cars in R's built-in `mtcars` dataset (1). Contained in the data is a repeating instrument,
+*sales*, which contains sales transaction data for some of those cars.
 
 | car_id|redcap_repeat_instrument |redcap_repeat_instance |make     |model       |mpg  |cyl |motor_trend_cars_complete |price    |color |customer |sale_complete |
 |------:|:------------------------|:----------------------|:--------|:-----------|:----|:---|:-------------------------|:--------|:-----|:--------|:-------------|
@@ -57,11 +58,10 @@ R's built-in `mtcars` dataset as well as some sales data for some of the cars.
 |     10|sale                     |2                      |         |            |     |    |                          |7954.00  |1     |Quentin  |0             |
 |     10|sale                     |3                      |         |            |     |    |                          |6800.55  |3     |Sharon   |2             |
 
-*Data credit*: Henderson and Velleman (1981), Building multiple regression models interactively. *Biometrics*, **37**, 391--411.
-**Modified with fake data for the purpose of illustration**
 
 You can see that the data from the non-repeating forms (primary table) is interlaced with the data in the repeating forms,
 creating a checkerboard pattern. In order to do analysis, the data must be normalized and then the tables rejoined. 
+Normalization would result in two tables: 1) a *primary* table and 2) a *sale* table.
 The normalized tables would look like this:
 
 **Primary table**
@@ -79,7 +79,7 @@ The normalized tables would look like this:
 |      9|Mazda    |RX4 Wag    |21   |6   |0                         |
 |     10|Merc     |230        |22.8 |4   |0                         |
 
-**Child table**
+**Sale table**
 
 |car_id |redcap_repeat_instrument |redcap_repeat_instance |price    |color |customer |sale_complete |
 |:------|:------------------------|:----------------------|:--------|:-----|:--------|:-------------|
@@ -97,7 +97,10 @@ The normalized tables would look like this:
 |10     |sale                     |2                      |7954.00  |1     |Quentin  |0             |
 |10     |sale                     |3                      |6800.55  |3     |Sharon   |2             |
 
-After inner joining the primary table to the child table on `car_id` and selecting only the fields you are interested in, 
+Suppose you would like to do some analysis such as sale price by make of car or find
+the most popular color for each model. To do so, you can join the tables together using
+relational algebra. After inner joining the *primary* table to the *sale* table on `car_id` 
+and selecting only the fields you are interested in, 
 your resulting analytic dataset might look something like this:
 
 | car_id|make     |model    |price    |color |customer |
@@ -115,6 +118,16 @@ your resulting analytic dataset might look something like this:
 |     10|Merc     |230      |7800.98  |2     |Ted      |
 |     10|Merc     |230      |7954.00  |1     |Quentin  |
 |     10|Merc     |230      |6800.55  |3     |Sharon   |
+
+Such a join can be accomplished numerous ways. Just to name a few:
+
+- SAS
+    - [`PROC SQL`](http://support.sas.com/documentation/cdl/en/proc/61895/HTML/default/viewer.htm#a002473709.htm)
+    - The [`MERGE`](http://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a000202970.htm) statement in a `DATA` step
+- R
+    - [`dplyr::*_join`](https://www.rdocumentation.org/packages/dplyr/versions/0.7.5/topics/join)
+    - [`sqldf`](https://www.rdocumentation.org/packages/sqldf/versions/0.4-11/topics/sqldf)
+    - [`base::merge`](https://www.rdocumentation.org/packages/base/versions/3.5.0/topics/merge)
 
 ### Supported Platforms
 
@@ -260,8 +273,11 @@ Suggestions and contributions are more than welcome! Please feel free to create 
 
 ## About REDCap
 
-This code was written for [REDCap electronic data capture tools](https://projectredcap.org/).^1^ Code for this project was tested on the REDCap instance hosted at Spectrum Health, Grand Rapids, MI. REDCap (Research Electronic Data Capture) is a secure, web-based application designed to support data capture for research studies, providing 1) an intuitive interface for validated data entry; 2) audit trails for tracking data manipulation and export procedures; 3) automated export procedures for seamless data downloads to common statistical packages; and 4) procedures for importing data from external sources.
+This code was written for [REDCap electronic data capture tools](https://projectredcap.org/)(2). Code for this project was tested on the REDCap instance hosted at Spectrum Health, Grand Rapids, MI. REDCap (Research Electronic Data Capture) is a secure, web-based application designed to support data capture for research studies, providing 1) an intuitive interface for validated data entry; 2) audit trails for tracking data manipulation and export procedures; 3) automated export procedures for seamless data downloads to common statistical packages; and 4) procedures for importing data from external sources.
 
 ## References
 
-^1^Paul A. Harris, Robert Taylor, Robert Thielke, Jonathon Payne, Nathaniel Gonzalez, Jose G. Conde, Research electronic data capture (REDCap) – A metadata-driven methodology and workflow process for providing translational research informatics support, J Biomed Inform. 2009 Apr;42(2):377-81.
+(1) Henderson and Velleman (1981), Building multiple regression models interactively. *Biometrics*, **37**, 391--411.
+**Modified with fake data for the purpose of illustration**
+
+(2) Paul A. Harris, Robert Taylor, Robert Thielke, Jonathon Payne, Nathaniel Gonzalez, Jose G. Conde, Research electronic data capture (REDCap) – A metadata-driven methodology and workflow process for providing translational research informatics support, J Biomed Inform. 2009 Apr;42(2):377-81.
