@@ -24,13 +24,15 @@ way that is not useful in most analysis software.
 The normalized data can be retrieved by downloading repeating instruments individually then doing a little
 data munging or by writing a few custom parameters in a series of API calls (then doing more data munging),
 but this is a lot of extra steps that can make reproducible research more difficult.
-Therefore, I have made a programmatic solution to handle the problem in both SAS and R.
+
+REDCapRITS is a programmatic solution to handle the problem in both SAS and R.
 
 ### Illustration
 
-For example, consider this mocked-up data involving some information about a subset 
-of cars in R's built-in `mtcars` dataset (1). Contained in the data is a repeating instrument,
-*sales*, which contains sales transaction data for some of those cars.
+For example, consider this mocked-up data exported from a REDCap project with repeating instruments.
+The data contains information on a subset of cars in R's built-in `mtcars` dataset [1].
+Within the table there is also a repeating instrument, *sales*, which has sales transaction
+data for some of those cars.
 
 | car_id|redcap_repeat_instrument |redcap_repeat_instance |make     |model       |mpg  |cyl |motor_trend_cars_complete |price    |color |customer |sale_complete |
 |------:|:------------------------|:----------------------|:--------|:-----------|:----|:---|:-------------------------|:--------|:-----|:--------|:-------------|
@@ -59,7 +61,7 @@ of cars in R's built-in `mtcars` dataset (1). Contained in the data is a repeati
 |     10|sale                     |3                      |         |            |     |    |                          |6800.55  |3     |Sharon   |2             |
 
 
-You can see that the data from the non-repeating forms (primary table) is interlaced with the data in the repeating forms,
+You can see that the data from the non-repeating form (primary table) is interlaced with the data in the repeating form,
 creating a checkerboard pattern. In order to do analysis, the data must be normalized and then the tables rejoined. 
 Normalization would result in two tables: 1) a *primary* table and 2) a *sale* table.
 The normalized tables would look like this:
@@ -98,7 +100,7 @@ The normalized tables would look like this:
 |10     |sale                     |3                      |6800.55  |3     |Sharon   |2             |
 
 Suppose you would like to do some analysis such as sale price by make of car or find
-the most popular color for each model. To do so, you can join the tables together using
+the most popular color for each model. To do so, you can join the tables together with
 relational algebra. After inner joining the *primary* table to the *sale* table on `car_id` 
 and selecting only the fields you are interested in, 
 your resulting analytic dataset might look something like this:
@@ -126,7 +128,7 @@ Such a join can be accomplished numerous ways. Just to name a few:
     - The [`MERGE`](http://support.sas.com/documentation/cdl/en/lrdict/64316/HTML/default/viewer.htm#a000202970.htm) statement in a `DATA` step
 - R
     - [`dplyr::*_join`](https://www.rdocumentation.org/packages/dplyr/versions/0.7.5/topics/join)
-    - [`sqldf`](https://www.rdocumentation.org/packages/sqldf/versions/0.4-11/topics/sqldf)
+    - [`sqldf::sqldf`](https://www.rdocumentation.org/packages/sqldf/versions/0.4-11/topics/sqldf)
     - [`base::merge`](https://www.rdocumentation.org/packages/base/versions/3.5.0/topics/merge)
 
 ### Supported Platforms
@@ -273,11 +275,11 @@ Suggestions and contributions are more than welcome! Please feel free to create 
 
 ## About REDCap
 
-This code was written for [REDCap electronic data capture tools](https://projectredcap.org/)(2). Code for this project was tested on the REDCap instance hosted at Spectrum Health, Grand Rapids, MI. REDCap (Research Electronic Data Capture) is a secure, web-based application designed to support data capture for research studies, providing 1) an intuitive interface for validated data entry; 2) audit trails for tracking data manipulation and export procedures; 3) automated export procedures for seamless data downloads to common statistical packages; and 4) procedures for importing data from external sources.
+This code was written for [REDCap electronic data capture tools](https://projectredcap.org/) [2]. Code for this project was tested on the REDCap instance hosted at Spectrum Health, Grand Rapids, MI. REDCap (Research Electronic Data Capture) is a secure, web-based application designed to support data capture for research studies, providing 1) an intuitive interface for validated data entry; 2) audit trails for tracking data manipulation and export procedures; 3) automated export procedures for seamless data downloads to common statistical packages; and 4) procedures for importing data from external sources.
 
 ## References
 
-(1) Henderson and Velleman (1981), Building multiple regression models interactively. *Biometrics*, **37**, 391--411.
+[1] Henderson and Velleman (1981), Building multiple regression models interactively. *Biometrics*, **37**, 391--411.
 **Modified with fake data for the purpose of illustration**
 
-(2) Paul A. Harris, Robert Taylor, Robert Thielke, Jonathon Payne, Nathaniel Gonzalez, Jose G. Conde, Research electronic data capture (REDCap) – A metadata-driven methodology and workflow process for providing translational research informatics support, J Biomed Inform. 2009 Apr;42(2):377-81.
+[2] Paul A. Harris, Robert Taylor, Robert Thielke, Jonathon Payne, Nathaniel Gonzalez, Jose G. Conde, Research electronic data capture (REDCap) – A metadata-driven methodology and workflow process for providing translational research informatics support, J Biomed Inform. 2009 Apr;42(2):377-81.
