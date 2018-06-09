@@ -12,27 +12,56 @@
 #' @author Paul W. Egeler, M.S., GStat
 #' @examples
 #' \dontrun{
+#' # Using an API call -------------------------------------------------------
+#'
 #' library(RCurl)
 #'
 #' # Get the records
 #' records <- postForm(
-#'     uri = api_url,     # Supply your site-specific URI
-#'     token = api_token, # Supply your own API token
-#'     content = 'record',
-#'     format = 'json',
-#'     returnFormat = 'json'
+#'   uri = api_url,     # Supply your site-specific URI
+#'   token = api_token, # Supply your own API token
+#'   content = 'record',
+#'   format = 'json',
+#'   returnFormat = 'json'
 #' )
 #'
 #' # Get the metadata
 #' metadata <- postForm(
-#'     uri = api_url,
-#'     token = api_token,
-#'     content = 'metadata',
-#'     format = 'json'
+#'   uri = api_url,     # Supply your site-specific URI
+#'   token = api_token, # Supply your own API token
+#'   content = 'metadata',
+#'   format = 'json'
 #' )
 #'
 #' # Convert exported JSON strings into a list of data.frames
-#' REDCap_split(records, metadata)
+#' REDCapRITS::REDCap_split(records, metadata)
+#'
+#' # Using a raw data export -------------------------------------------------
+#'
+#' # Get the records
+#' records <- read.csv("/path/to/data/ExampleProject_DATA_2018-06-03_1700.csv")
+#'
+#' # Get the metadata
+#' metadata <- read.csv("/path/to/data/ExampleProject_DataDictionary_2018-06-03.csv")
+#'
+#' # Split the tables
+#' REDCapRITS::REDCap_split(records, metadata)
+#'
+#' # In conjunction with the R export script ---------------------------------
+#'
+#' # You must set the working directory first since the REDCap data export script
+#' # contains relative file references.
+#' setwd("/path/to/data/")
+#'
+#' # Run the data export script supplied by REDCap.
+#' # This will create a data.frame of your records called 'data'
+#' source("ExampleProject_R_2018-06-03_1700.r")
+#'
+#' # Get the metadata
+#' metadata <- read.csv("ExampleProject_DataDictionary_2018-06-03.csv")
+#'
+#' # Split the tables
+#' REDCapRITS::REDCap_split(data, metadata)
 #' }
 #' @return A list of \code{"data.frame"}s: one base table and zero or more
 #'   tables for each repeating instrument.
