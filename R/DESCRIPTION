@@ -1,11 +1,10 @@
 Package: REDCapRITS
 Title: REDCap Repeating Instrument Table Splitter
 Version: 0.0.0
-Authors@R: person(
-    "Paul", 
-    "Egeler", 
-    email = "paul.egeler@spectrumhealth.org", 
-    role = c("aut", "cre"))
+Authors@R: c(
+    person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = c("aut", "cre")),
+    person("Spectrum Health, Grand Rapids, MI", role = "cph"))
+Copyright: Spectrum Health, Grand Rapids, MI
 Description: Split REDCap repeating instruments output into multiple tables. 
     This will take raw output from a REDCap export and split it into a base table
     and child tables for each repeating instrument. 
