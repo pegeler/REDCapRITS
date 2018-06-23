@@ -36,18 +36,6 @@ process_user_input.character <- function(x, ...) {
 
 process_user_input.response <- function(x, ...) {
 
-  if (!requireNamespace("httr", quietly = TRUE)) {
-    stop(
-      "The package 'httr' is needed to convert ",
-      deparse(substitute(x)),
-      " into a data frame.",
-      "\n       Either install 'httr' or pass ",
-      deparse(substitute(x)),
-      " as a 'data.frame'.",
-      call. = FALSE
-    )
-  }
-
-  httr::content(x, as = "text")
+  process_user_input(rawToChar(x$content))
 
 }
