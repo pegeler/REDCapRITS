@@ -4,11 +4,12 @@
 #' and child tables for each repeating instrument. Metadata
 #' is used to determine which fields should be included in each resultant table.
 #'
-#' @param records Exported project records. May be a \code{data.frame} or
-#'   \code{character} vector containing JSON from an API call.
-#' @param metadata Project metadata (the data dictionary). May be a
-#'   \code{data.frame} or \code{character} vector containing JSON from an API
+#' @param records Exported project records. May be a \code{data.frame},
+#'   \code{response}, or \code{character} vector containing JSON from an API
 #'   call.
+#' @param metadata Project metadata (the data dictionary). May be a
+#'   \code{data.frame}, \code{response}, or \code{character} vector containing
+#'   JSON from an API call.
 #' @author Paul W. Egeler, M.S., GStat
 #' @examples
 #' \dontrun{
@@ -65,13 +66,13 @@
 #' }
 #' @return A list of \code{"data.frame"}s: one base table and zero or more
 #'   tables for each repeating instrument.
-#' @include JSON2data.frame.r
+#' @include process_user_input.r
 #' @export
 REDCap_split <- function(records, metadata) {
 
   # Process user input
-  records  <- JSON2data.frame(records)
-  metadata <- JSON2data.frame(metadata)
+  records  <- process_user_input(records)
+  metadata <- process_user_input(metadata)
 
   # Get the variable names in the dataset
   vars_in_data <- names(records)

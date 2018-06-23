@@ -7,12 +7,13 @@
 REDCap_split(records, metadata)
 }
 \arguments{
-\item{records}{Exported project records. May be a \code{data.frame} or
-\code{character} vector containing JSON from an API call.}
+\item{records}{Exported project records. May be a \code{data.frame},
+\code{response}, or \code{character} vector containing JSON from an API
+call.}
 
 \item{metadata}{Project metadata (the data dictionary). May be a
-\code{data.frame} or \code{character} vector containing JSON from an API
-call.}
+\code{data.frame}, \code{response}, or \code{character} vector containing
+JSON from an API call.}
 }
 \value{
 A list of \code{"data.frame"}s: one base table and zero or more
