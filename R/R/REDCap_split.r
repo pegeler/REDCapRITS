@@ -174,11 +174,24 @@ REDCap_split <- function(records, metadata) {
   subtables <- unique(records$redcap_repeat_instrument)
   subtables <- subtables[subtables != ""]
 
-  # Variables to be at the beginning of each repeating instrument
-  repeat_instrument_fields <- c(
-    vars_in_data[1:3],
-    grep("redcap_repeat_instrument\\.factor", vars_in_data, value = TRUE)
+  # Variables to be present in each output table
+  universal_fields <- c(
+    vars_in_data[1],
+    grep(
+      "^redcap_(?!(repeat)).*",
+      vars_in_data,
+      value = TRUE,
+      perl = TRUE
     )
+  )
+
+  # Variables to be at the beginning of each repeating instrument
+  repeat_instrument_fields <- grep(
+    "^redcap_repeat.*",
+    vars_in_data,
+    value = TRUE
+  )
+
 
   # Split the table based on instrument
   out <- split.data.frame(records, records$redcap_repeat_instrument)
@@ -188,12 +201,23 @@ REDCap_split <- function(records, metadata) {
 
     if (i == "") {
 
-      out_fields <- which(vars_in_data %in% fields[!fields[,2] %in% subtables, 1])
+      out_fields <- which(
+        vars_in_data %in% c(
+          universal_fields,
+          fields[!fields[,2] %in% subtables, 1]
+        )
+      )
       out[[which(names(out) == "")]] <- out[[which(names(out) == "")]][out_fields]
 
     } else {
 
-      out_fields <- which(vars_in_data %in% c(repeat_instrument_fields, fields[fields[,2] == i, 1]))
+      out_fields <- which(
+        vars_in_data %in% c(
+          universal_fields,
+          repeat_instrument_fields,
+          fields[fields[,2] == i, 1]
+        )
+      )
       out[[i]] <- out[[i]][out_fields]
 
     }
