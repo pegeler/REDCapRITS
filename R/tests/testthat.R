@@ -1,4 +1,4 @@
-# library(testthat)
-# library(REDCapRITS)
-#
-# test_check("REDCapRITS")
+library(testthat)
+library(REDCapRITS)
+
+test_check("REDCapRITS")

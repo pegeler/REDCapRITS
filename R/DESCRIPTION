@@ -9,9 +9,12 @@ Description: Split REDCap repeating instruments output into multiple tables.
     This will take raw output from a REDCap export and split it into a base table
     and child tables for each repeating instrument. 
 Depends: R (>= 3.4.0)
-Suggests: RCurl, 
+Suggests: 
+    RCurl, 
     jsonlite,
-    testthat
+    testthat,
+    Hmisc,
+    httr
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
