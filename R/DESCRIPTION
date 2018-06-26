@@ -9,9 +9,12 @@ Description: Split REDCap repeating instruments output into multiple tables.
     This will take raw output from a REDCap export and split it into a base table
     and child tables for each repeating instrument. 
 Depends: R (>= 3.4.0)
-Suggests: RCurl, 
+Suggests: 
+    RCurl, 
+    httr,
     jsonlite,
-    testthat
+    testthat,
+    Hmisc
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -19,5 +22,5 @@ RoxygenNote: 6.0.1
 URL: https://github.com/SpectrumHealthResearch/REDCapRITS
 BugReports: https://github.com/SpectrumHealthResearch/REDCapRITS/issues
 Collate: 
-    'JSON2data.frame.r'
+    'process_user_input.r'
     'REDCap_split.r'
