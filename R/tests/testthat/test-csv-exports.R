@@ -1,19 +1,14 @@
 context("CSV Exports")
 
 # Set up the path and data -------------------------------------------------
-
-data_dir <- system.file("tests", "testthat", "data", package = "REDCapRITS")
-
 metadata <- read.csv(
-  file.path(
-    data_dir,
+  get_data_location(
     "ExampleProject_DataDictionary_2018-06-07.csv"
   )
 )
 
 records <- read.csv(
-  file.path(
-    data_dir,
+  get_data_location(
     "ExampleProject_DATA_2018-06-07_1129.csv"
   )
 )
@@ -26,10 +21,11 @@ test_that("CSV export matches reference", {
 })
 
 # Test that R code enhanced CSV export matches reference --------------------
-test_that("R code enhanced export matches reference", {
-  source(file.path(data_dir, "ExampleProject_R_2018-06-07_1129.r"))
+if (requireNamespace("Hmisc", quietly = TRUE)) {
+  test_that("R code enhanced export matches reference", {
+      redcap_output_csv2 <- REDCap_split(REDCap_process_csv(records), metadata)
 
-  redcap_output_csv2 <- REDCap_split(REDCap_process_csv(records), metadata)
+      expect_known_hash(redcap_output_csv2, "34f82cab35bf8aae47d08cd96f743e6b")
+  })
+}
 
-  expect_known_hash(redcap_output_csv2, "34f82cab35bf8aae47d08cd96f743e6b")
-})

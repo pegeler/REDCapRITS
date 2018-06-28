@@ -157,6 +157,9 @@ welcome your contributions!
 ## Instructions
 ### R
 
+[![Travis-CI Build Status](https://travis-ci.org/SpectrumHealthResearch/REDCapRITS.svg?branch=master)](https://travis-ci.org/SpectrumHealthResearch/REDCapRITS)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/SpectrumHealthResearch/REDCapRITS?branch=master&svg=true)](https://ci.appveyor.com/project/SpectrumHealthResearch/REDCapRITS)
+
 #### Installation
 
 First you must install the package. To do so, execute the following in your R console:

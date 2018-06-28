@@ -1,22 +1,16 @@
 context("Reading in JSON")
 
-# Set up the path ----------------------------------------------------------
-
-data_dir <- system.file("tests", "testthat", "data", package = "REDCapRITS")
-
 # Check the RCurl export ---------------------------------------------------
 test_that("JSON character vector from RCurl matches reference", {
 
   metadata <- jsonlite::fromJSON(
-    file.path(
-      data_dir,
+    get_data_location(
       "ExampleProject_metadata.json"
     )
   )
 
   records <- jsonlite::fromJSON(
-    file.path(
-      data_dir,
+    get_data_location(
       "ExampleProject_records.json"
     )
   )
