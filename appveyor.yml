@@ -1,8 +1,12 @@
 # DO NOT CHANGE the "init" and "install" sections below
 
+environment:
+  PKG_DIR: R
+
 before_build:
-  - cp travis-tool.sh travis-tool.sh.cmd R
-  - cd R
+  - cp ..\travis-tool.sh .\travis-tool.sh
+  - cp travis-tool.sh.cmd %PKG_DIR%\travis-tool.sh.cmd
+  - cd %PKG_DIR%
   - bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
 
 # Download script file from GitHub
