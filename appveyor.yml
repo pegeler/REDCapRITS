@@ -1,7 +1,9 @@
 # DO NOT CHANGE the "init" and "install" sections below
 
 before_build:
- - cd R
+  - cp travis-tool.sh travis-tool.sh.cmd R
+  - cd R
+  - bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
 
 # Download script file from GitHub
 init:
