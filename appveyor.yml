@@ -6,7 +6,7 @@ before_build:
         cp ..\travis-tool.sh R\travis-tool.sh
         cp travis-tool.sh.cmd R\travis-tool.sh.cmd
         cd R
-        bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
+        bash -c "echo '^travis-tool\.sh(\.cmd)?$' >> .Rbuildignore"
 
 # Download script file from GitHub
 init:
