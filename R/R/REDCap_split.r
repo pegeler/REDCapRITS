@@ -10,6 +10,8 @@
 #' @param metadata Project metadata (the data dictionary). May be a
 #'   \code{data.frame}, \code{response}, or \code{character} vector containing
 #'   JSON from an API call.
+#' @param primary_table_label Name of the label given to the list element for
+#'   the primary output table (as described in *README.md*).
 #' @author Paul W. Egeler, M.S., GStat
 #' @examples
 #' \dontrun{
@@ -66,9 +68,12 @@
 #' }
 #' @return A list of \code{"data.frame"}s: one base table and zero or more
 #'   tables for each repeating instrument.
-#' @include process_user_input.r
+#' @include process_user_input.r utils.r
 #' @export
-REDCap_split <- function(records, metadata) {
+REDCap_split <- function(records,
+                         metadata,
+                         primary_table_label = ""
+) {
 
   # Process user input
   records  <- process_user_input(records)
@@ -78,12 +83,8 @@ REDCap_split <- function(records, metadata) {
   vars_in_data <- names(records)
 
   # Check to see if there were any repeating instruments
-  if (!any(vars_in_data == "redcap_repeat_instrument")) {
-
-    message("There are no repeating instruments in this data.")
-
-    return(list(records))
-
+  if (!"redcap_repeat_instrument" %in% vars_in_data) {
+    stop("There are no repeating instruments in this dataset.")
   }
 
   # Standardize variable names for metadata
@@ -93,80 +94,7 @@ REDCap_split <- function(records, metadata) {
   metadata <- rapply(metadata, as.character, classes = "factor", how = "replace")
 
   # Find the fields and associated form
-  fields <- metadata[
-    !metadata$field_type %in% c("descriptive", "checkbox"),
-    c("field_name", "form_name")
-  ]
-
-  # Process instrument status fields
-  form_names <- unique(metadata$form_name)
-  form_complete_fields <- data.frame(
-    field_name = paste0(form_names, "_complete"),
-    form_name = form_names,
-    stringsAsFactors = FALSE
-  )
-
-  fields <- rbind(fields, form_complete_fields)
-
-  # Process checkbox fields
-  if (any(metadata$field_type == "checkbox")) {
-
-    checkbox_basenames <- metadata[
-      metadata$field_type == "checkbox",
-      c("field_name", "form_name")
-    ]
-
-    checkbox_fields <-
-      do.call(
-        "rbind",
-        apply(
-          checkbox_basenames,
-          1,
-          function(x, y)
-            data.frame(
-              field_name = y[grepl(paste0("^", x[1], "___((?!\\.factor).)+$"), y, perl = TRUE)],
-              form_name = x[2],
-              stringsAsFactors = FALSE,
-              row.names = NULL
-            ),
-          y = vars_in_data
-        )
-      )
-
-    fields <- rbind(fields, checkbox_fields)
-
-  }
-
-  # Process ".*\\.factor" fields supplied by REDCap's export data R script
-  if (any(grepl("\\.factor$", vars_in_data))) {
-
-    factor_fields <-
-      do.call(
-        "rbind",
-        apply(
-          fields,
-          1,
-          function(x, y) {
-            field_indices <- grepl(paste0("^", x[1], "\\.factor$"), y)
-            if (any(field_indices))
-              data.frame(
-                field_name = y[field_indices],
-                form_name = x[2],
-                stringsAsFactors = FALSE,
-                row.names = NULL
-              )
-          },
-          y = vars_in_data
-        )
-      )
-
-    fields <- rbind(fields, factor_fields)
-
-  }
-
-  # Identify the subtables in the data
-  subtables <- unique(records$redcap_repeat_instrument)
-  subtables <- subtables[subtables != ""]
+  fields <- match_fields_to_form(metadata, vars_in_data)
 
   # Variables to be present in each output table
   universal_fields <- c(
@@ -187,13 +115,26 @@ REDCap_split <- function(records, metadata) {
   )
 
 
+  # Identify the subtables in the data
+  subtables <- unique(records$redcap_repeat_instrument)
+  subtables <- subtables[subtables != ""]
+
   # Split the table based on instrument
   out <- split.data.frame(records, records$redcap_repeat_instrument)
+
+  if (primary_table_label %in% subtables) {
+    warning(
+      "The label given to the primary table is already used by a repeating instrument.\n",
+      "The primary table label will be left blank."
+    )
+  } else if (primary_table_label > "") {
+    names(out)[[which(names(out) == "")]] <- primary_table_label
+  }
 
   # Delete the variables that are not relevant
   for (i in names(out)) {
 
-    if (i == "") {
+    if (i == primary_table_label) {
 
       out_fields <- which(
         vars_in_data %in% c(
@@ -201,7 +142,7 @@ REDCap_split <- function(records, metadata) {
           fields[!fields[,2] %in% subtables, 1]
         )
       )
-      out[[which(names(out) == "")]] <- out[[which(names(out) == "")]][out_fields]
+      out[[which(names(out) == primary_table_label)]] <- out[[which(names(out) == primary_table_label)]][out_fields]
 
     } else {
 

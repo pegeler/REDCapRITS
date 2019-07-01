@@ -4,7 +4,7 @@
 \alias{REDCap_split}
 \title{Split REDCap repeating instruments table into multiple tables}
 \usage{
-REDCap_split(records, metadata)
+REDCap_split(records, metadata, primary_table_label = "")
 }
 \arguments{
 \item{records}{Exported project records. May be a \code{data.frame},
@@ -14,6 +14,9 @@ call.}
 \item{metadata}{Project metadata (the data dictionary). May be a
 \code{data.frame}, \code{response}, or \code{character} vector containing
 JSON from an API call.}
+
+\item{primary_table_label}{Name of the label given to the list element for
+the primary output table (as described in *README.md*).}
 }
 \value{
 A list of \code{"data.frame"}s: one base table and zero or more
