@@ -10,8 +10,11 @@
 #' @param metadata Project metadata (the data dictionary). May be a
 #'   \code{data.frame}, \code{response}, or \code{character} vector containing
 #'   JSON from an API call.
-#' @param primary_table_label Name of the label given to the list element for
-#'   the primary output table (as described in *README.md*).
+#' @param primary_table_name Name given to the list element for the primary
+#'   output table (as described in \emph{README.md}). Ignored if
+#'   \code{forms = 'all'}.
+#' @param forms Indicate whether to create separate tables for repeating
+#'   instruments only or for all forms.
 #' @author Paul W. Egeler, M.S., GStat
 #' @examples
 #' \dontrun{
@@ -66,13 +69,20 @@
 #' # Split the tables
 #' REDCapRITS::REDCap_split(data, metadata)
 #' }
-#' @return A list of \code{"data.frame"}s: one base table and zero or more
-#'   tables for each repeating instrument.
+#' @return A list of \code{"data.frame"}s. The number of tables will differ
+#'   depending on the \code{forms} option selected.
+#'   \itemize{
+#'     \item \code{'repeating'}: one base table and one or more
+#'     tables for each repeating instrument.
+#'     \item \code{'all'}: a data.frame for each instrument, regardless of
+#'     whether it is a repeating instrument or not.
+#'   }
 #' @include process_user_input.r utils.r
 #' @export
 REDCap_split <- function(records,
                          metadata,
-                         primary_table_label = ""
+                         primary_table_name = "",
+                         forms = c("repeating", "all")
 ) {
 
   # Process user input
@@ -82,8 +92,11 @@ REDCap_split <- function(records,
   # Get the variable names in the dataset
   vars_in_data <- names(records)
 
+  # Match arg for forms
+  forms <- match.arg(forms)
+
   # Check to see if there were any repeating instruments
-  if (!"redcap_repeat_instrument" %in% vars_in_data) {
+  if (forms == "repeating" && !"redcap_repeat_instrument" %in% vars_in_data) {
     stop("There are no repeating instruments in this dataset.")
   }
 
@@ -107,56 +120,55 @@ REDCap_split <- function(records,
     )
   )
 
-  # Variables to be at the beginning of each repeating instrument
-  repeat_instrument_fields <- grep(
-    "^redcap_repeat.*",
-    vars_in_data,
-    value = TRUE
-  )
-
-
-  # Identify the subtables in the data
-  subtables <- unique(records$redcap_repeat_instrument)
-  subtables <- subtables[subtables != ""]
-
-  # Split the table based on instrument
-  out <- split.data.frame(records, records$redcap_repeat_instrument)
-
-  if (primary_table_label %in% subtables) {
-    warning(
-      "The label given to the primary table is already used by a repeating instrument.\n",
-      "The primary table label will be left blank."
+  if ("redcap_repeat_instrument" %in% vars_in_data) {
+    # Variables to be at the beginning of each repeating instrument
+    repeat_instrument_fields <- grep(
+      "^redcap_repeat.*",
+      vars_in_data,
+      value = TRUE
     )
-  } else if (primary_table_label > "") {
-    names(out)[[which(names(out) == "")]] <- primary_table_label
-  }
 
-  # Delete the variables that are not relevant
-  for (i in names(out)) {
+    # Identify the subtables in the data
+    subtables <- unique(records$redcap_repeat_instrument)
+    subtables <- subtables[subtables != ""]
 
-    if (i == primary_table_label) {
+    # Split the table based on instrument
+    out <- split.data.frame(records, records$redcap_repeat_instrument)
 
-      out_fields <- which(
-        vars_in_data %in% c(
-          universal_fields,
-          fields[!fields[,2] %in% subtables, 1]
-        )
-      )
-      out[[which(names(out) == primary_table_label)]] <- out[[which(names(out) == primary_table_label)]][out_fields]
-
-    } else {
-
-      out_fields <- which(
-        vars_in_data %in% c(
-          universal_fields,
-          repeat_instrument_fields,
-          fields[fields[,2] == i, 1]
-        )
-      )
-      out[[i]] <- out[[i]][out_fields]
-
+    if (forms == "repeating" && primary_table_name %in% subtables) {
+      warning("The label given to the primary table is already used by a repeating instrument. The primary table label will be left blank.")
+      primary_table_name <- ""
+    } else if (primary_table_name > "") {
+      names(out)[[which(names(out) == "")]] <- primary_table_name
     }
 
+    # Delete the variables that are not relevant
+    for (i in names(out)) {
+
+      if (i == primary_table_name) {
+
+        out_fields <- which(
+          vars_in_data %in% c(
+            universal_fields,
+            fields[!fields[,2] %in% subtables, 1]
+          )
+        )
+        out[[which(names(out) == primary_table_name)]] <- out[[which(names(out) == primary_table_name)]][out_fields]
+
+      } else {
+
+        out_fields <- which(
+          vars_in_data %in% c(
+            universal_fields,
+            repeat_instrument_fields,
+            fields[fields[,2] == i, 1]
+          )
+        )
+        out[[i]] <- out[[i]][out_fields]
+
+      }
+
+    }
   }
 
   out

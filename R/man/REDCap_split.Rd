@@ -4,7 +4,8 @@
 \alias{REDCap_split}
 \title{Split REDCap repeating instruments table into multiple tables}
 \usage{
-REDCap_split(records, metadata, primary_table_label = "")
+REDCap_split(records, metadata, primary_table_name = "",
+  forms = c("repeating", "all"))
 }
 \arguments{
 \item{records}{Exported project records. May be a \code{data.frame},
@@ -15,12 +16,22 @@ call.}
 \code{data.frame}, \code{response}, or \code{character} vector containing
 JSON from an API call.}
 
-\item{primary_table_label}{Name of the label given to the list element for
-the primary output table (as described in *README.md*).}
+\item{primary_table_name}{Name given to the list element for the primary
+output table (as described in \emph{README.md}). Ignored if
+\code{forms = 'all'}.}
+
+\item{forms}{Indicate whether to create separate tables for repeating
+instruments only or for all forms.}
 }
 \value{
-A list of \code{"data.frame"}s: one base table and zero or more
-  tables for each repeating instrument.
+A list of \code{"data.frame"}s. The number of tables will differ
+  depending on the \code{forms} option selected.
+  \itemize{
+    \item \code{'repeating'}: one base table and one or more
+    tables for each repeating instrument.
+    \item \code{'all'}: a data.frame for each instrument, regardless of
+    whether it is a repeating instrument or not.
+  }
 }
 \description{
 This will take output from a REDCap export and split it into a base table
