@@ -134,12 +134,13 @@ REDCap_split <- function(records,
 
     # Split the table based on instrument
     out <- split.data.frame(records, records$redcap_repeat_instrument)
+    primary_table_index <- which(names(out) == "")
 
     if (forms == "repeating" && primary_table_name %in% subtables) {
       warning("The label given to the primary table is already used by a repeating instrument. The primary table label will be left blank.")
       primary_table_name <- ""
     } else if (primary_table_name > "") {
-      names(out)[[which(names(out) == "")]] <- primary_table_name
+      names(out)[[primary_table_index]] <- primary_table_name
     }
 
     # Delete the variables that are not relevant
@@ -153,7 +154,7 @@ REDCap_split <- function(records,
             fields[!fields[,2] %in% subtables, 1]
           )
         )
-        out[[which(names(out) == primary_table_name)]] <- out[[which(names(out) == primary_table_name)]][out_fields]
+        out[[primary_table_index]] <- out[[primary_table_index]][out_fields]
 
       } else {
 
@@ -169,6 +170,24 @@ REDCap_split <- function(records,
       }
 
     }
+
+    if (forms == "all") {
+
+      out <- c(
+        split_non_repeating_forms(
+          out[[primary_table_index]],
+          universal_fields,
+          fields[!fields[,2] %in% subtables,]
+        ),
+        out[-primary_table_index]
+      )
+
+    }
+
+  } else {
+
+    out <- split_non_repeating_forms(records, universal_fields, fields)
+
   }
 
   out

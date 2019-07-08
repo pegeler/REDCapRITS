@@ -15,6 +15,20 @@ match_fields_to_form <- function(metadata, vars_in_data) {
 
   fields <- rbind(fields, form_complete_fields)
 
+  # Process survey timestamps
+  timestamps <- intersect(vars_in_data, paste0(form_names, "_timestamp"))
+  if (length(timestamps)) {
+
+    timestamp_fields <- data.frame(
+      field_name = timestamps,
+      form_name = sub("_timestamp$", "", timestamps),
+      stringsAsFactors = FALSE
+    )
+
+    fields <- rbind(fields, timestamp_fields)
+
+  }
+
   # Process checkbox fields
   if (any(metadata$field_type == "checkbox")) {
 
@@ -74,3 +88,19 @@ match_fields_to_form <- function(metadata, vars_in_data) {
   fields
 
   }
+
+
+split_non_repeating_forms <- function(table, universal_fields, fields) {
+
+  forms <- unique(fields[[2]])
+
+  x <- lapply(
+    forms,
+    function (x) {
+      table[names(table) %in% union(universal_fields, fields[fields[,2] == x,1])]
+  })
+
+  structure(x, names = forms)
+
+}
+

@@ -13,5 +13,5 @@ test_that("CSV export matches reference", {
   redcap_output <- with(redcap, REDCap_split(records, metadata))
 
 
-  expect_known_hash(redcap_output, "dff3a52955")
+  expect_known_hash(redcap_output, "0934bcb292")
 })
