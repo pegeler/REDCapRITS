@@ -51,7 +51,7 @@
 %MACRO REDCAP_SPLIT(
     DATA_SET = REDCAP /* The name of the SAS dataset created by REDCap */,
     DATA_DICTIONARY = REDCAP_DATA_DICTIONARY  /* The name of the SAS dataset of the data dictionary */,
-    NUMERIC_SUBTABLES = N /* Y/N: Should the subtables be numbered (Y) or should the be based on the name of the repeating instrument (N)? */
+    NUMERIC_SUBTABLES = N /* Y/N: Should the subtables be numbered (Y) or should they be based on the name of the repeating instrument (N)? */
 );
 
     /* Find the key that links the base table to child tables */
