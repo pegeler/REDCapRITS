@@ -14,7 +14,8 @@ Suggests:
     httr,
     jsonlite,
     testthat,
-    Hmisc
+    Hmisc,
+    readr
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

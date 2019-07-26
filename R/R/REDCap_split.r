@@ -89,6 +89,10 @@ REDCap_split <- function(records,
   records  <- process_user_input(records)
   metadata <- process_user_input(metadata)
 
+  # Remove "tbl_df" class from metadata, if present, due to difference in
+  # `[.tbl_df` behavior as compared to `[.data.frame` behavior (see issue #12)
+  if(inherits(metadata, "tbl_df")) class(metadata) <- "data.frame"
+
   # Get the variable names in the dataset
   vars_in_data <- names(records)
 
@@ -98,6 +102,15 @@ REDCap_split <- function(records,
   # Check to see if there were any repeating instruments
   if (forms == "repeating" && !"redcap_repeat_instrument" %in% vars_in_data) {
     stop("There are no repeating instruments in this dataset.")
+  }
+
+  # Remove NAs from `redcap_repeat_instrument` (see issue #12)
+  if(any(is.na(records$redcap_repeat_instrument))) {
+    records$redcap_repeat_instrument <- ifelse(
+      is.na(records$redcap_repeat_instrument),
+      "",
+      as.character(records$redcap_repeat_instrument)
+    )
   }
 
   # Standardize variable names for metadata
