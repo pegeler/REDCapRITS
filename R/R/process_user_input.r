@@ -13,7 +13,7 @@ process_user_input.default <- function(x, ...) {
 }
 
 process_user_input.data.frame <- function(x, ...) {
-    x
+  x
 }
 
 process_user_input.character <- function(x, ...) {

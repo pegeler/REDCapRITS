@@ -87,11 +87,7 @@ REDCap_split <- function(records,
 
   # Process user input
   records  <- process_user_input(records)
-  metadata <- process_user_input(metadata)
-
-  # Remove "tbl_df" class from metadata, if present, due to difference in
-  # `[.tbl_df` behavior as compared to `[.data.frame` behavior (see issue #12)
-  if(inherits(metadata, "tbl_df")) class(metadata) <- "data.frame"
+  metadata <- as.data.frame(process_user_input(metadata)) # See issue #12
 
   # Get the variable names in the dataset
   vars_in_data <- names(records)
