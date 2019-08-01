@@ -1,4 +1,8 @@
-# REDCapRITS 0.2.0 (Release date: 2019-??-??)
+# REDCapRITS 0.2.1 (Release date: 2019-07-26)
+
+  * [bug] Can now accept `"tbl_df"` objects and `NA`s in the `redcap_repeat_instrument` field. (#12)
+
+# REDCapRITS 0.2.0 (Release date: 2019-07-08)
 
   * [feature] User can now separate each form into its own data.frame, regardless if it is a repeating instrument or not. (#10)
   * [bug] Handles auto-generated form timestamp fields.
