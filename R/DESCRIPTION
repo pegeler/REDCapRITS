@@ -1,6 +1,6 @@
 Package: REDCapRITS
 Title: REDCap Repeating Instrument Table Splitter
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = c("aut", "cre")),
     person("Spectrum Health, Grand Rapids, MI", role = "cph"))
@@ -14,7 +14,8 @@ Suggests:
     httr,
     jsonlite,
     testthat,
-    Hmisc
+    Hmisc,
+    readr
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
