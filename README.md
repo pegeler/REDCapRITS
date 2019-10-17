@@ -5,6 +5,24 @@ Paul W. Egeler, M.S., GStat
 Spectrum Health Office of Research Administration  
 13 July 2017
 
+## Table of Contents
+
+* [Table of Contents](#table-of-contents)
+* [Description](#description)
+    * [Illustration](#illustration)
+    * [Supported Platforms](#supported-platforms)
+        * [Coming Soon](#coming-soon)
+* [Instructions](#instructions)
+    * [R](#r)
+        * [Installation](#installation)
+        * [Usage](#usage)
+        * [Examples](#examples)
+    * [SAS](#sas)
+        * [Examples](#examples-1)
+* [Issues](#issues)
+* [About REDCap](#about-redcap)
+* [References](#references)
+
 ## Description
 
 So the new buzz in the REDCap world seems to be Repeating Instruments 
@@ -26,23 +44,6 @@ data munging or by writing a few custom parameters in a series of API calls (the
 but this is a lot of extra steps that can make reproducible research more difficult.
 
 REDCapRITS is a programmatic solution to handle the problem in both SAS and R.
-
-## Table of Contents
-
-* [Description](#description)
-    * [Illustration](#illustration)
-    * [Supported Platforms](#supported-platforms)
-        * [Coming Soon](#coming-soon)
-* [Instructions](#instructions)
-    * [R](#r)
-        * [Installation](#installation)
-        * [Usage](#usage)
-        * [Examples](#examples)
-    * [SAS](#sas)
-        * [Examples](#examples-1)
-* [Issues](#issues)
-* [About REDCap](#about-redcap)
-* [References](#references)
 
 ### Illustration
 
