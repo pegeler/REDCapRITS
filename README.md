@@ -27,6 +27,23 @@ but this is a lot of extra steps that can make reproducible research more diffic
 
 REDCapRITS is a programmatic solution to handle the problem in both SAS and R.
 
+## Table of Contents
+
+* [Description](#description)
+    * [Illustration](#illustration)
+    * [Supported Platforms](#supported-platforms)
+        * [Coming Soon](#coming-soon)
+* [Instructions](#instructions)
+    * [R](#r)
+        * [Installation](#installation)
+        * [Usage](#usage)
+        * [Examples](#examples)
+    * [SAS](#sas)
+        * [Examples](#examples-1)
+* [Issues](#issues)
+* [About REDCap](#about-redcap)
+* [References](#references)
+
 ### Illustration
 
 For example, consider this mocked-up data exported from a REDCap project with repeating instruments.
