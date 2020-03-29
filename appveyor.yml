@@ -24,6 +24,7 @@ cache:
 # Adapt as necessary starting from here
 
 environment:
+  R_VERSION: devel
   PKGTYPE: binary
 
 build_script:
