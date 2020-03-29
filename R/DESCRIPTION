@@ -1,6 +1,6 @@
 Package: REDCapRITS
 Title: REDCap Repeating Instrument Table Splitter
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(
     person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = c("aut", "cre")),
     person("Spectrum Health, Grand Rapids, MI", role = "cph"))
@@ -8,6 +8,13 @@ Copyright: Spectrum Health, Grand Rapids, MI
 Description: Split REDCap repeating instruments output into multiple tables. 
     This will take raw output from a REDCap export and split it into a base table
     and child tables for each repeating instrument. 
+    REDCap (Research Electronic Data Capture) is a secure, web-based software
+    platform designed to support data capture for research studies, providing
+    1) an intuitive interface for validated data capture; 2) audit trails for
+    tracking data manipulation and export procedures; 3) automated export
+    procedures for seamless data downloads to common statistical packages; and
+    4) procedures for data integration and interoperability with external sources
+    (<doi:10.1016/j.jbi.2008.08.010>; <doi:10.1016/j.jbi.2019.103208>).
 Depends: R (>= 3.4.0)
 Suggests: 
     RCurl, 
