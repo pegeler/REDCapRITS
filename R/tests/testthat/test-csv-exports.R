@@ -2,15 +2,13 @@ context("CSV Exports")
 
 # Set up the path and data -------------------------------------------------
 metadata <- read.csv(
-  get_data_location(
-    "ExampleProject_DataDictionary_2018-06-07.csv"
-  )
+  get_data_location("ExampleProject_DataDictionary_2018-06-07.csv"),
+  stringsAsFactors = TRUE
 )
 
 records <- read.csv(
-  get_data_location(
-    "ExampleProject_DATA_2018-06-07_1129.csv"
-  )
+  get_data_location("ExampleProject_DATA_2018-06-07_1129.csv"),
+  stringsAsFactors = TRUE
 )
 
 redcap_output_csv1 <- REDCap_split(records, metadata)
