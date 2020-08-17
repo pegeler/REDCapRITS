@@ -3,6 +3,8 @@ REDCap Repeating Instrument Table Splitter
 
 [![Travis-CI Build Status](https://travis-ci.org/SpectrumHealthResearch/REDCapRITS.svg?branch=master)](https://travis-ci.org/SpectrumHealthResearch/REDCapRITS)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/SpectrumHealthResearch/REDCapRITS?branch=master&svg=true)](https://ci.appveyor.com/project/pegeler/REDCapRITS)
+[![CRAN status](https://www.r-pkg.org/badges/version/REDCapRITS)](https://CRAN.R-project.org/package=REDCapRITS)
+[![Number of Downloads](https://cranlogs.r-pkg.org/badges/grand-total/REDCapRITS)](https://cran.r-project.org/package=REDCapRITS)
 
 Paul W. Egeler, M.S.  
 Spectrum Health Office of Research and Education
