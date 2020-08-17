@@ -25,11 +25,11 @@ Spectrum Health Office of Research and Education
 When you conceptualize the the ideal data model for a REDCap project which
 contains Repeating Instrument(s), you probably think of a multi-table model. You
 might expect that the non-repeating instruments may constitute one table that
-would be related to Repeating Instruments tables via a one-to-many relationship
-on a key. Unfortunately, that is not how the data is exported either via CSV or
-API call. In reality, the data is delivered as one table with all possible
-fields; this has the effect of nesting the output table in a way that is not
-useful in most statistical analysis software.
+would be related to Repeating Instruments tables via a one-to-many relationship.
+Unfortunately, that is not how the data is exported either via CSV or API call.
+In reality, the data is delivered as one table with all possible fields; this
+has the effect of nesting the output table in a way that is not useful in most
+statistical analysis software.
 
 The normalized data can be retrieved by downloading repeating instruments
 individually then doing a little data munging or by writing a few custom
@@ -154,8 +154,8 @@ install.packages("REDCapRITS")
 To install the development version, run the following code:
 
 ```r
-if (!require(remotes)) install.packages("remotes")
-devtools::install_github("SpectrumHealthResearch/REDCapRITS/R")
+if (!requireNamespace(remotes, quietly = TRUE)) install.packages("remotes")
+remotes::install_github("SpectrumHealthResearch/REDCapRITS/R")
 ```
 
 ### Usage
@@ -168,11 +168,11 @@ be accomplished by several methods:
     - Exporting the data from the web interface by selecting *CSV / Microsoft Excel (raw data)*.
     - Exporting the data from the web interface by selecting *R Statistical Software*.
       If you use this method, you may run the R script supplied by REDCap prior to splitting the data.
-	- **Do NOT** export from the web interface with the *CSV / Microsoft Excel (labels)* option.
-      This will not work with REDCapRITS.
+    - **Do NOT** export from the web interface with the *CSV / Microsoft Excel (labels)* option.
+      This will not work with `REDCapRITS`.
 1. Call the function, pointing it to your record dataset and metadata
-`data.frame`s or JSON character vectors. You may need to load the package via 
-`library()` or `require()`.
+`data.frame`s, `httr` responses, or JSON character vectors. You may need to load
+the package via `library()` or `require()`.
 
 ### Examples
 
