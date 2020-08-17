@@ -15,7 +15,7 @@
 #'   \code{forms = 'all'}.
 #' @param forms Indicate whether to create separate tables for repeating
 #'   instruments only or for all forms.
-#' @author Paul W. Egeler, M.S., GStat
+#' @author Paul W. Egeler, M.S.
 #' @examples
 #' \dontrun{
 #' # Using an API call -------------------------------------------------------
