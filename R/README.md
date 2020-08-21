@@ -79,9 +79,10 @@ instruments. The data contains information on a subset of cars in R's built-in
 
 You can see that the data from the non-repeating form (primary table) is
 interlaced with the data in the repeating form, creating a checkerboard pattern.
-In order to do analysis, the data must be _normalized_ and then the tables
-rejoined. Normalization would result in two tables: 1) a *primary* table and 2)
-a *sale* table. The normalized tables would look like this:
+In order to do analysis, the data must be
+[_normalized_](https://en.wikipedia.org/wiki/Database_normalization) and then
+the tables rejoined. Normalization would result in two tables: 1) a *primary*
+table and 2) a *sale* table. The normalized tables would look like this:
 
 **Primary table**
 
@@ -118,10 +119,10 @@ a *sale* table. The normalized tables would look like this:
 
 Suppose you would like to do some analysis such as sale price by make of car or
 find the most popular color for each model. To do so, you can
-[join](https://en.wikipedia.org/wiki/Join_%28SQL%29) the tables together. After
-inner joining the *primary* table to the *sale* table on `car_id` and selecting
-only the fields you are interested in, your resulting analytic dataset might
-look something like this:
+[_join_](https://en.wikipedia.org/wiki/Join_%28SQL%29) the tables together.
+After inner joining the *primary* table to the *sale* table on `car_id` and
+selecting only the fields you are interested in, your resulting analytic dataset
+might look something like this:
 
 | car_id|make     |model    |price    |color |customer |
 |------:|:--------|:--------|:--------|:-----|:--------|
