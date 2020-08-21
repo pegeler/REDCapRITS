@@ -38,9 +38,10 @@ A list of \code{"data.frame"}s. The number of tables will differ
   }
 }
 \description{
-This will take output from a REDCap export and split it into a base table
-and child tables for each repeating instrument. Metadata
-is used to determine which fields should be included in each resultant table.
+This will take output from a REDCap export and split it into multiple tables.
+The function returns a primary (parent) table as well as secondary (child)
+tables for each repeating instrument. Metadata is used to determine which
+fields should be included in each resultant table.
 }
 \examples{
 \dontrun{

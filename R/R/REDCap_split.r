@@ -1,8 +1,9 @@
 #' Split REDCap repeating instruments table into multiple tables
 #'
-#' This will take output from a REDCap export and split it into a base table
-#' and child tables for each repeating instrument. Metadata
-#' is used to determine which fields should be included in each resultant table.
+#' This will take output from a REDCap export and split it into multiple tables.
+#' The function returns a primary (parent) table as well as secondary (child)
+#' tables for each repeating instrument. Metadata is used to determine which
+#' fields should be included in each resultant table.
 #'
 #' @param records Exported project records. May be a \code{data.frame},
 #'   \code{response}, or \code{character} vector containing JSON from an API
