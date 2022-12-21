@@ -1,7 +1,7 @@
 # REDCapRITS
 REDCap Repeating Instrument Table Splitter
 
-Modified fork of SpectrumHealthResearch/REDCapRITS
+Modified fork of SpectrumHealthResearch/REDCapRITS. Thsi fork is purely minded on R usage.
 
 REDCap Repeating Instrument Table Splitter
 ===========================================
