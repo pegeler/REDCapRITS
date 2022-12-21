@@ -4,8 +4,12 @@
 \alias{REDCap_split}
 \title{Split REDCap repeating instruments table into multiple tables}
 \usage{
-REDCap_split(records, metadata, primary_table_name = "",
-  forms = c("repeating", "all"))
+REDCap_split(
+  records,
+  metadata,
+  primary_table_name = "",
+  forms = c("repeating", "all")
+)
 }
 \arguments{
 \item{records}{Exported project records. May be a \code{data.frame},
