@@ -17,7 +17,6 @@ process_user_input.data.frame <- function(x, ...) {
 }
 
 process_user_input.character <- function(x, ...) {
-
   if (!requireNamespace("jsonlite", quietly = TRUE)) {
     stop(
       "The package 'jsonlite' is needed to convert ",
@@ -35,7 +34,6 @@ process_user_input.character <- function(x, ...) {
 }
 
 process_user_input.response <- function(x, ...) {
-
   process_user_input(rawToChar(x$content))
 
 }

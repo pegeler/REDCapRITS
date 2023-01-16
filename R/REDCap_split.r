@@ -82,12 +82,11 @@
 REDCap_split <- function(records,
                          metadata,
                          primary_table_name = "",
-                         forms = c("repeating", "all")
-) {
-
+                         forms = c("repeating", "all")) {
   # Process user input
   records  <- process_user_input(records)
-  metadata <- as.data.frame(process_user_input(metadata)) # See issue #12
+  metadata <-
+    as.data.frame(process_user_input(metadata)) # See issue #12
 
   # Get the variable names in the dataset
   vars_in_data <- names(records)
@@ -96,12 +95,13 @@ REDCap_split <- function(records,
   forms <- match.arg(forms)
 
   # Check to see if there were any repeating instruments
-  if (forms == "repeating" && !"redcap_repeat_instrument" %in% vars_in_data) {
+  if (forms == "repeating" &&
+      !"redcap_repeat_instrument" %in% vars_in_data) {
     stop("There are no repeating instruments in this dataset.")
   }
 
   # Remove NAs from `redcap_repeat_instrument` (see issue #12)
-  if(any(is.na(records$redcap_repeat_instrument))) {
+  if (any(is.na(records$redcap_repeat_instrument))) {
     records$redcap_repeat_instrument <- ifelse(
       is.na(records$redcap_repeat_instrument),
       "",
@@ -113,7 +113,8 @@ REDCap_split <- function(records,
   names(metadata) <- metadata_names
 
   # Make sure that no metadata columns are factors
-  metadata <- rapply(metadata, as.character, classes = "factor", how = "replace")
+  metadata <-
+    rapply(metadata, as.character, classes = "factor", how = "replace")
 
   # Find the fields and associated form
   fields <- match_fields_to_form(metadata, vars_in_data)
@@ -131,22 +132,23 @@ REDCap_split <- function(records,
 
   if ("redcap_repeat_instrument" %in% vars_in_data) {
     # Variables to be at the beginning of each repeating instrument
-    repeat_instrument_fields <- grep(
-      "^redcap_repeat.*",
-      vars_in_data,
-      value = TRUE
-    )
+    repeat_instrument_fields <- grep("^redcap_repeat.*",
+                                     vars_in_data,
+                                     value = TRUE)
 
     # Identify the subtables in the data
     subtables <- unique(records$redcap_repeat_instrument)
     subtables <- subtables[subtables != ""]
 
     # Split the table based on instrument
-    out <- split.data.frame(records, records$redcap_repeat_instrument)
+    out <-
+      split.data.frame(records, records$redcap_repeat_instrument)
     primary_table_index <- which(names(out) == "")
 
     if (forms == "repeating" && primary_table_name %in% subtables) {
-      warning("The label given to the primary table is already used by a repeating instrument. The primary table label will be left blank.")
+      warning(
+        "The label given to the primary table is already used by a repeating instrument. The primary table label will be left blank."
+      )
       primary_table_name <- ""
     } else if (primary_table_name > "") {
       names(out)[[primary_table_index]] <- primary_table_name
@@ -154,26 +156,16 @@ REDCap_split <- function(records,
 
     # Delete the variables that are not relevant
     for (i in names(out)) {
-
       if (i == primary_table_name) {
-
-        out_fields <- which(
-          vars_in_data %in% c(
-            universal_fields,
-            fields[!fields[,2] %in% subtables, 1]
-          )
-        )
-        out[[primary_table_index]] <- out[[primary_table_index]][out_fields]
+        out_fields <- which(vars_in_data %in% c(universal_fields,
+                                                fields[!fields[, 2] %in% subtables, 1]))
+        out[[primary_table_index]] <-
+          out[[primary_table_index]][out_fields]
 
       } else {
-
-        out_fields <- which(
-          vars_in_data %in% c(
-            universal_fields,
-            repeat_instrument_fields,
-            fields[fields[,2] == i, 1]
-          )
-        )
+        out_fields <- which(vars_in_data %in% c(universal_fields,
+                                                repeat_instrument_fields,
+                                                fields[fields[, 2] == i, 1]))
         out[[i]] <- out[[i]][out_fields]
 
       }
@@ -181,20 +173,14 @@ REDCap_split <- function(records,
     }
 
     if (forms == "all") {
-
-      out <- c(
-        split_non_repeating_forms(
-          out[[primary_table_index]],
-          universal_fields,
-          fields[!fields[,2] %in% subtables,]
-        ),
-        out[-primary_table_index]
-      )
+      out <- c(split_non_repeating_forms(out[[primary_table_index]],
+                                         universal_fields,
+                                         fields[!fields[, 2] %in% subtables, ]),
+               out[-primary_table_index])
 
     }
 
   } else {
-
     out <- split_non_repeating_forms(records, universal_fields, fields)
 
   }

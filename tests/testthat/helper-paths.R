@@ -6,4 +6,5 @@
 #   )
 # }
 
-get_data_location <- function(x) file.path("data", x)
+get_data_location <- function(x)
+  file.path("data", x)

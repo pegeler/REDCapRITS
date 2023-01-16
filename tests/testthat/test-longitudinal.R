@@ -1,4 +1,4 @@
-context("Longitudinal data")
+## "Longitudinal data"
 
 test_that("CSV export matches reference", {
   file_paths <- sapply(
