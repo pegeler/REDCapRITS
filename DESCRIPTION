@@ -32,9 +32,11 @@ RoxygenNote: 7.2.3
 URL: https://github.com/agdamsbo/REDCapRITS
 BugReports: https://github.com/agdamsbo/REDCapRITS/issues
 Imports: 
-    REDCapR
+    REDCapR,
+    tidyr
 Collate: 
     'utils.r'
     'process_user_input.r'
     'REDCap_split.r'
     'read_redcap_tables.R'
+    'redcap_wider.R'

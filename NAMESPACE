@@ -2,5 +2,7 @@
 
 export(REDCap_split)
 export(read_redcap_tables)
+export(redcap_wider)
 importFrom(REDCapR,redcap_metadata_read)
 importFrom(REDCapR,redcap_read)
+importFrom(tidyr,pivot_wider)

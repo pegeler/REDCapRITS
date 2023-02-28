@@ -12,7 +12,7 @@
 #' @param raw_or_label raw or label tags
 #' @param generics vector of auto-generated generic variable names to
 #' ignore when discarding empty rows
-#' @param ... ekstra parameters for REDCapR::redcap_read_oneshot
+#' @param ... extra parameters for internal REDCapR::redcap_read
 #'
 #' @return list of instruments
 #' @importFrom REDCapR redcap_metadata_read redcap_read
@@ -39,7 +39,7 @@ read_redcap_tables <- function(uri,
   #
   # This does not handle repeated instruments!! This should be implemented.
 
-  d <- REDCapR::redcap_read_oneshot(
+  d <- REDCapR::redcap_read(
     redcap_uri = uri,
     token = token,
     fields = fields,
