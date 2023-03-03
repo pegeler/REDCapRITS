@@ -1,9 +1,9 @@
-# REDCapRITS
-REDCap Repeating Instrument Table Splitter
+# REDCapCAST
+REDCap Castellated data handling.
 
-Modified fork of SpectrumHealthResearch/REDCapRITS. Thsi fork is purely minded on R usage.
+Modified fork of SpectrumHealthResearch/REDCapRITS. This fork is purely minded on R usage and includes a few implementations of the main `REDCap_split`function.
 
-REDCap Repeating Instrument Table Splitter
+Fork of REDCapRITS: REDCap Repeating Instrument Table Splitter
 ===========================================
 
 Paul W. Egeler, M.S., GStat  
