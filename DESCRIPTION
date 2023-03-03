@@ -1,6 +1,6 @@
-Package: REDCapRITS
-Title: REDCap Repeating Instrument Table Splitter Fork
-Version: 0.2.3
+Package: REDCapCAST
+Title: REDCap Castellated data handling
+Version: 23.3.1
 Authors@R: c(
     person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = c("aut")),
      person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", role = c("cre", "ctb","cph"),
