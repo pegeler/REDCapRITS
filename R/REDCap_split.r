@@ -83,6 +83,7 @@ REDCap_split <- function(records,
                          metadata,
                          primary_table_name = "",
                          forms = c("repeating", "all")) {
+
   # Process user input
   records  <- process_user_input(records)
   metadata <-
@@ -110,7 +111,7 @@ REDCap_split <- function(records,
   }
 
   # Standardize variable names for metadata
-  names(metadata) <- metadata_names
+  # names(metadata) <- metadata_names
 
   # Make sure that no metadata columns are factors
   metadata <-
