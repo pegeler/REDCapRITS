@@ -1,3 +1,77 @@
+focused_metadata <- function(metadata, vars_in_data) {
+  # metadata <- m$data
+  # vars_in_data <- names(d$data)
+
+  fields <-
+    metadata[!metadata$field_type %in% c("descriptive", "checkbox") &
+               metadata$field_name %in% vars_in_data,
+             "field_name"]
+
+  # Process checkbox fields
+  if (any(metadata$field_type == "checkbox")) {
+
+    # Getting base field names from checkbox fields
+    vars_check <- gsub(pattern = "___(\\d+)",replacement = "", vars_in_data)
+
+    # Processing
+    checkbox_basenames <-
+      metadata[metadata$field_type == "checkbox" &
+                 metadata$field_name %in% vars_check,
+               "field_name"]
+
+    fields <- rbind(fields, checkbox_basenames)
+
+  }
+
+  # Process instrument status fields
+  form_names <- unique(metadata$form_name[metadata$field_name %in% fields$field_name])
+
+  form_complete_fields <- data.frame(
+    field_name = paste0(form_names, "_complete"),
+    stringsAsFactors = FALSE
+  )
+
+  fields <- rbind(fields, form_complete_fields)
+
+  # Process survey timestamps
+  timestamps <-
+    intersect(vars_in_data, paste0(form_names, "_timestamp"))
+  if (length(timestamps)) {
+    timestamp_fields <- data.frame(
+      field_name = timestamps,
+      stringsAsFactors = FALSE
+    )
+
+    fields <- rbind(fields, timestamp_fields)
+
+  }
+
+  # Process ".*\\.factor" fields supplied by REDCap's export data R script
+  if (any(grepl("\\.factor$", vars_in_data))) {
+    factor_fields <-
+      do.call("rbind",
+              apply(fields,
+                    1,
+                    function(x, y) {
+                      field_indices <- grepl(paste0("^", x[1], "\\.factor$"), y)
+                      if (any(field_indices))
+                        data.frame(
+                          field_name = y[field_indices],
+                          form_name = x[2],
+                          stringsAsFactors = FALSE,
+                          row.names = NULL
+                        )
+                    },
+                    y = vars_in_data))
+
+    fields <- rbind(fields, factor_fields)
+
+  }
+
+  metadata[metadata$field_name %in% fields$field_name,]
+
+}
+
 match_fields_to_form <- function(metadata, vars_in_data) {
   fields <- metadata[!metadata$field_type %in% c("descriptive", "checkbox"),
                      c("field_name", "form_name")]
