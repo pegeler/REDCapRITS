@@ -5,11 +5,12 @@ Authors@R: c(
     person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = c("aut")),
      person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", role = c("cre", "ctb","cph"),
            comment = c(ORCID = "0000-0002-7559-1154")))
-Description: This is a fork of REDCapRITS by Paul Egeler and Spectrum Health. See
-    [https://github.com/SpectrumHealthResearch/REDCapRITS](https://github.com/SpectrumHealthResearch/REDCapRITS).
-    Split REDCap repeating instruments output into multiple tables. 
-    This will take raw output from a REDCap export and split it into a base table
-    and child tables for each repeating instrument. 
+Description: This package is based on REDCapRITS by Paul Egeler and Spectrum Health. 
+    See [https://github.com/SpectrumHealthResearch/REDCapRITS](https://github.com/SpectrumHealthResearch/REDCapRITS).
+    Handle the castellated dataset from REDCap projects with repeating
+    instruments. Split data into multiple tables. This will take raw output from 
+    a REDCap export and split it into a base table and child tables for each 
+    repeated instrument. 
     REDCap (Research Electronic Data Capture) is a secure, web-based software
     platform designed to support data capture for research studies, providing
     1) an intuitive interface for validated data capture; 2) audit trails for

@@ -1,19 +1,15 @@
-# REDCapRITS 0.2.1 (Release date: 2019-07-26)
+# REDCapCAST 23.3.1
 
-  * [bug] Can now accept `"tbl_df"` objects and `NA`s in the `redcap_repeat_instrument` field. (#12)
+### New name: REDCapCAST
 
-# REDCapRITS 0.2.0 (Release date: 2019-07-08)
+To reflect new functions and the limitation to only working in R, I have changed the naming of the fork, while still, of course, maintaining the status as a fork.
 
-  * [feature] User can now separate each form into its own data.frame, regardless if it is a repeating instrument or not. (#10)
-  * [bug] Handles auto-generated form timestamp fields.
+The versioning has moved to a monthly naming convention.
 
-# REDCapRITS 0.1.0 (Release date: 2019-07-01)
+### Functions:
 
-  * [feature] User can now specify the name of the 'primary' table, which previously was left blank. (#9)
-  * [bug] Keeps REDCap-generated fields in non-repeating data.frame that are not present in metadata file. (#7)
-  * [enhancement] Unit tests created. (#6)
-  * [bug] Checkbox data now supported. (#1)
+* `read_redcap_tables()` **NEW**: this function is mainly an implementation of the combined use of `REDCapR::readcap_read()` and `REDCap_split()` to maintain the focused nature of `REDCapR::readcap_read()`, to only download the specified data. Also implements tests of valid form names and event names. The usual fall-back solution was to get all data.
 
-# REDCapRITS 0.0.0 (Release date: 2018-06-03)
+* `redcap_wider()` **NEW**: this function pivots the long data frames from `read_redcap_tables()` using `tidyr::pivot_wider()`.
 
-  * Initial Release
+* `focused_metadata()` **NEW**: a hidden helper function to enable a focused data acquisition approach to handle only a subset of metadata corresponding to the focused dataset.
