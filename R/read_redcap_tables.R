@@ -12,10 +12,10 @@
 #' @param raw_or_label raw or label tags
 #' @param generics vector of auto-generated generic variable names to
 #' ignore when discarding empty rows
-#' @param ... extra parameters for internal REDCapR::redcap_read
 #'
 #' @return list of instruments
-#' @importFrom REDCapR redcap_metadata_read redcap_read
+#' @importFrom REDCapR redcap_metadata_read redcap_read redcap_event_instruments
+#' @include utils.r
 #' @export
 #'
 #' @examples
@@ -32,12 +32,30 @@ read_redcap_tables <- function(uri,
                                  "redcap_event_name",
                                  "redcap_repeat_instrument",
                                  "redcap_repeat_instance"
-                               ),
-                               ...) {
-  # Notes to self: Based on the metadata, this functionality could be
-  # introduced without using the REDCapRITS package.. To be tried..
-  #
-  # This does not handle repeated instruments!! This should be implemented.
+                               )) {
+
+
+  if (!is.null(forms) | !is.null(events)){
+    arm_event_inst <- REDCapR::redcap_event_instruments(redcap_uri = uri,
+                                              token = token)
+
+    if (!is.null(forms)){
+
+    forms_test <- forms %in% unique(arm_event_inst$data$form)
+
+    if (any(!forms_test)){
+      stop("Not all supplied forms are valid")
+    }
+    }
+
+    if (!is.null(events)){
+    event_test <- events %in% unique(arm_event_inst$data$unique_event_name)
+
+    if (any(!forms_test)){
+      stop("Not all supplied event names are valid")
+    }
+    }
+  }
 
   d <- REDCapR::redcap_read(
     redcap_uri = uri,
@@ -46,15 +64,14 @@ read_redcap_tables <- function(uri,
     events = events,
     forms = forms,
     records = records,
-    raw_or_label = raw_or_label,
-    ...
+    raw_or_label = raw_or_label
   )
 
   m <-
     REDCapR::redcap_metadata_read (redcap_uri = uri, token = token)
 
   l <- REDCap_split(d$data,
-                    m$data[m$data$field_name %in% names(d$data), ],
+                    focused_metadata(m$data,names(d$data)),
                     forms = "all")
 
   lapply(l, function(i) {
