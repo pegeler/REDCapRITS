@@ -15,6 +15,22 @@ test_that("CSV export matches reference", {
   expect_known_hash(redcap_output_csv1, "f74558d1939c17d9ff0e08a19b956e26")
 })
 
+# Test that REDCap_split can handle a focused dataset
+
+records_red <- records[!records$redcap_repeat_instrument == "sale",
+                   !names(records) %in% metadata$field_name[metadata$form_name == "sale"] &
+                     !names(records) == "sale_complete"]
+records_red$redcap_repeat_instrument <- as.character(records_red$redcap_repeat_instrument)
+
+redcap_output_red <- REDCap_split(records_red, metadata)
+
+
+test_that("REDCap_split handles subset dataset",
+          {
+            testthat::expect_length(redcap_output_red,1)
+          })
+
+
 # Test that R code enhanced CSV export matches reference --------------------
 if (requireNamespace("Hmisc", quietly = TRUE)) {
   test_that("R code enhanced export matches reference", {
@@ -53,3 +69,5 @@ if (requireNamespace("readr", quietly = TRUE)) {
             })
 
 }
+
+

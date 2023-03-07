@@ -12,9 +12,9 @@ read_redcap_tables(
   events = NULL,
   forms = NULL,
   raw_or_label = "label",
+  split_forms = "all",
   generics = c("record_id", "redcap_event_name", "redcap_repeat_instrument",
-    "redcap_repeat_instance"),
-  ...
+    "redcap_repeat_instance")
 )
 }
 \arguments{
@@ -32,16 +32,18 @@ read_redcap_tables(
 
 \item{raw_or_label}{raw or label tags}
 
+\item{split_forms}{Whether to split "repeating" or "all" forms, default is all.}
+
 \item{generics}{vector of auto-generated generic variable names to
 ignore when discarding empty rows}
-
-\item{...}{ekstra parameters for REDCapR::redcap_read_oneshot}
 }
 \value{
 list of instruments
 }
 \description{
-Wrapper function for using REDCapR::redcap_read and REDCapRITS::REDCap_split
+Implementation of REDCap_split with a focused data acquisition approach using
+REDCapR::redcap_read nad only downloading specified fields, forms and/or events
+using the built-in focused_metadata
 including some clean-up. Works with longitudinal projects with repeating
 instruments.
 }

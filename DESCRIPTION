@@ -33,8 +33,10 @@ RoxygenNote: 7.2.3
 URL: https://github.com/agdamsbo/REDCapRITS
 BugReports: https://github.com/agdamsbo/REDCapRITS/issues
 Imports: 
+    dplyr,
     REDCapR,
-    tidyr
+    tidyr,
+    tidyselect
 Collate: 
     'utils.r'
     'process_user_input.r'

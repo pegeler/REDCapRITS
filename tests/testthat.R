@@ -1,4 +1,4 @@
 library(testthat)
-library(REDCapRITS)
+library(REDCapCAST)
 
-test_check("REDCapRITS")
+test_check("REDCapCAST")

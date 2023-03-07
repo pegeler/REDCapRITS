@@ -2,7 +2,7 @@
 #   system.file(
 #     "testdata",
 #     x,
-#     package = "REDCapRITS"
+#     package = "REDCapCAST"
 #   )
 # }
 

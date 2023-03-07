@@ -1,6 +1,8 @@
 #' Download REDCap data
 #'
-#' Wrapper function for using REDCapR::redcap_read and REDCapRITS::REDCap_split
+#' Implementation of REDCap_split with a focused data acquisition approach using
+#' REDCapR::redcap_read nad only downloading specified fields, forms and/or events
+#' using the built-in focused_metadata
 #' including some clean-up. Works with longitudinal projects with repeating
 #' instruments.
 #' @param uri REDCap database uri
@@ -10,6 +12,7 @@
 #' @param events events to download
 #' @param forms forms to download
 #' @param raw_or_label raw or label tags
+#' @param split_forms Whether to split "repeating" or "all" forms, default is all.
 #' @param generics vector of auto-generated generic variable names to
 #' ignore when discarding empty rows
 #'
@@ -27,6 +30,7 @@ read_redcap_tables <- function(uri,
                                events = NULL,
                                forms = NULL,
                                raw_or_label = "label",
+                               split_forms = "all",
                                generics = c(
                                  "record_id",
                                  "redcap_event_name",
@@ -57,6 +61,7 @@ read_redcap_tables <- function(uri,
     }
   }
 
+  # Getting dataset
   d <- REDCapR::redcap_read(
     redcap_uri = uri,
     token = token,
@@ -65,23 +70,33 @@ read_redcap_tables <- function(uri,
     forms = forms,
     records = records,
     raw_or_label = raw_or_label
-  )
+  )[["data"]]
 
+  # Process repeat instrument naming
+  # Removes any extra characters other than a-z, 0-9 and "_", to mimic raw instrument names.
+  if ("redcap_repeat_instrument" %in% names(d)) {
+    d$redcap_repeat_instrument <-
+    gsub("[^a-z0-9_]", "", gsub(" ", "_", tolower(d$redcap_repeat_instrument)))
+  }
+
+  # Getting metadata
   m <-
-    REDCapR::redcap_metadata_read (redcap_uri = uri, token = token)
+    REDCapR::redcap_metadata_read (redcap_uri = uri, token = token)[["data"]]
 
-  l <- REDCap_split(d$data,
-                    focused_metadata(m$data,names(d$data)),
-                    forms = "all")
+  # Processing metadata to reflect dataset
+  if (!is.null(c(fields,forms,events))){
+    m <- focused_metadata(m,names(d))
+  }
 
-  lapply(l, function(i) {
-    if (ncol(i) > 2) {
-      s <- data.frame(i[, !colnames(i) %in% generics])
-      i[!apply(is.na(s), MARGIN = 1, FUN = all), ]
-    } else {
-      i
-    }
-  })
+  # Splitting
+  l <- REDCap_split(d,
+                    m,
+                    forms = split_forms,
+                    primary_table_name = "nonrepeating")
+
+  # Sanitizing split list by removing completely empty rows apart from colnames
+  # in "generics"
+  sanitize_split(l,generics)
 
 }
 
