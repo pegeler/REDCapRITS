@@ -4,6 +4,8 @@
 
 * Page added. Vignettes to follow.
 
+* GithubActions tests added and code coverage assessed. Badge galore..
+
 # REDCapCAST 23.3.1
 
 ### New name: REDCapCAST
