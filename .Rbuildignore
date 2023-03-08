@@ -3,3 +3,7 @@
 ^data-raw$
 ^test-data$
 ^troubleshooting\.R$
+^setup\.R$
+^docs$
+^\.github$
+^codecov\.yml$

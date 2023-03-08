@@ -1,3 +1,9 @@
+# REDCapCAST 23.3.2
+
+### Documentation:
+
+* Page added. Vignettes to follow.
+
 # REDCapCAST 23.3.1
 
 ### New name: REDCapCAST

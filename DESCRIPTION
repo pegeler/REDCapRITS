@@ -1,6 +1,6 @@
 Package: REDCapCAST
 Title: REDCap Castellated data handling
-Version: 23.3.1
+Version: 23.3.2
 Authors@R: c(
     person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = c("aut")),
      person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", role = c("cre", "ctb","cph"),
@@ -19,13 +19,15 @@ Description: This package is based on REDCapRITS by Paul Egeler and Spectrum Hea
     4) procedures for data integration and interoperability with external sources
     (<doi:10.1016/j.jbi.2008.08.010>; <doi:10.1016/j.jbi.2019.103208>).
 Depends: R (>= 3.4.0)
-Suggests: 
-    RCurl, 
+Suggests:
+    spelling,
+    RCurl,
     httr,
     jsonlite,
     testthat,
     Hmisc,
-    readr
+    readr,
+    covr
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -43,3 +45,4 @@ Collate:
     'REDCap_split.r'
     'read_redcap_tables.R'
     'redcap_wider.R'
+Language: en-US

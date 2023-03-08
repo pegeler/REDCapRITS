@@ -6,7 +6,6 @@
 #' @param vars_in_data Vector of variable names in the dataset
 #' @return A dataframe containing metadata for the variables in the dataset
 #' @export
-#' @examples
 #'
 focused_metadata <- function(metadata, vars_in_data) {
 
@@ -99,7 +98,6 @@ focused_metadata <- function(metadata, vars_in_data) {
 #'
 #' @export
 #'
-#' @examples
 #'
 sanitize_split <- function(l,
                            generic.names = c(
@@ -127,8 +125,6 @@ sanitize_split <- function(l,
 #' @return A data frame containing field names and form names
 #'
 #' @export
-#'
-#' @examples
 #'
 #'
 match_fields_to_form <- function(metadata, vars_in_data) {
