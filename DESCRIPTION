@@ -1,10 +1,10 @@
 Package: REDCapCAST
 Title: REDCap Castellated data handling
-Version: 23.3.2
+Version: 23.4.1
 Authors@R: c(
-    person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = c("aut")),
-     person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", role = c("cre", "ctb","cph"),
-           comment = c(ORCID = "0000-0002-7559-1154")))
+    person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7559-1154")),
+           person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = "aut"))
 Description: This package is based on REDCapRITS by Paul Egeler and Spectrum Health. 
     See [https://github.com/SpectrumHealthResearch/REDCapRITS](https://github.com/SpectrumHealthResearch/REDCapRITS).
     Handle the castellated dataset from REDCap projects with repeating
@@ -27,7 +27,11 @@ Suggests:
     testthat,
     Hmisc,
     readr,
-    covr
+    covr,
+    knitr,
+    rmarkdown,
+    gt,
+    keyring
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -46,3 +50,4 @@ Collate:
     'read_redcap_tables.R'
     'redcap_wider.R'
 Language: en-US
+VignetteBuilder: knitr

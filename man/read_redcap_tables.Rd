@@ -32,7 +32,8 @@ read_redcap_tables(
 
 \item{raw_or_label}{raw or label tags}
 
-\item{split_forms}{Whether to split "repeating" or "all" forms, default is all.}
+\item{split_forms}{Whether to split "repeating" or "all" forms, default is
+all.}
 
 \item{generics}{vector of auto-generated generic variable names to
 ignore when discarding empty rows}
@@ -42,10 +43,9 @@ list of instruments
 }
 \description{
 Implementation of REDCap_split with a focused data acquisition approach using
-REDCapR::redcap_read nad only downloading specified fields, forms and/or events
-using the built-in focused_metadata
-including some clean-up. Works with longitudinal projects with repeating
-instruments.
+REDCapR::redcap_read nad only downloading specified fields, forms and/or
+events using the built-in focused_metadata including some clean-up.
+Works with longitudinal projects with repeating instruments.
 }
 \examples{
 # Examples will be provided later

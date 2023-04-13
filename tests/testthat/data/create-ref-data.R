@@ -37,11 +37,11 @@ REDCap_split(
 
 # Longitudinal data from @pbchase; Issue #7 -------------------------------
 
-file_paths <- sapply(
+file_paths <- vapply(
   c(
     records = "WARRIORtestForSoftwa_DATA_2018-06-21_1431.csv",
     metadata = "WARRIORtestForSoftwareUpgrades_DataDictionary_2018-06-21.csv"
-  ), ref_data_location
+  ), FUN.VALUE = "character", ref_data_location
 )
 
 redcap <- lapply(file_paths, read.csv, stringsAsFactors = FALSE)

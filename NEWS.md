@@ -1,3 +1,9 @@
+# REDCapCAST 23.4.1
+
+### Documentation:
+
+* Aiming for CRAN
+
 # REDCapCAST 23.3.2
 
 ### Documentation:

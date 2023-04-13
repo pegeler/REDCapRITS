@@ -2,16 +2,19 @@
 
 
 # Global  variables -------------------------------------------------------
-metadata <- jsonlite::fromJSON(get_data_location("ExampleProject_metadata.json"))
+metadata <-
+  jsonlite::fromJSON(get_data_location("ExampleProject_metadata.json"))
 
-records <- jsonlite::fromJSON(get_data_location("ExampleProject_records.json"))
+records <-
+  jsonlite::fromJSON(get_data_location("ExampleProject_records.json"))
 
 ref_hash <- "2c8b6531597182af1248f92124161e0c"
 
 # Tests -------------------------------------------------------------------
 test_that("Will not use a repeating instrument name for primary table", {
-  redcap_output_json1 <- expect_warning(REDCap_split(records, metadata, "sale"),
-                                        "primary table")
+  redcap_output_json1 <-
+    expect_warning(REDCap_split(records, metadata, "sale"),
+                   "primary table")
 
   expect_known_hash(redcap_output_json1, ref_hash)
 

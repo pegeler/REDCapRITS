@@ -48,15 +48,16 @@
 #' records <- read.csv("/path/to/data/ExampleProject_DATA_2018-06-03_1700.csv")
 #'
 #' # Get the metadata
-#' metadata <- read.csv("/path/to/data/ExampleProject_DataDictionary_2018-06-03.csv")
+#' metadata <- read.csv(
+#' "/path/to/data/ExampleProject_DataDictionary_2018-06-03.csv")
 #'
 #' # Split the tables
 #' REDCapRITS::REDCap_split(records, metadata)
 #'
 #' # In conjunction with the R export script ---------------------------------
 #'
-#' # You must set the working directory first since the REDCap data export script
-#' # contains relative file references.
+#' # You must set the working directory first since the REDCap data export
+#' # script contains relative file references.
 #' setwd("/path/to/data/")
 #'
 #' # Run the data export script supplied by REDCap.
@@ -148,7 +149,8 @@ REDCap_split <- function(records,
 
     if (forms == "repeating" && primary_table_name %in% subtables) {
       warning(
-        "The label given to the primary table is already used by a repeating instrument. The primary table label will be left blank."
+        "The label given to the primary table is already used by a repeating
+        instrument. The primary table label will be left blank."
       )
       primary_table_name <- ""
     } else if (primary_table_name > "") {
@@ -159,7 +161,8 @@ REDCap_split <- function(records,
     for (i in names(out)) {
       if (i == primary_table_name) {
         out_fields <- which(vars_in_data %in% c(universal_fields,
-                                                fields[!fields[, 2] %in% subtables, 1]))
+                                                fields[!fields[, 2] %in%
+                                                         subtables, 1]))
         out[[primary_table_index]] <-
           out[[primary_table_index]][out_fields]
 

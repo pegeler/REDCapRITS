@@ -9,7 +9,27 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 # REDCapCAST
 REDCap Castellated data handling when using repeated instruments.
 
-Modified fork of SpectrumHealthResearch/REDCapRITS. This fork is purely minded on R usage and includes a few implementations of the main `REDCap_split` function.
+This package is a fork of [SpectrumHealthResearch/REDCapRITS](https://github.com/SpectrumHealthResearch/REDCapRITS). The REDCapRITS represents great and extensive work to handle castellated REDCap data in different programming languages. This fork is purely minded on R usage and includes a few implementations of the main `REDCap_split` function.
 
-Fork of [REDCapRITS: REDCap Repeating Instrument Table Splitter](https://github.com/SpectrumHealthResearch/REDCapRITS)
+The main goal for this project was to allow for a "minimal data" approach by allowing to filter records, instruments and variables in the export to only download data needed. I think this approach is desireable for handling sensitive, clinical data. No similar functionality is available from similar tools (like `REDCapR` or `REDCapTidieR`). Please refer to [REDCap-Tools](https://redcap-tools.github.io/) for other great tools.
+
+## Use and immprovements
+
+This package is primarily relevant for working with longitudinal projects and/or projects using repeated instruments. Here is just a short descirption of the main functions:
+
+* `REDcap_split()`: Works largely as the original `REDCapRITS::REDCap_split()`. It takes a REDCap dataset and metadata (data dictionary) to split the data set into a list of dataframes of instruments.
+
+* `read_redcap_tables()`: wraps the use of [`REDCapR::redcap_read()`](https://github.com/OuhscBbmc/REDCapR) with `REDCap_split()` to ease the export of REDCap data.
+
+* `redcap_wider()`: pivots each data frame with repeated instruments to a wide format utilizing the [`tidyr::pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) from the [tidyverse](https://www.tidyverse.org/).
+
+Compared to the original `REDCapRITS`, all matching functions are improved to accept column naming of REDCap data from manual download or API export.
+
+## Installation
+
+Install the latest version directly from GitHub:
+
+```
+remotes::install_github("agdamsbo/REDCapCAST")
+```
 

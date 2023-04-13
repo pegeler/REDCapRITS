@@ -1,0 +1,76 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(REDCapCAST)
+```
+
+This vignette covers the included functions and basic functionality.
+
+## Splitting the dataset
+
+```{r eval=FALSE}
+keyring::key_set("handbook_api")
+keyring::key_set("cast_api")
+```
+
+```{r include=FALSE}
+uri <- keyring::key_get("DB_URI")
+```
+
+
+```{r}
+dataset <- REDCapR::redcap_read_oneshot(redcap_uri = uri,
+                                   token = keyring::key_get("cast_api"))$data
+
+dataset |> gt::gt()
+```
+
+```{r}
+metadata <- REDCapR::redcap_metadata_read(redcap_uri = uri,
+                                   token = keyring::key_get("cast_api"))$data
+metadata |> gt::gt()
+```
+```{r}
+list <-
+  REDCapCAST::REDCap_split(records = dataset,
+                           metadata = metadata,
+                           forms = "repeating")
+str(list)
+```
+
+```{r}
+list <-
+  REDCapCAST::REDCap_split(records = dataset,
+                           metadata = metadata,
+                           forms = "all")
+str(list)
+```
+
+## Reading data from REDCap
+
+```{r}
+ds <- read_redcap_tables(uri = uri, token = keyring::key_get("cast_api"))
+str(ds)
+```
+
+## Pivotting to wider format
+
+```{r}
+redcap_wider(ds) |> gt::gt()
+```
+
+

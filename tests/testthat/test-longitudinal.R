@@ -1,11 +1,11 @@
 ## "Longitudinal data"
 
 test_that("CSV export matches reference", {
-  file_paths <- sapply(
+  file_paths <- vapply(
     c(
       records = "WARRIORtestForSoftwa_DATA_2018-06-21_1431.csv",
       metadata = "WARRIORtestForSoftwareUpgrades_DataDictionary_2018-06-21.csv"
-    ), get_data_location
+    ), get_data_location, FUN.VALUE = "character"
   )
 
   redcap <- lapply(file_paths, read.csv, stringsAsFactors = FALSE)

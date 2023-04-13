@@ -138,7 +138,8 @@ match_fields_to_form <- function(metadata, vars_in_data) {
   names(fields) <- c("field_name", "form_name")
 
   # Process instrument status fields
-  form_names <- unique(metadata[,grepl(".*[Ff]orm[._][Nn]ame$",names(metadata))])
+  form_names <- unique(metadata[,grepl(".*[Ff]orm[._][Nn]ame$",
+                                       names(metadata))])
   form_complete_fields <- data.frame(
     field_name = paste0(form_names, "_complete"),
     form_name = form_names,

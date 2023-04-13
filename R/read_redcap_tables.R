@@ -1,10 +1,9 @@
 #' Download REDCap data
 #'
 #' Implementation of REDCap_split with a focused data acquisition approach using
-#' REDCapR::redcap_read nad only downloading specified fields, forms and/or events
-#' using the built-in focused_metadata
-#' including some clean-up. Works with longitudinal projects with repeating
-#' instruments.
+#' REDCapR::redcap_read nad only downloading specified fields, forms and/or
+#' events using the built-in focused_metadata including some clean-up.
+#' Works with longitudinal projects with repeating instruments.
 #' @param uri REDCap database uri
 #' @param token API token
 #' @param records records to download
@@ -12,7 +11,8 @@
 #' @param events events to download
 #' @param forms forms to download
 #' @param raw_or_label raw or label tags
-#' @param split_forms Whether to split "repeating" or "all" forms, default is all.
+#' @param split_forms Whether to split "repeating" or "all" forms, default is
+#' all.
 #' @param generics vector of auto-generated generic variable names to
 #' ignore when discarding empty rows
 #'
@@ -73,7 +73,8 @@ read_redcap_tables <- function(uri,
   )[["data"]]
 
   # Process repeat instrument naming
-  # Removes any extra characters other than a-z, 0-9 and "_", to mimic raw instrument names.
+  # Removes any extra characters other than a-z, 0-9 and "_", to mimic raw
+  # instrument names.
   if ("redcap_repeat_instrument" %in% names(d)) {
     d$redcap_repeat_instrument <-
     gsub("[^a-z0-9_]", "", gsub(" ", "_", tolower(d$redcap_repeat_instrument)))

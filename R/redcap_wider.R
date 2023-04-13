@@ -27,18 +27,14 @@ redcap_wider <-
            inst.glue = "{.value}_{redcap_repeat_instance}") {
     all_names <- unique(do.call(c, lapply(list, names)))
 
-    if (!any(c("redcap_event_name", "redcap_repeat_instrument") %in% all_names)) {
+    if (!any(c("redcap_event_name", "redcap_repeat_instrument") %in%
+             all_names)) {
       stop(
         "The dataset does not include a 'redcap_event_name' variable.
          redcap_wider only handles projects with repeating instruments or
          longitudinal projects"
       )
     }
-
-    # if (any(grepl("_timestamp",all_names))){
-    #   stop("The dataset includes a '_timestamp' variable, which is not supported
-    #        by this function yet. Sorry! Feel free to contribute :)")
-    # }
 
     id.name <- all_names[1]
 

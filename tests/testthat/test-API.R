@@ -1,9 +1,12 @@
 
+
 # Check the RCurl export ---------------------------------------------------
 test_that("JSON character vector from RCurl matches reference", {
-  metadata <- jsonlite::fromJSON(get_data_location("ExampleProject_metadata.json"))
+  metadata <-
+    jsonlite::fromJSON(get_data_location("ExampleProject_metadata.json"))
 
-  records <- jsonlite::fromJSON(get_data_location("ExampleProject_records.json"))
+  records <-
+    jsonlite::fromJSON(get_data_location("ExampleProject_records.json"))
 
   redcap_output_json1 <- REDCap_split(records, metadata)
 

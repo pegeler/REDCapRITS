@@ -74,15 +74,16 @@ REDCapRITS::REDCap_split(records, metadata)
 records <- read.csv("/path/to/data/ExampleProject_DATA_2018-06-03_1700.csv")
 
 # Get the metadata
-metadata <- read.csv("/path/to/data/ExampleProject_DataDictionary_2018-06-03.csv")
+metadata <- read.csv(
+"/path/to/data/ExampleProject_DataDictionary_2018-06-03.csv")
 
 # Split the tables
 REDCapRITS::REDCap_split(records, metadata)
 
 # In conjunction with the R export script ---------------------------------
 
-# You must set the working directory first since the REDCap data export script
-# contains relative file references.
+# You must set the working directory first since the REDCap data export
+# script contains relative file references.
 setwd("/path/to/data/")
 
 # Run the data export script supplied by REDCap.
