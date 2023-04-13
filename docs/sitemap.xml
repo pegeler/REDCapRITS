@@ -40,6 +40,12 @@
     <loc>/reference/redcap_wider.html</loc>
   </url>
   <url>
+    <loc>/reference/redcapcast_data.html</loc>
+  </url>
+  <url>
+    <loc>/reference/redcapcast_meta.html</loc>
+  </url>
+  <url>
     <loc>/reference/sanitize_split.html</loc>
   </url>
   <url>

@@ -20,57 +20,49 @@ library(REDCapCAST)
 
 This vignette covers the included functions and basic functionality.
 
+A dataset and a meta data file are provided with the package for demonstration of the functions.
+
 ## Splitting the dataset
 
-```{r eval=FALSE}
-keyring::key_set("handbook_api")
-keyring::key_set("cast_api")
-```
-
-```{r include=FALSE}
-uri <- keyring::key_get("DB_URI")
-```
-
-
 ```{r}
-dataset <- REDCapR::redcap_read_oneshot(redcap_uri = uri,
-                                   token = keyring::key_get("cast_api"))$data
-
-dataset |> gt::gt()
+redcapcast_data |> gt::gt()
 ```
 
 ```{r}
-metadata <- REDCapR::redcap_metadata_read(redcap_uri = uri,
-                                   token = keyring::key_get("cast_api"))$data
-metadata |> gt::gt()
+redcapcast_meta |> gt::gt()
 ```
 ```{r}
 list <-
-  REDCapCAST::REDCap_split(records = dataset,
-                           metadata = metadata,
+  REDCapCAST::REDCap_split(records = redcapcast_data,
+                           metadata = redcapcast_meta,
                            forms = "repeating")
 str(list)
 ```
 
 ```{r}
 list <-
-  REDCapCAST::REDCap_split(records = dataset,
-                           metadata = metadata,
+  REDCapCAST::REDCap_split(records = redcapcast_data,
+                           metadata = redcapcast_meta,
                            forms = "all")
 str(list)
 ```
 
 ## Reading data from REDCap
 
-```{r}
-ds <- read_redcap_tables(uri = uri, token = keyring::key_get("cast_api"))
-str(ds)
+This function wraps all the above demonstrated function to get the dataset, the metadata, apply the `REDCap_split`function and then a bit of cleaning.
+
+The function works verysimilarly as the `REDCapR::redcap_read()`.
+
+```{r eval=FALSE}
+# read_redcap_tables(uri = "YOUR URI", token = "YOUR TOKEN")
+
+# ds <- read_redcap_tables(uri = key_get("DB_URI"), token = key_get("cast_api"))
 ```
 
 ## Pivotting to wider format
 
 ```{r}
-redcap_wider(ds) |> gt::gt()
+# redcap_wider(ds)
 ```
 
 

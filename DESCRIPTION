@@ -49,5 +49,7 @@ Collate:
     'REDCap_split.r'
     'read_redcap_tables.R'
     'redcap_wider.R'
+    'redcapcast_data.R'
+    'redcapcast_meta.R'
 Language: en-US
 VignetteBuilder: knitr
