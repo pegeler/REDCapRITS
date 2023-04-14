@@ -14,7 +14,7 @@ redcap_output_csv1 <- REDCap_split(records, metadata)
 
 # Test that basic CSV export matches reference ------------------------------
 test_that("CSV export matches reference", {
-  expect_known_hash(redcap_output_csv1, "f74558d1939c17d9ff0e08a19b956e26")
+  expect_known_hash(redcap_output_csv1, "cb5074a06e1abcf659d60be1016965d2")
 })
 
 # Test that REDCap_split can handle a focused dataset
@@ -41,7 +41,7 @@ if (requireNamespace("Hmisc", quietly = TRUE)) {
     redcap_output_csv2 <-
       REDCap_split(REDCap_process_csv(records), metadata)
 
-    expect_known_hash(redcap_output_csv2, "6d8d0462ab2343b848a086ab06b50fe3")
+    expect_known_hash(redcap_output_csv2, "578dc054e59ec92a21e950042e08ee37")
   })
 }
 

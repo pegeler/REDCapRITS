@@ -33,7 +33,7 @@ redcapcast_meta |> gt::gt()
 ```
 ```{r}
 list <-
-  REDCapCAST::REDCap_split(records = redcapcast_data,
+  REDCap_split(records = redcapcast_data,
                            metadata = redcapcast_meta,
                            forms = "repeating")
 str(list)
@@ -41,7 +41,7 @@ str(list)
 
 ```{r}
 list <-
-  REDCapCAST::REDCap_split(records = redcapcast_data,
+  REDCap_split(records = redcapcast_data,
                            metadata = redcapcast_meta,
                            forms = "all")
 str(list)
@@ -49,14 +49,12 @@ str(list)
 
 ## Reading data from REDCap
 
-This function wraps all the above demonstrated function to get the dataset, the metadata, apply the `REDCap_split`function and then a bit of cleaning.
+This function wraps all the above demonstrated function to get the dataset, the metadata, apply the `REDCap_split`function and then a bit of cleaning. It just cuts outs all the steps for an easier approach.
 
-The function works very similar to the `REDCapR::redcap_read()`.
+The function works very similar to the `REDCapR::redcap_read()` in allowing to specify fields, events and forms for export instead of exporting the whole database and filtering afterwards. I believe this is a better and safer, focused approach. 
 
 ```{r eval=FALSE}
 # read_redcap_tables(uri = "YOUR URI", token = "YOUR TOKEN")
-
-# ds <- read_redcap_tables(uri = key_get("DB_URI"), token = key_get("cast_api"))
 ```
 
 ## Pivotting to wider format

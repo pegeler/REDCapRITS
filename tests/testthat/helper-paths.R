@@ -6,5 +6,7 @@
 #   )
 # }
 
+# setwd("tests/testthat")
+
 get_data_location <- function(x)
   file.path("data", x)
