@@ -76,8 +76,7 @@ read_redcap_tables <- function(uri,
   # Removes any extra characters other than a-z, 0-9 and "_", to mimic raw
   # instrument names.
   if ("redcap_repeat_instrument" %in% names(d)) {
-    d$redcap_repeat_instrument <-
-    gsub("[^a-z0-9_]", "", gsub(" ", "_", tolower(d$redcap_repeat_instrument)))
+    d$redcap_repeat_instrument <- clean_redcap_name(d$redcap_repeat_instrument)
   }
 
   # Getting metadata
@@ -93,7 +92,7 @@ read_redcap_tables <- function(uri,
   l <- REDCap_split(d,
                     m,
                     forms = split_forms,
-                    primary_table_name = "nonrepeating")
+                    primary_table_name = "")
 
   # Sanitizing split list by removing completely empty rows apart from colnames
   # in "generics"

@@ -83,9 +83,24 @@ focused_metadata <- function(metadata, vars_in_data) {
 
 }
 
+#' clean_redcap_name
+#' @description
+#' Stepwise removal on non-alphanumeric characters, trailing white space,
+#' substitutes spaces for underscores and converts to lower case.
+#' Trying to make up for different naming conventions.
+#'
+#' @param x vector or data frame for cleaning
+#'
+#' @return vector or data frame, same format as input
+#' @export
+#'
+clean_redcap_name <- function(x){
 
-
-# function to convert the list of dataframes
+  gsub(" ", "_",
+       gsub("[' ']$","",
+           gsub("[^a-z0-9' '_]", "",
+                tolower(x)
+       )))}
 
 
 #' Sanitize list of data frames
