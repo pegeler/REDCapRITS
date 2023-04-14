@@ -19,14 +19,14 @@
 #'   \item{hypertension}{Hypertension, character}
 #'   \item{diabetes}{diabetes, character}
 #'   \item{region}{region, character}
-#'   \item{base_complete}{Completed, character}
+#'   \item{baseline_data_start_complete}{Completed, character}
 #'   \item{mrs_assessed}{mRS Assessed, character}
 #'   \item{mrs_date}{Assesment date, date}
 #'   \item{mrs_score}{Score, numeric}
 #'   \item{mrs_complete}{Complete, numeric}
 #'   \item{event_date}{Event date, date}
 #'   \item{event_type}{Event type, character}
-#'   \item{event_complete}{Completed, character}
+#'   \item{new_event_complete}{Completed, character}
 #'
 #' }
 #' @usage data(redcapcast_data)
