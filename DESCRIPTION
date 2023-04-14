@@ -1,13 +1,13 @@
 Package: REDCapCAST
-Title: REDCap Castellated data handling
+Title: REDCap Castellated Data Handling
 Version: 23.4.1
 Authors@R: c(
     person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7559-1154")),
            person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = "aut"))
-Description: This package is based on REDCapRITS by Paul Egeler and Spectrum Health. 
-    See [https://github.com/SpectrumHealthResearch/REDCapRITS](https://github.com/SpectrumHealthResearch/REDCapRITS).
-    Handle the castellated dataset from REDCap projects with repeating
+Description: Based on REDCapRITS by Paul Egeler and Spectrum Health. 
+    See <https://github.com/SpectrumHealthResearch/REDCapRITS>.
+    Handles the castellated dataset from REDCap projects with repeating
     instruments. Split data into multiple tables. This will take raw output from 
     a REDCap export and split it into a base table and child tables for each 
     repeated instrument. 
@@ -36,8 +36,8 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
-URL: https://github.com/agdamsbo/REDCapRITS
-BugReports: https://github.com/agdamsbo/REDCapRITS/issues
+URL: https://github.com/agdamsbo/REDCapCAST
+BugReports: https://github.com/agdamsbo/REDCapCAST/issues
 Imports: 
     dplyr,
     REDCapR,

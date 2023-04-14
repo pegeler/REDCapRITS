@@ -3,7 +3,7 @@
 \docType{data}
 \name{redcapcast_meta}
 \alias{redcapcast_meta}
-\title{REDCap matedata from data base}
+\title{REDCap metadata from data base}
 \format{
 A data frame with 22 variables:
 \describe{

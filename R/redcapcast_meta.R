@@ -1,4 +1,4 @@
-#' REDCap matedata from data base
+#' REDCap metadata from data base
 #'
 #' This metadata dataset from a REDCap database is for demonstrational purposes.
 #'

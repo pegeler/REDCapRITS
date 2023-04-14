@@ -51,7 +51,7 @@ str(list)
 
 This function wraps all the above demonstrated function to get the dataset, the metadata, apply the `REDCap_split`function and then a bit of cleaning.
 
-The function works verysimilarly as the `REDCapR::redcap_read()`.
+The function works very similar to the `REDCapR::redcap_read()`.
 
 ```{r eval=FALSE}
 # read_redcap_tables(uri = "YOUR URI", token = "YOUR TOKEN")
