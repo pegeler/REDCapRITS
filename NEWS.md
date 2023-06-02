@@ -3,7 +3,7 @@
 ### Documentation:
 
 * Updated description.
-* Look! A hexicon!
+* Look! A hex icon!
 * Heading for CRAN.
 
 # REDCapCAST 23.4.1
