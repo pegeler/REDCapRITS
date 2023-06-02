@@ -6,7 +6,8 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
 
-# REDCapCAST
+# REDCapCAST package <img src="man/figures/logo.png" align="right" />
+
 REDCap Castellated data handling when using repeated instruments.
 
 This package is a fork of [SpectrumHealthResearch/REDCapRITS](https://github.com/SpectrumHealthResearch/REDCapRITS). The REDCapRITS represents great and extensive work to handle castellated REDCap data in different programming languages. This fork is purely minded on R usage and includes a few implementations of the main `REDCap_split` function.
@@ -24,6 +25,10 @@ This package is primarily relevant for working with longitudinal projects and/or
 * `redcap_wider()`: pivots each data frame with repeated instruments to a wide format utilizing the [`tidyr::pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) from the [tidyverse](https://www.tidyverse.org/).
 
 Compared to the original `REDCapRITS`, all matching functions are improved to accept column naming of REDCap data from manual download or API export.
+
+## Future
+
+The plan with this package is to be bundled with a Handbook on working with REDCap from R. I plan to also include functionality to assist in casting (yes, pun intended) the initial REDCap database.
 
 ## Installation
 

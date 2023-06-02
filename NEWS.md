@@ -1,3 +1,11 @@
+# REDCapCAST 23.6.1
+
+### Documentation:
+
+* Updated description.
+* Look! A hexicon!
+* Heading for CRAN.
+
 # REDCapCAST 23.4.1
 
 ### Documentation:

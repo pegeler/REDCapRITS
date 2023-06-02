@@ -1,16 +1,16 @@
 Package: REDCapCAST
 Title: REDCap Castellated Data Handling
-Version: 23.4.1
+Version: 23.6.1
 Authors@R: c(
     person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7559-1154")),
            person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = "aut"))
-Description: Based on REDCapRITS by Paul Egeler and Spectrum Health. 
+Description: Forked from REDCapRITS by Paul Egeler and Spectrum Health. 
     See <https://github.com/SpectrumHealthResearch/REDCapRITS>.
-    Handles the castellated dataset from REDCap projects with repeating
-    instruments. Split data into multiple tables. This will take raw output from 
-    a REDCap export and split it into a base table and child tables for each 
-    repeated instrument. 
+    Handles castellated datasets from REDCap projects with repeating instruments. 
+    Assists in splitting raw REDCap data exports to base table and child tables 
+    for each repeated instrument. Keeps a focused data export approach, by
+    allowing to only export required data from the database.
     REDCap (Research Electronic Data Capture) is a secure, web-based software
     platform designed to support data capture for research studies, providing
     1) an intuitive interface for validated data capture; 2) audit trails for
