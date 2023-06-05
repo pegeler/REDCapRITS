@@ -156,17 +156,19 @@ instruments only or for all forms.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># You must set the working directory first since the REDCap data export</span></span></span>
 <span class="r-in"><span><span class="co"># script contains relative file references.</span></span></span>
+<span class="r-in"><span><span class="va">old</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="st">"/path/to/data/"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run the data export script supplied by REDCap.</span></span></span>
 <span class="r-in"><span><span class="co"># This will create a data.frame of your records called 'data'</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"ExampleProject_R_2018-06-03_1700.r"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Get the metadata</span></span></span>
+<span class="r-in"><span><span class="co"># Get the metadatan</span></span></span>
 <span class="r-in"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"ExampleProject_DataDictionary_2018-06-03.csv"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Split the tables</span></span></span>
 <span class="r-in"><span><span class="fu">REDCapRITS</span><span class="fu">::</span><span class="fu">REDCap_split</span><span class="op">(</span><span class="va">data</span>, <span class="va">metadata</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="va">old</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>

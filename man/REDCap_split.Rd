@@ -84,17 +84,19 @@ REDCapRITS::REDCap_split(records, metadata)
 
 # You must set the working directory first since the REDCap data export
 # script contains relative file references.
+old <- getwd()
 setwd("/path/to/data/")
 
 # Run the data export script supplied by REDCap.
 # This will create a data.frame of your records called 'data'
 source("ExampleProject_R_2018-06-03_1700.r")
 
-# Get the metadata
+# Get the metadatan
 metadata <- read.csv("ExampleProject_DataDictionary_2018-06-03.csv")
 
 # Split the tables
 REDCapRITS::REDCap_split(data, metadata)
+setwd(old)
 }
 }
 \author{
