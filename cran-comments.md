@@ -1,54 +1,41 @@
-## Test environments
-- R-hub windows-x86_64-devel (r-devel)
-- R-hub ubuntu-gcc-release (r-release)
-- R-hub fedora-clang-devel (r-devel)
+## rhub::check_for_cran() results
 
-## R CMD check results
-❯ On windows-x86_64-devel (r-devel)
-  checking CRAN incoming feasibility ... [17s] NOTE
-  Maintainer: 'Andreas Gammelgaard Damsbo <agdamsbo@clin.au.dk>'
-  
-  New submission
-  
-  Possibly misspelled words in DESCRIPTION:
-    Egeler (8:45)
-    REDCap (2:8, 10:39, 11:30, 14:5)
-    REDCapRITS (8:26)
-    interoperability (19:44)
+── REDCapCAST 23.6.2: NOTE
 
-❯ On windows-x86_64-devel (r-devel)
-  checking for non-standard things in the check directory ... NOTE
-  Found the following files/directories:
+  Build ID:   REDCapCAST_23.6.2.tar.gz-a738190c0d8a4e76b9212e4915625f96
+  Platform:   Windows Server 2022, R-devel, 64 bit
+  Submitted:  56m 54.3s ago
+  Build time: 4m 25.1s
 
-❯ On windows-x86_64-devel (r-devel)
-  checking for detritus in the temp directory ... NOTE
+❯ checking for non-standard things in the check directory ... NOTE
+    ''NULL''
+
+❯ checking for detritus in the temp directory ... NOTE
   Found the following files/directories:
     'lastMiKTeXException'
 
-❯ On ubuntu-gcc-release (r-release)
-  checking CRAN incoming feasibility ... [6s/24s] NOTE
-  Maintainer: ‘Andreas Gammelgaard Damsbo <agdamsbo@clin.au.dk>’
-  
-  New submission
-  
-  Possibly misspelled words in DESCRIPTION:
-    Egeler (8:45)
-    REDCap (2:8, 10:39, 11:30, 14:5)
-    REDCapRITS (8:26)
+0 errors ✔ | 0 warnings ✔ | 2 notes ✖
 
-❯ On ubuntu-gcc-release (r-release), fedora-clang-devel (r-devel)
-  checking HTML version of manual ... NOTE
+── REDCapCAST 23.6.2: NOTE
+
+  Build ID:   REDCapCAST_23.6.2.tar.gz-a9243a74abae4f04b2a0e29a2751c420
+  Platform:   Ubuntu Linux 20.04.1 LTS, R-release, GCC
+  Submitted:  56m 54.4s ago
+  Build time: 32m 6.5s
+
+❯ checking HTML version of manual ... NOTE
   Skipping checking HTML validation: no command 'tidy' found
 
-❯ On fedora-clang-devel (r-devel)
-  checking CRAN incoming feasibility ... [7s/21s] NOTE
-  Maintainer: ‘Andreas Gammelgaard Damsbo <agdamsbo@clin.au.dk>’
-  
-  New submission
-  
-  Possibly misspelled words in DESCRIPTION:
-    Egeler (8:45)
-    REDCap (2:8, 10:39, 11:30, 14:5)
-    REDCapRITS (8:26)
+0 errors ✔ | 0 warnings ✔ | 1 note ✖
 
-0 errors ✔ | 0 warnings ✔ | 6 notes ✖
+── REDCapCAST 23.6.2: NOTE
+
+  Build ID:   REDCapCAST_23.6.2.tar.gz-ba8ade3478c6494b8a8daee08a502f2b
+  Platform:   Fedora Linux, R-devel, clang, gfortran
+  Submitted:  56m 54.4s ago
+  Build time: 29m 25.6s
+
+❯ checking HTML version of manual ... NOTE
+  Skipping checking HTML validation: no command 'tidy' found
+
+0 errors ✔ | 0 warnings ✔ | 1 note ✖

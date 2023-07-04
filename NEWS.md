@@ -1,3 +1,16 @@
+# REDCapCAST 23.6.2
+
+This version marks the introduction of a few helper functions to handle database creation.
+
+### Functions
+
+* New: `ds2dd()` function migrating from the `stRoke`-package. Assists in building a data dictionary for REDCap from a dataset.
+
+* New: `strsplitx()` function to ease the string splitting as an extension of `base::strsplit()`. Inspiration from https://stackoverflow.com/a/11014253/21019325 and https://www.r-bloggers.com/2018/04/strsplit-but-keeping-the-delimiter/. 
+
+* New: `d2n()` function converts single digits to written numbers. Used to sanitize variable and form names in REDCap database creation. For more universal number to word I would suggest `english::word()` or `xfun::numbers_to_words()`, though I have not been testing these.
+
+
 # REDCapCAST 23.6.1
 
 ### Documentation:

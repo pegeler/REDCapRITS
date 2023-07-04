@@ -276,3 +276,141 @@ split_non_repeating_forms <-
     structure(x, names = forms)
 
   }
+
+
+#' Extended string splitting
+#'
+#' Can be used as a substitute of the base function. Main claim to fame is
+#' easing the split around the defined delimiter, see example.
+#' @param x data
+#' @param split delimiter
+#' @param type Split type. Can be c("classic", "before", "after", "around")
+#' @param perl perl param from strsplit()
+#' @param ... additional parameters are passed to base strsplit handling splits
+#'
+#' @return list
+#' @export
+#'
+#' @examples
+#' test <- c("12 months follow-up", "3 steps", "mRS 6 weeks", "Counting to 231 now")
+#' strsplitx(test,"[0-9]",type="around")
+strsplitx <- function(x,
+                      split,
+                      type = "classic",
+                      perl = FALSE,
+                      ...) {
+  if (type == "classic") {
+    # use base::strsplit
+    out <- base::strsplit(x = x, split = split, perl = perl, ...)
+  } else if (type == "before") {
+    # split before the delimiter and keep it
+    out <- base::strsplit(x = x,
+                          split = paste0("(?<=.)(?=", split, ")"),
+                          perl = TRUE,
+                          ...)
+  } else if (type == "after") {
+    # split after the delimiter and keep it
+    out <- base::strsplit(x = x,
+                          split = paste0("(?<=", split, ")"),
+                          perl = TRUE,
+                          ...)
+  } else if (type == "around") {
+    # split around the defined delimiter
+
+    out <- base::strsplit(gsub("~~", "~", # Removes double ~
+                               gsub("^~", "", # Removes leading ~
+                                    gsub(
+                                      # Splits and inserts ~ at all delimiters
+                                      paste0("(", split, ")"), "~\\1~", x
+                                    ))), "~")
+
+  } else {
+    # wrong type input
+    stop("type must be 'classic', 'after', 'before' or 'around'!")
+  }
+
+  out
+}
+
+#' Convert single digits to words
+#'
+#' @param x data. Handle vectors, data.frames and lists
+#' @param lang language. Danish (da) and English (en), Default is "en"
+#' @param neutrum for numbers depending on counted word
+#' @param everything flag to also split numbers >9 to single digits
+#'
+#' @return returns characters in same format as input
+#' @export
+#'
+#' @examples
+#' d2w(c(2:8,21))
+#' d2w(data.frame(2:7,3:8,1),lang="da",neutrum=TRUE)
+#'
+#' ## If everything=T, also larger numbers are reduced.
+#' ## Elements in the list are same length as input
+#' d2w(list(2:8,c(2,6,4,23),2), everything=TRUE)
+#'
+d2w <- function(x, lang = "en", neutrum=FALSE, everything=FALSE) {
+
+  # In Danish the written 1 depends on the counted word
+  if (neutrum) nt <- "t" else nt <- "n"
+
+  # A sapply() call with nested lapply() to handle vectors, data.frames and lists
+  convert <- function(x, lang, neutrum) {
+    zero_nine = data.frame(
+      num = 0:9,
+      en = c(
+        'zero',
+        'one',
+        'two',
+        'three',
+        'four',
+        'five',
+        'six',
+        'seven',
+        'eight',
+        'nine'
+      ),
+      da = c(
+        "nul",
+        paste0("e",nt),
+        "to",
+        "tre",
+        "fire",
+        "fem",
+        "seks",
+        "syv",
+        "otte",
+        "ni"
+      )
+    )
+
+    wrd <- lapply(x, function(i) {
+      zero_nine[, tolower(lang)][zero_nine[, 1] == i]
+    })
+
+    sub <- lengths(wrd) == 1
+
+    x[sub] <- wrd[sub]
+
+    unlist(x)
+  }
+
+  # Also converts numbers >9 to single digits and writes out
+  # Uses strsplitx()
+  if (everything) {
+    out <- sapply(x,function(y){
+      do.call(c,lapply(y,function(z){
+        v <- strsplitx(z,"[0-9]",type="around")
+        Reduce(paste,sapply(v,convert,lang = lang, neutrum = neutrum))
+      }))
+
+    })
+  } else {
+  out <- sapply(x,convert,lang = lang, neutrum = neutrum)
+  }
+
+  if (is.data.frame(x)) out <- data.frame(out)
+
+  out
+}
