@@ -1,6 +1,8 @@
 REDCap Repeating Instrument Table Splitter
 ===========================================
 
+**Normalize REDCap Repeating Instruments**
+
 [![Travis-CI Build Status](https://travis-ci.org/SpectrumHealthResearch/REDCapRITS.svg?branch=master)](https://travis-ci.org/SpectrumHealthResearch/REDCapRITS)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/SpectrumHealthResearch/REDCapRITS?branch=master&svg=true)](https://ci.appveyor.com/project/pegeler/REDCapRITS)
 <!-- [![CRAN status](https://www.r-pkg.org/badges/version/REDCapRITS)](https://CRAN.R-project.org/package=REDCapRITS) -->
@@ -25,13 +27,13 @@ Spectrum Health Office of Research and Education
 ## Description
 
 When you conceptualize the the ideal data model for a REDCap project which
-contains Repeating Instrument(s), you probably think of a multi-table model. You
-might expect that the non-repeating instruments may constitute one table that
-would be related to Repeating Instruments tables via a one-to-many relationship.
-Unfortunately, that is not how the data is exported either via CSV or API call.
-In reality, the data is delivered as one table with all possible fields; this
-has the effect of nesting the output table in a way that is not useful in most
-statistical analysis software.
+contains Repeating Instrument(s), you probably think of a multi-table model
+(_aka_, a relational model). You might expect that the non-repeating instruments
+may constitute one table that would be related to Repeating Instruments tables
+via a one-to-many relationship. Unfortunately, that is not how the data is
+exported either via CSV or API call. In reality, the data is delivered as one
+table with all possible fields; this has the effect of nesting the output table
+in a way that is not useful in most statistical analysis software.
 
 The normalized data can be retrieved by downloading repeating instruments
 individually then doing a little data munging or by writing a few custom
@@ -77,10 +79,10 @@ instruments. The data contains information on a subset of cars in R's built-in
 
 You can see that the data from the non-repeating form (primary table) is
 interlaced with the data in the repeating form, creating a checkerboard pattern.
-In order to do analysis, the data must be "normalized" (for lack of a better
-term) and then the tables rejoined. Normalization would result in two tables: 1)
-a *primary* table and 2) a *sale* table. The normalized tables would look like
-this:
+In order to do analysis, the data must be
+[_normalized_](https://en.wikipedia.org/wiki/Database_normalization) and then
+the tables rejoined. Normalization would result in two tables: 1) a *primary*
+table and 2) a *sale* table. The normalized tables would look like this:
 
 **Primary table**
 
@@ -116,10 +118,11 @@ this:
 |10     |sale                     |3                      |6800.55  |3     |Sharon   |2             |
 
 Suppose you would like to do some analysis such as sale price by make of car or
-find the most popular color for each model. To do so, you can join the tables
-together with relational algebra. After inner joining the *primary* table to the
-*sale* table on `car_id` and selecting only the fields you are interested in,
-your resulting analytic dataset might look something like this:
+find the most popular color for each model. To do so, you can
+[_join_](https://en.wikipedia.org/wiki/Join_%28SQL%29) the tables together.
+After inner joining the *primary* table to the *sale* table on `car_id` and
+selecting only the fields you are interested in, your resulting analytic dataset
+might look something like this:
 
 | car_id|make     |model    |price    |color |customer |
 |------:|:--------|:--------|:--------|:-----|:--------|
