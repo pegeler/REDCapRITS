@@ -2,7 +2,7 @@ Package: REDCapRITS
 Title: REDCap Repeating Instrument Table Splitter
 Version: 0.2.3
 Authors@R: c(
-    person("Paul", "Egeler", email = "paul.egeler@spectrumhealth.org", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6948-9498")),
+    person("Paul", "Egeler", email = "paulegeler@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6948-9498")),
     person("Spectrum Health, Grand Rapids, MI", role = "cph"))
 Copyright: Spectrum Health, Grand Rapids, MI
 Description: Split REDCap repeating instruments output into multiple tables. 
