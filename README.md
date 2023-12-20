@@ -28,6 +28,9 @@ This package is primarily relevant for working with longitudinal projects and/or
 
 * `redcap_wider()`: pivots each data frame with repeated instruments to a wide format utilizing the [`tidyr::pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) from the [tidyverse](https://www.tidyverse.org/).
 
+* `easy_redcap()`: combines secure API key storage with the `keyring`-package, focused data retrieval and optional widening. This is the recommended approach for easy data access and analysis.
+
+
 Compared to the original `REDCapRITS`, all matching functions are improved to accept column naming of REDCap data from manual download or API export.
 
 ## Future
