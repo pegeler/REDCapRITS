@@ -1,6 +1,6 @@
 # Installing the latest REDCapRITS from GitHub ------------------------------
-#devtools::install_github("SpectrumHealthResearch/REDCapRITS/R@s3methods")
-devtools::install_github("SpectrumHealthResearch/REDCapRITS/R@longitudinal-data")
+#devtools::install_github("pegeler/REDCapRITS/R@s3methods")
+#devtools::install_github("pegeler/REDCapRITS/R@longitudinal-data")
 
 # Debugging reading in longitudinal datasets ------------------------------
 
