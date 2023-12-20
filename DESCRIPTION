@@ -22,22 +22,16 @@ Description: Originally forked from the R part of 'REDCapRITS' by Paul Egeler.
 Depends: R (>= 3.4.0)
 Suggests:
     spelling,
-    RCurl,
     httr,
     jsonlite,
     testthat,
     Hmisc,
     readr,
-    covr,
     knitr,
     rmarkdown,
     gt,
     usethis,
-    pak,
-    ggplot2,
-    roxygen2,
-    rhub,
-    devtools
+    ggplot2
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
