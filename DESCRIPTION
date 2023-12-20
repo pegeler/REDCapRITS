@@ -1,6 +1,6 @@
 Package: REDCapCAST
 Title: REDCap Castellated Data Handling
-Version: 23.6.2
+Version: 23.12.1
 Authors@R: c(
     person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7559-1154")),
@@ -32,7 +32,12 @@ Suggests:
     knitr,
     rmarkdown,
     gt,
-    keyring
+    usethis,
+    pak,
+    ggplot2,
+    roxygen2,
+    rhub,
+    devtools
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -43,12 +48,15 @@ Imports:
     dplyr,
     REDCapR,
     tidyr,
-    tidyselect
+    tidyselect,
+    keyring,
+    purrr
 Collate: 
     'utils.r'
     'process_user_input.r'
     'REDCap_split.r'
     'ds2dd.R'
+    'easy_redcap.R'
     'read_redcap_tables.R'
     'redcap_wider.R'
     'redcapcast_data.R'

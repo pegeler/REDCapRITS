@@ -55,7 +55,7 @@ read_redcap_tables <- function(uri,
     if (!is.null(events)){
     event_test <- events %in% unique(arm_event_inst$data$unique_event_name)
 
-    if (any(!forms_test)){
+    if (any(!event_test)){
       stop("Not all supplied event names are valid")
     }
     }

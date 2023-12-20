@@ -1,3 +1,13 @@
+# REDCapCAST 23.12.1
+
+One new function to ease secure dataset retrieval and a few bug fixes.
+
+### Functions
+
+* New: `easy_redcap()` function to ease the retrieval of a dataset with `read_redcap_tables()` with `keyring`-package based key storage, which handles secure API set, storage and retrieval. Relies on a small helper function, `get_api_key()`, which wraps relevant `keyring`-functions. Includes option to cast the data in a wide format with flag `widen.data`.
+* Fix: `REDCap_split()`: when using this function on its own, supplying a data set with check boxes would fail if metadata is supplied as a tibble. Metadata is now converted to data.frame. Fixed.
+* Fix: `read_redcap_tables()`: fixed bug when supplying events.
+
 # REDCapCAST 23.6.2
 
 This version marks the introduction of a few helper functions to handle database creation.

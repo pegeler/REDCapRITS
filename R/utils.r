@@ -144,6 +144,8 @@ sanitize_split <- function(l,
 #'
 match_fields_to_form <- function(metadata, vars_in_data) {
 
+  metadata <- data.frame(metadata)
+
   field_form_name <- grepl(".*([Ff]ield|[Ff]orm)[._][Nn]ame$",names(metadata))
   field_type <- grepl(".*[Ff]ield[._][Tt]ype$",names(metadata))
 
