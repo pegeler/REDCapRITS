@@ -2,7 +2,7 @@
 
 ### Functions
 
-* Fix: `read_redcap_tables()`: checking form names based on data dictionary to allow handling of non-longitudinal projects. Prints invalid form names and invalid event names. If invalid form names are supplied to `REDCapR::redcap_read()` (which is the backbone), all forms are exported, which is not what we want with a focused approach. Invalid event names will give an output with a rather peculiar formatting.
+* Fix: `read_redcap_tables()`: checking form names based on data dictionary to allow handling of non-longitudinal projects. Prints invalid form names and invalid event names. If invalid form names are supplied to `REDCapR::redcap_read()` (which is the backbone), all forms are exported, which is not what we want with a focused approach. Invalid event names will give an output with a rather peculiar formatting. Checking of field names validity is also added.
 
 # REDCapCAST 23.12.1
 

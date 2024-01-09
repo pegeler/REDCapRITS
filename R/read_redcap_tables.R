@@ -42,6 +42,16 @@ read_redcap_tables <- function(uri,
 
   m <- REDCapR::redcap_metadata_read(redcap_uri = uri, token = token)[["data"]]
 
+  if (!is.null(fields)){
+
+    fields_test <- fields %in% unique(m$field_name)
+
+    if (any(!fields_test)){
+      print(paste0("The following field names are invalid: ", paste(fields[!fields_test],collapse=", "),"."))
+      stop("Not all supplied field names are valid")
+    }
+  }
+
 
   if (!is.null(forms)){
 
@@ -49,7 +59,7 @@ read_redcap_tables <- function(uri,
 
     if (any(!forms_test)){
       print(paste0("The following form names are invalid: ", paste(forms[!forms_test],collapse=", "),"."))
-      stop("Not all supplied forms are valid")
+      stop("Not all supplied form names are valid")
     }
   }
 
