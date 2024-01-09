@@ -43,9 +43,10 @@ list of instruments
 }
 \description{
 Implementation of REDCap_split with a focused data acquisition approach using
-REDCapR::redcap_read nad only downloading specified fields, forms and/or
+REDCapR::redcap_read and only downloading specified fields, forms and/or
 events using the built-in focused_metadata including some clean-up.
-Works with longitudinal projects with repeating instruments.
+Works with classical and longitudinal projects with or without repeating
+instruments.
 }
 \examples{
 # Examples will be provided later

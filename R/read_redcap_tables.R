@@ -1,9 +1,10 @@
 #' Download REDCap data
 #'
 #' Implementation of REDCap_split with a focused data acquisition approach using
-#' REDCapR::redcap_read nad only downloading specified fields, forms and/or
+#' REDCapR::redcap_read and only downloading specified fields, forms and/or
 #' events using the built-in focused_metadata including some clean-up.
-#' Works with longitudinal projects with repeating instruments.
+#' Works with classical and longitudinal projects with or without repeating
+#' instruments.
 #' @param uri REDCap database uri
 #' @param token API token
 #' @param records records to download
@@ -39,25 +40,28 @@ read_redcap_tables <- function(uri,
                                )) {
 
 
-  if (!is.null(forms) | !is.null(events)){
-    arm_event_inst <- REDCapR::redcap_event_instruments(redcap_uri = uri,
-                                              token = token)
+  m <- REDCapR::redcap_metadata_read(redcap_uri = uri, token = token)[["data"]]
 
-    if (!is.null(forms)){
 
-    forms_test <- forms %in% unique(arm_event_inst$data$form)
+  if (!is.null(forms)){
+
+    forms_test <- forms %in% unique(m$form_name)
 
     if (any(!forms_test)){
+      print(paste0("The following form names are invalid: ", paste(forms[!forms_test],collapse=", "),"."))
       stop("Not all supplied forms are valid")
     }
-    }
+  }
 
-    if (!is.null(events)){
+  if (!is.null(events)){
+    arm_event_inst <- REDCapR::redcap_event_instruments(redcap_uri = uri,
+                                                        token = token)
+
     event_test <- events %in% unique(arm_event_inst$data$unique_event_name)
 
     if (any(!event_test)){
+      print(paste0("The following event names are invalid: ", paste(events[!event_test],collapse=", "),"."))
       stop("Not all supplied event names are valid")
-    }
     }
   }
 
