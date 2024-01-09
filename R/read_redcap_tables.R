@@ -40,7 +40,9 @@ read_redcap_tables <- function(uri,
                                )) {
 
 
-  m <- REDCapR::redcap_metadata_read(redcap_uri = uri, token = token)[["data"]]
+  # Getting metadata
+  m <-
+    REDCapR::redcap_metadata_read (redcap_uri = uri, token = token)[["data"]]
 
   if (!is.null(fields)){
 
@@ -93,11 +95,7 @@ read_redcap_tables <- function(uri,
     d$redcap_repeat_instrument <- clean_redcap_name(d$redcap_repeat_instrument)
   }
 
-  # Getting metadata
-  m <-
-    REDCapR::redcap_metadata_read (redcap_uri = uri, token = token)[["data"]]
-
-  # Processing metadata to reflect dataset
+  # Processing metadata to reflect focused dataset
   if (!is.null(c(fields,forms,events))){
     m <- focused_metadata(m,names(d))
   }
