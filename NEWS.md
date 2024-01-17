@@ -1,3 +1,13 @@
+# REDCapCAST 24.1.2
+
+### Functions
+
+* Fix: `ds2dd()`: uses correct default dd column names
+
+### Other
+
+I believe `renv` has now been added and runs correctly. After clone, do `renv::restore()` to install all necessary package to modify the package.
+
 # REDCapCAST 24.1.1
 
 ### Functions
