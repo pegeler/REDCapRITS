@@ -32,7 +32,7 @@ ds2dd <-
            field.type = "text",
            field.label = NULL,
            include.column.names = FALSE,
-           metadata = names(redcapcast_meta)) {
+           metadata = metadata_names) {
     dd <- data.frame(matrix(ncol = length(metadata), nrow = ncol(ds)))
     colnames(dd) <- metadata
 
