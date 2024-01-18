@@ -12,8 +12,9 @@ A data frame with 22 variables:
   \item{redcap_repeat_instrument}{Repeat instrument, character}
   \item{redcap_repeat_instance}{Repeat instance, numeric}
   \item{cpr}{CPR number, character}
-  \item{inclusion}{Inclusion date, date}
-  \item{dob}{Date of birth, date}
+  \item{inclusion}{Inclusion date, Date}
+  \item{inclusion_time}{Inclusion time, hms}
+  \item{dob}{Date of birth, Date}
   \item{age}{Age decimal, numeric}
   \item{age_integer}{Age integer, numeric}
   \item{sex}{Legal sex, character}
@@ -23,10 +24,10 @@ A data frame with 22 variables:
   \item{region}{region, character}
   \item{baseline_data_start_complete}{Completed, character}
   \item{mrs_assessed}{mRS Assessed, character}
-  \item{mrs_date}{Assesment date, date}
-  \item{mrs_score}{Score, numeric}
+  \item{mrs_date}{Assesment date, Date}
+  \item{mrs_score}{Categorical score, numeric}
   \item{mrs_complete}{Complete, numeric}
-  \item{event_date}{Event date, date}
+  \item{event_datetime}{Event datetime, POSIXct}
   \item{event_type}{Event type, character}
   \item{new_event_complete}{Completed, character}
 
