@@ -2,7 +2,7 @@
 % Please edit documentation in R/ds2dd.R
 \name{ds2dd}
 \alias{ds2dd}
-\title{Data set to data dictionary function}
+\title{(DEPRECATED) Data set to data dictionary function}
 \usage{
 ds2dd(
   ds,
@@ -11,7 +11,7 @@ ds2dd(
   field.type = "text",
   field.label = NULL,
   include.column.names = FALSE,
-  metadata = names(redcapcast_meta)
+  metadata = metadata_names
 )
 }
 \arguments{
@@ -34,14 +34,18 @@ names.}
 column names for original data set for upload.}
 
 \item{metadata}{Metadata column names. Default is the included
-REDCapCAST::redcapcast_data.}
+REDCapCAST::metadata_names.}
 }
 \value{
 data.frame or list of data.frame and vector
 }
 \description{
+Creates a very basic data dictionary skeleton. Please see `ds2dd_detailed()`
+for a more advanced function.
+}
+\details{
 Migrated from stRoke ds2dd(). Fits better with the functionality of
-'REDCapCAST'
+'REDCapCAST'.
 }
 \examples{
 redcapcast_data$record_id <- seq_len(nrow(redcapcast_data))
