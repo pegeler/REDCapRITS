@@ -27,12 +27,13 @@ Suggests:
     jsonlite,
     testthat,
     Hmisc,
-    readr,
     knitr,
     rmarkdown,
     gt,
     usethis,
-    ggplot2
+    ggplot2,
+    haven,
+    here
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -45,12 +46,15 @@ Imports:
     tidyr,
     tidyselect,
     keyring,
-    purrr
+    purrr,
+    readr,
+    stats
 Collate: 
     'utils.r'
     'process_user_input.r'
     'REDCap_split.r'
     'ds2dd.R'
+    'ds2dd_detailed.R'
     'easy_redcap.R'
     'read_redcap_tables.R'
     'redcap_wider.R'

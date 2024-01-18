@@ -1,8 +1,13 @@
-utils::globalVariables(c("redcapcast_meta"))
-#' Data set to data dictionary function
+utils::globalVariables(c("metadata_names"))
+#' (DEPRECATED) Data set to data dictionary function
 #'
+#' @description
+#' Creates a very basic data dictionary skeleton. Please see `ds2dd_detailed()`
+#' for a more advanced function.
+#'
+#' @details
 #' Migrated from stRoke ds2dd(). Fits better with the functionality of
-#' 'REDCapCAST'
+#' 'REDCapCAST'.
 #' @param ds data set
 #' @param record.id name or column number of id variable, moved to first row of
 #' data dictionary, character of integer. Default is "record_id".
@@ -16,7 +21,7 @@ utils::globalVariables(c("redcapcast_meta"))
 #' @param include.column.names Flag to give detailed output including new
 #' column names for original data set for upload.
 #' @param metadata Metadata column names. Default is the included
-#' REDCapCAST::redcapcast_data.
+#' REDCapCAST::metadata_names.
 #'
 #' @return data.frame or list of data.frame and vector
 #' @export

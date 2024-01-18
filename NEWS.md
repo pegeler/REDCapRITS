@@ -2,7 +2,9 @@
 
 ### Functions
 
-* Fix: `ds2dd()`: uses correct default dd column names
+* Fix: `ds2dd()`: uses correct default dd column names. Will be deprecated.
+
+* NEW: `ds2dd_detailed()`: extension of the `ds2dd()`, which serves to preserve as much metadata as possible automatically. Depends on a group of helper functions also introduced. Of special note is the `guess_time_only_filter()`, which will try to guess which columns/variables should be formatted as time only formats. Supports hms time format. DETAILED INSTRUCTION AND VIGNETTE IS PENDING.
 
 ### Other
 
