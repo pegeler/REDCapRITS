@@ -7,7 +7,7 @@
 read_redcap_instrument(
   key,
   uri,
-  instrument = "rbans",
+  instrument,
   raw_or_label = "raw",
   id_name = "record_id",
   records = NULL
@@ -16,7 +16,7 @@ read_redcap_instrument(
 \arguments{
 \item{key}{key name in standard keyring for token retrieval.}
 
-\item{uri}{redcap api url}
+\item{uri}{REDCap database API uri}
 
 \item{instrument}{instrument name}
 

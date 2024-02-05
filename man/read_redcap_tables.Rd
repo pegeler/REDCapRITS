@@ -18,7 +18,7 @@ read_redcap_tables(
 )
 }
 \arguments{
-\item{uri}{REDCap database uri}
+\item{uri}{REDCap database API uri}
 
 \item{token}{API token}
 

@@ -5,7 +5,7 @@
 #' events using the built-in focused_metadata including some clean-up.
 #' Works with classical and longitudinal projects with or without repeating
 #' instruments.
-#' @param uri REDCap database uri
+#' @param uri REDCap database API uri
 #' @param token API token
 #' @param records records to download
 #' @param fields fields to download

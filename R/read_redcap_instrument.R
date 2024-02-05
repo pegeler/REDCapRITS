@@ -1,7 +1,7 @@
 #' Convenience function to download complete instrument, using token storage in keyring.
 #'
 #' @param key key name in standard keyring for token retrieval.
-#' @param uri redcap api url
+#' @param uri REDCap database API uri
 #' @param instrument instrument name
 #' @param raw_or_label raw or label passed to `REDCapR::redcap_read()`
 #' @param id_name id variable name. Default is "record_id".
@@ -11,7 +11,7 @@
 #' @export
 read_redcap_instrument <- function(key,
                             uri,
-                            instrument = "rbans",
+                            instrument,
                             raw_or_label = "raw",
                             id_name = "record_id",
                             records = NULL) {
