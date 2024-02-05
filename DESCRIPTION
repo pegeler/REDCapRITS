@@ -1,6 +1,6 @@
 Package: REDCapCAST
 Title: REDCap Castellated Data Handling
-Version: 24.1.2
+Version: 24.2.1
 Authors@R: c(
     person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", 
     role = c("aut", "cre"),comment = c(ORCID = "0000-0002-7559-1154")), 
@@ -34,7 +34,9 @@ Suggests:
     ggplot2,
     haven,
     here,
-    styler
+    styler,
+    devtools,
+    roxygen2
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -49,13 +51,17 @@ Imports:
     keyring,
     purrr,
     readr,
-    stats
+    stats,
+    calendar,
+    lubridate,
+    glue
 Collate: 
     'utils.r'
     'process_user_input.r'
     'REDCap_split.r'
     'ds2dd.R'
     'ds2dd_detailed.R'
+    'ds2ical.R'
     'easy_redcap.R'
     'read_redcap_instrument.R'
     'read_redcap_tables.R'
