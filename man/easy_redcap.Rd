@@ -4,13 +4,15 @@
 \alias{easy_redcap}
 \title{Secure API key storage and data acquisition in one}
 \usage{
-easy_redcap(project.name, widen.data = TRUE, ...)
+easy_redcap(project.name, widen.data = TRUE, uri, ...)
 }
 \arguments{
 \item{project.name}{The name of the current project (for key storage with
 `keyring::key_set()`)}
 
 \item{widen.data}{argument to widen the exported data}
+
+\item{uri}{REDCap database API uri}
 
 \item{...}{arguments passed on to `REDCapCAST::read_redcap_tables()`}
 }

@@ -21,19 +21,19 @@ get_api_key <- function(key.name) {
 #' @param project.name The name of the current project (for key storage with
 #' `keyring::key_set()`)
 #' @param widen.data argument to widen the exported data
+#' @param uri REDCap database API uri
 #' @param ... arguments passed on to `REDCapCAST::read_redcap_tables()`
 #'
 #' @return data.frame or list depending on widen.data
 #' @importFrom purrr reduce
 #' @importFrom dplyr left_join
 #' @export
-easy_redcap <- function(project.name, widen.data = TRUE, ...) {
-  project.name <- "ENIGMA"
-
+easy_redcap <- function(project.name, widen.data = TRUE, uri, ...) {
   key <- get_api_key(key.name = paste0(project.name, "_REDCAP_API"))
 
   out <- read_redcap_tables(
     token = key,
+    uri = uri,
     ...
   )
 
