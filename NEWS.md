@@ -1,12 +1,16 @@
-# REDCapCAST 24.1.2
+# REDCapCAST 24.2.1
 
 ### Functions
 
 * Fix: `ds2dd()`: uses correct default dd column names. Will be deprecated.
 
+* Fix: `easy_redcap()`: fixed to actually allow project naming. also specifically asks for uri.
+
 * NEW: `ds2dd_detailed()`: extension of the `ds2dd()`, which serves to preserve as much metadata as possible automatically. Depends on a group of helper functions also introduced. Of special note is the `guess_time_only_filter()`, which will try to guess which columns/variables should be formatted as time only formats. Supports hms time format. DETAILED INSTRUCTION AND VIGNETTE IS PENDING.
 
 * NEW: `read_redcap_instrument()` convenience function to retrieve complete instrument. Goes a little against the focused approach. DETAILED INSTRUCTION IS PENDING.
+
+* NEW: `ds2ical()` converts data set to ical format with easy glue string for summary and description. Export ics file with `calendar::ic_write()`.
 
 ### Other
 
