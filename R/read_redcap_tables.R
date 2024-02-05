@@ -33,7 +33,6 @@ read_redcap_tables <- function(uri,
                                raw_or_label = "label",
                                split_forms = "all",
                                generics = c(
-                                 "record_id",
                                  "redcap_event_name",
                                  "redcap_repeat_instrument",
                                  "redcap_repeat_instance"
@@ -100,6 +99,9 @@ read_redcap_tables <- function(uri,
     m <- focused_metadata(m,names(d))
   }
 
+
+
+  if (any(generics %in% names(d))){
   # Splitting
   l <- REDCap_split(d,
                     m,
@@ -108,7 +110,13 @@ read_redcap_tables <- function(uri,
 
   # Sanitizing split list by removing completely empty rows apart from colnames
   # in "generics"
-  sanitize_split(l,generics)
+  sanitize_split(l,c(names(d)[1],generics))
+  } else {
+    # If none of generics are present, the data base is not longitudinal,
+    # and does not have repeatable events, and therefore splitting does not
+    # make sense. But now we handle that as well.
+    d
+  }
 
 }
 

@@ -6,28 +6,27 @@
 \usage{
 ds2ical(
   data,
-  start,
-  location,
+  start = start,
+  end = end,
+  location = location,
   summary.glue.string = "ID {id} [{assessor}]",
-  description.glue.string = NULL,
-  event.length = lubridate::hours(2)
+  description.glue.string = NULL
 )
 }
 \arguments{
 \item{data}{data set}
 
-\item{start}{event start column}
+\item{start}{dplyr style event start datetime column name}
 
-\item{location}{event location column}
+\item{end}{dplyr style event end datetime column name}
+
+\item{location}{dplyr style event location column name}
 
 \item{summary.glue.string}{character string to pass to glue::glue() for event
 name (summary). Can take any column from data set.}
 
 \item{description.glue.string}{character string to pass to glue::glue() for
 event description. Can take any column from data set.}
-
-\item{event.length}{use lubridate functions to generate "Period" class
-element (default is lubridate::hours(2))}
 }
 \value{
 tibble of class "ical"
@@ -37,11 +36,11 @@ Convert data set to ical file
 }
 \examples{
 df <- dplyr::tibble(start = c(Sys.time(), Sys.time() + lubridate::days(2)),
-id = c("1", 3), assessor = "A", location = "111", note = c(NA, "OBS"))
-df |> ds2ical(start, location)
-df |> ds2ical(start, location,
-summary.glue.string = "ID {id} [{assessor}] {note}")
+id = c("1", 3), assessor = "A", location = "111", note = c(NA, "OBS")) |>
+dplyr::mutate(end= start+lubridate::hours(2))
+df |> ds2ical()
+df |> ds2ical(summary.glue.string = "ID {id} [{assessor}] {note}")
 # Export .ics file: (not run)
-ical <- df |> ds2ical(start, location, description.glue.string = "{note}")
+ical <- df |> ds2ical(start, end, location, description.glue.string = "{note}")
 # ical |> calendar::ic_write(file=here::here("calendar.ics"))
 }

@@ -13,8 +13,7 @@ read_redcap_tables(
   forms = NULL,
   raw_or_label = "label",
   split_forms = "all",
-  generics = c("record_id", "redcap_event_name", "redcap_repeat_instrument",
-    "redcap_repeat_instance")
+  generics = c("redcap_event_name", "redcap_repeat_instrument", "redcap_repeat_instance")
 )
 }
 \arguments{
