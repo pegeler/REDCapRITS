@@ -5,13 +5,13 @@
 \title{Redcap Wider}
 \usage{
 redcap_wider(
-  list,
+  data,
   event.glue = "{.value}_{redcap_event_name}",
   inst.glue = "{.value}_{redcap_repeat_instance}"
 )
 }
 \arguments{
-\item{list}{A list of data frames.}
+\item{data}{A list of data frames.}
 
 \item{event.glue}{A dplyr::glue string for repeated events naming}
 
@@ -25,11 +25,36 @@ Converts a list of REDCap data frames from long to wide format.
 Handles longitudinal projects, but not yet repeated instruments.
 }
 \examples{
-list <- list(data.frame(record_id = c(1,2,1,2),
+# Longitudinal
+list1 <- list(data.frame(record_id = c(1,2,1,2),
 redcap_event_name = c("baseline", "baseline", "followup", "followup"),
 age = c(25,26,27,28)),
 data.frame(record_id = c(1,2),
 redcap_event_name = c("baseline", "baseline"),
 gender = c("male", "female")))
-redcap_wider(list)
+redcap_wider(list1)
+# Simpel with two instruments
+list2 <- list(data.frame(record_id = c(1,2),
+age = c(25,26)),
+data.frame(record_id = c(1,2),
+gender = c("male", "female")))
+redcap_wider(list2)
+# Simple with single instrument
+list3 <- list(data.frame(record_id = c(1,2),
+age = c(25,26)))
+redcap_wider(list3)
+# Longitudinal with repeatable instruments
+list4 <- list(data.frame(record_id = c(1,2,1,2),
+redcap_event_name = c("baseline", "baseline", "followup", "followup"),
+age = c(25,26,27,28)),
+data.frame(record_id = c(1,1,1,1,2,2,2,2),
+redcap_event_name = c("baseline", "baseline", "followup", "followup",
+"baseline", "baseline", "followup", "followup"),
+redcap_repeat_instrument = "walk",
+redcap_repeat_instance=c(1,2,1,2,1,2,1,2),
+dist = c(40, 32, 25, 33, 28, 24, 23, 36)),
+data.frame(record_id = c(1,2),
+redcap_event_name = c("baseline", "baseline"),
+gender = c("male", "female")))
+redcap_wider(list4)
 }

@@ -5,40 +5,70 @@ utils::globalVariables(c("redcap_wider",
 #' @title Redcap Wider
 #' @description Converts a list of REDCap data frames from long to wide format.
 #' Handles longitudinal projects, but not yet repeated instruments.
-#' @param list A list of data frames.
+#' @param data A list of data frames.
 #' @param event.glue A dplyr::glue string for repeated events naming
 #' @param inst.glue A dplyr::glue string for repeated instruments naming
 #' @return The list of data frames in wide format.
 #' @export
 #' @importFrom tidyr pivot_wider
 #' @importFrom tidyselect all_of
+#' @importFrom purrr reduce
 #'
 #' @examples
-#' list <- list(data.frame(record_id = c(1,2,1,2),
+#' # Longitudinal
+#' list1 <- list(data.frame(record_id = c(1,2,1,2),
 #' redcap_event_name = c("baseline", "baseline", "followup", "followup"),
 #' age = c(25,26,27,28)),
 #' data.frame(record_id = c(1,2),
 #' redcap_event_name = c("baseline", "baseline"),
 #' gender = c("male", "female")))
-#' redcap_wider(list)
+#' redcap_wider(list1)
+#' # Simpel with two instruments
+#' list2 <- list(data.frame(record_id = c(1,2),
+#' age = c(25,26)),
+#' data.frame(record_id = c(1,2),
+#' gender = c("male", "female")))
+#' redcap_wider(list2)
+#' # Simple with single instrument
+#' list3 <- list(data.frame(record_id = c(1,2),
+#' age = c(25,26)))
+#' redcap_wider(list3)
+#' # Longitudinal with repeatable instruments
+#' list4 <- list(data.frame(record_id = c(1,2,1,2),
+#' redcap_event_name = c("baseline", "baseline", "followup", "followup"),
+#' age = c(25,26,27,28)),
+#' data.frame(record_id = c(1,1,1,1,2,2,2,2),
+#' redcap_event_name = c("baseline", "baseline", "followup", "followup",
+#' "baseline", "baseline", "followup", "followup"),
+#' redcap_repeat_instrument = "walk",
+#' redcap_repeat_instance=c(1,2,1,2,1,2,1,2),
+#' dist = c(40, 32, 25, 33, 28, 24, 23, 36)),
+#' data.frame(record_id = c(1,2),
+#' redcap_event_name = c("baseline", "baseline"),
+#' gender = c("male", "female")))
+#'redcap_wider(list4)
 redcap_wider <-
-  function(list,
+  function(data,
            event.glue = "{.value}_{redcap_event_name}",
            inst.glue = "{.value}_{redcap_repeat_instance}") {
-    all_names <- unique(do.call(c, lapply(list, names)))
 
-    if (!any(c("redcap_event_name", "redcap_repeat_instrument") %in%
-             all_names)) {
-      stop(
-        "The dataset does not include a 'redcap_event_name' variable.
-         redcap_wider only handles projects with repeating instruments or
-         longitudinal projects"
-      )
-    }
+    if (!is.repeated_longitudinal(data)) {
+      if (is.list(data)) {
+        if (length(data) == 1) {
+          out <- data[[1]]
+        } else {
+          out <- data |> purrr::reduce(dplyr::left_join)
+        }
+      } else if (is.data.frame(data)){
+        out <- data
+      }
 
-    id.name <- all_names[1]
 
-    l <- lapply(list, function(i) {
+    } else {
+
+    id.name <- do.call(c, lapply(data, names))[[1]]
+
+    l <- lapply(data, function(i) {
       rep_inst <- "redcap_repeat_instrument" %in% names(i)
 
       if (rep_inst) {
@@ -81,13 +111,17 @@ redcap_wider <-
             names_glue = event.glue
           )
           s[colnames(s) != "redcap_event_name"]
-        } else
-          (i[colnames(i) != "redcap_event_name"])
-      } else
-        (i)
+        } else {
+          i[colnames(i) != "redcap_event_name"]
+          }
+      } else {
+        i
+        }
     })
 
-    ## Additional conditioning is needed to handle repeated instruments.
+    out <- data.frame(Reduce(f = dplyr::full_join, x = l))
+    }
 
-    data.frame(Reduce(f = dplyr::full_join, x = l))
+    out
   }
+
