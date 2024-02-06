@@ -26,5 +26,5 @@ easing the split around the defined delimiter, see example.
 }
 \examples{
 test <- c("12 months follow-up", "3 steps", "mRS 6 weeks", "Counting to 231 now")
-strsplitx(test,"[0-9]",type="around")
+strsplitx(test, "[0-9]", type = "around")
 }

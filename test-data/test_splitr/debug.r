@@ -3,10 +3,11 @@
 #devtools::install_github("pegeler/REDCapRITS/R@longitudinal-data")
 
 # Debugging reading in longitudinal datasets ------------------------------
+# setwd(here::here(""))
 
 # Reading in the files
 file_paths <- file.path(
-  "../test-data/test_splitr/",
+  "test-data/test_splitr",
   c(
     records = "WARRIORtestForSoftwa_DATA_2018-06-21_1431.csv",
     metadata = "WARRIORtestForSoftwareUpgrades_DataDictionary_2018-06-21.csv"

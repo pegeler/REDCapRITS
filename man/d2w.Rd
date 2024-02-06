@@ -22,11 +22,11 @@ returns characters in same format as input
 Convert single digits to words
 }
 \examples{
-d2w(c(2:8,21))
-d2w(data.frame(2:7,3:8,1),lang="da",neutrum=TRUE)
+d2w(c(2:8, 21))
+d2w(data.frame(2:7, 3:8, 1), lang = "da", neutrum = TRUE)
 
 ## If everything=T, also larger numbers are reduced.
 ## Elements in the list are same length as input
-d2w(list(2:8,c(2,6,4,23),2), everything=TRUE)
+d2w(list(2:8, c(2, 6, 4, 23), 2), everything = TRUE)
 
 }
