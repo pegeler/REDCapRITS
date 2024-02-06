@@ -416,3 +416,30 @@ d2w <- function(x, lang = "en", neutrum=FALSE, everything=FALSE) {
 
   out
 }
+
+#' Test if repeatable or longitudinal
+#'
+#' @param data data set
+#' @param generics default is "redcap_event_name", "redcap_repeat_instrument"
+#' and "redcap_repeat_instance"
+#'
+#' @return logical
+#' @examples
+#' is.repeated_longitudinal(c("record_id", "age", "record_id", "gender"))
+#'
+is.repeated_longitudinal <- function(data, generics = c(
+  "redcap_event_name",
+  "redcap_repeat_instrument",
+  "redcap_repeat_instance"
+)) {
+  if (is.list(data)) {
+    names <- data |>
+      lapply(names) |>
+      purrr::list_c()
+  } else if (is.data.frame(data)) {
+    names <- names(data)
+  } else if (is.vector(data)) {
+    names <- data
+  }
+  any(generics %in% names)
+}
