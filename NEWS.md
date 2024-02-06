@@ -4,7 +4,9 @@
 
 * Fix: `ds2dd()`: uses correct default dd column names. Will be deprecated.
 
-* Fix: `easy_redcap()`: fixed to actually allow project naming. also specifically asks for uri.
+* Fix: `easy_redcap()`: fixed to actually allow project naming. also specifically asks for uri. widening updated to work.
+
+* Fix: `redcap_wider()`: updated to accept more formats and allow handling of simple projects without repeating instruments and not longitudinal.
 
 * Fix: `read_redcap_tables()`: now handles non-longitudinal project without repeatable instruments.
 
