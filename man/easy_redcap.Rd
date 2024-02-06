@@ -8,7 +8,7 @@ easy_redcap(project.name, widen.data = TRUE, uri, ...)
 }
 \arguments{
 \item{project.name}{The name of the current project (for key storage with
-`keyring::key_set()`)}
+`keyring::key_set()`, using the default keyring)}
 
 \item{widen.data}{argument to widen the exported data}
 
