@@ -35,7 +35,7 @@ redcapcast_meta |> gt::gt()
 list <-
   REDCap_split(records = redcapcast_data,
                            metadata = redcapcast_meta,
-                           forms = "repeating")
+                           forms = "repeating")|> sanitize_split()
 str(list)
 ```
 
@@ -43,7 +43,7 @@ str(list)
 list <-
   REDCap_split(records = redcapcast_data,
                            metadata = redcapcast_meta,
-                           forms = "all")
+                           forms = "all") |> sanitize_split()
 str(list)
 ```
 
@@ -60,7 +60,7 @@ The function works very similar to the `REDCapR::redcap_read()` in allowing to s
 ## Pivotting to wider format
 
 ```{r}
-# redcap_wider(ds)
+redcap_wider(list) |> str()
 ```
 
 
