@@ -12,8 +12,7 @@ read_redcap_tables(
   events = NULL,
   forms = NULL,
   raw_or_label = "label",
-  split_forms = "all",
-  generics = c("redcap_event_name", "redcap_repeat_instrument", "redcap_repeat_instance")
+  split_forms = "all"
 )
 }
 \arguments{

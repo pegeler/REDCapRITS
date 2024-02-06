@@ -92,15 +92,13 @@ read_redcap_tables <- function(uri,
 
 
     # Splitting
-    l <- REDCap_split(d,
+    out <- REDCap_split(d,
       m,
       forms = split_forms,
       primary_table_name = ""
     )
 
-    # Sanitizing split list by removing completely empty rows apart from colnames
-    # in "generics"
-    sanitize_split(l, c(names(d)[1], generics))
+    sanitize_split(out)
 
 }
 
