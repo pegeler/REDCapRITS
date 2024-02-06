@@ -36,10 +36,12 @@ universal_fields <- c("id")
 
 # Create the fields
 fields <- matrix(
-  c("form_a_name", "form_a",
+  c(
+    "form_a_name", "form_a",
     "form_a_age", "form_a",
     "form_b_name", "form_b",
-    "form_b_gender", "form_b"),
+    "form_b_gender", "form_b"
+  ),
   ncol = 2, byrow = TRUE
 )
 

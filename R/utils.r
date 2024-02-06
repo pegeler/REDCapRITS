@@ -1,5 +1,3 @@
-
-
 #' focused_metadata
 #' @description Extracts limited metadata for variables in a dataset
 #' @param metadata A dataframe containing metadata
@@ -8,7 +6,6 @@
 #' @export
 #'
 focused_metadata <- function(metadata, vars_in_data) {
-
   if (any(c("tbl_df", "tbl") %in% class(metadata))) {
     metadata <- data.frame(metadata)
   }
@@ -17,9 +14,11 @@ focused_metadata <- function(metadata, vars_in_data) {
   field_type <- grepl(".*[Ff]ield[._][Tt]ype$", names(metadata))
 
   fields <-
-    metadata[!metadata[, field_type] %in% c("descriptive", "checkbox") &
-               metadata[, field_name] %in% vars_in_data,
-             field_name]
+    metadata[
+      !metadata[, field_type] %in% c("descriptive", "checkbox") &
+        metadata[, field_name] %in% vars_in_data,
+      field_name
+    ]
 
   # Process checkbox fields
   if (any(metadata[, field_type] == "checkbox")) {
@@ -29,19 +28,22 @@ focused_metadata <- function(metadata, vars_in_data) {
 
     # Processing
     checkbox_basenames <-
-      metadata[metadata[, field_type] == "checkbox" &
-                 metadata[, field_name] %in% vars_check,
-               field_name]
+      metadata[
+        metadata[, field_type] == "checkbox" &
+          metadata[, field_name] %in% vars_check,
+        field_name
+      ]
 
     fields <- c(fields, checkbox_basenames)
-
   }
 
   # Process instrument status fields
   form_names <-
-    unique(metadata[, grepl(".*[Ff]orm[._][Nn]ame$",
-                            names(metadata))][metadata[, field_name]
-                                              %in% fields])
+    unique(metadata[, grepl(
+      ".*[Ff]orm[._][Nn]ame$",
+      names(metadata)
+    )][metadata[, field_name]
+    %in% fields])
 
   form_complete_fields <- paste0(form_names, "_complete")
 
@@ -54,33 +56,34 @@ focused_metadata <- function(metadata, vars_in_data) {
     timestamp_fields <- timestamps
 
     fields <- c(fields, timestamp_fields)
-
   }
 
   # Process ".*\\.factor" fields supplied by REDCap's export data R script
   if (any(grepl("\\.factor$", vars_in_data))) {
     factor_fields <-
-      do.call("rbind",
-              apply(fields,
-                    1,
-                    function(x, y) {
-                      field_indices <- grepl(paste0("^", x[1], "\\.factor$"), y)
-                      if (any(field_indices))
-                        data.frame(
-                          field_name = y[field_indices],
-                          form_name = x[2],
-                          stringsAsFactors = FALSE,
-                          row.names = NULL
-                        )
-                    },
-                    y = vars_in_data))
+      do.call(
+        "rbind",
+        apply(fields,
+          1,
+          function(x, y) {
+            field_indices <- grepl(paste0("^", x[1], "\\.factor$"), y)
+            if (any(field_indices)) {
+              data.frame(
+                field_name = y[field_indices],
+                form_name = x[2],
+                stringsAsFactors = FALSE,
+                row.names = NULL
+              )
+            }
+          },
+          y = vars_in_data
+        )
+      )
 
     fields <- c(fields, factor_fields[, 1])
-
   }
 
   metadata[metadata[, field_name] %in% fields, ]
-
 }
 
 #' clean_redcap_name
@@ -94,13 +97,18 @@ focused_metadata <- function(metadata, vars_in_data) {
 #' @return vector or data frame, same format as input
 #' @export
 #'
-clean_redcap_name <- function(x){
-
-  gsub(" ", "_",
-       gsub("[' ']$","",
-           gsub("[^a-z0-9' '_]", "",
-                tolower(x)
-       )))}
+clean_redcap_name <- function(x) {
+  gsub(
+    " ", "_",
+    gsub(
+      "[' ']$", "",
+      gsub(
+        "[^a-z0-9' '_]", "",
+        tolower(x)
+      )
+    )
+  )
+}
 
 
 #' Sanitize list of data frames
@@ -116,21 +124,37 @@ clean_redcap_name <- function(x){
 #'
 sanitize_split <- function(l,
                            generic.names = c(
-                             "record_id",
                              "redcap_event_name",
                              "redcap_repeat_instrument",
                              "redcap_repeat_instance"
                            )) {
+  generic.names <- c(get_id_name(l),
+                     generic.names,
+                     paste0(names(l), "_complete"))
+
   lapply(l, function(i) {
     if (ncol(i) > 2) {
       s <- data.frame(i[, !colnames(i) %in% generic.names])
-      i[!apply(is.na(s), MARGIN = 1, FUN = all),]
+      i[!apply(is.na(s), MARGIN = 1, FUN = all), ]
     } else {
       i
     }
   })
 }
 
+
+#' Get the id name
+#'
+#' @param data data frame or list
+#'
+#' @return character vector
+get_id_name <- function(data) {
+  if ("list" %in% class(data)) {
+    do.call(c, lapply(data, names))[[1]]
+  } else {
+    names(data)[[1]]
+  }
+}
 
 #' Match fields to forms
 #'
@@ -143,20 +167,23 @@ sanitize_split <- function(l,
 #'
 #'
 match_fields_to_form <- function(metadata, vars_in_data) {
-
   metadata <- data.frame(metadata)
 
-  field_form_name <- grepl(".*([Ff]ield|[Ff]orm)[._][Nn]ame$",names(metadata))
-  field_type <- grepl(".*[Ff]ield[._][Tt]ype$",names(metadata))
+  field_form_name <- grepl(".*([Ff]ield|[Ff]orm)[._][Nn]ame$", names(metadata))
+  field_type <- grepl(".*[Ff]ield[._][Tt]ype$", names(metadata))
 
-  fields <- metadata[!metadata[,field_type] %in% c("descriptive", "checkbox"),
-                     field_form_name]
+  fields <- metadata[
+    !metadata[, field_type] %in% c("descriptive", "checkbox"),
+    field_form_name
+  ]
 
   names(fields) <- c("field_name", "form_name")
 
   # Process instrument status fields
-  form_names <- unique(metadata[,grepl(".*[Ff]orm[._][Nn]ame$",
-                                       names(metadata))])
+  form_names <- unique(metadata[, grepl(
+    ".*[Ff]orm[._][Nn]ame$",
+    names(metadata)
+  )])
   form_complete_fields <- data.frame(
     field_name = paste0(form_names, "_complete"),
     form_name = form_names,
@@ -176,57 +203,65 @@ match_fields_to_form <- function(metadata, vars_in_data) {
     )
 
     fields <- rbind(fields, timestamp_fields)
-
   }
 
   # Process checkbox fields
-  if (any(metadata[,field_type] == "checkbox")) {
-    checkbox_basenames <- metadata[metadata[,field_type] == "checkbox",
-                                   field_form_name]
+  if (any(metadata[, field_type] == "checkbox")) {
+    checkbox_basenames <- metadata[
+      metadata[, field_type] == "checkbox",
+      field_form_name
+    ]
 
     checkbox_fields <-
-      do.call("rbind",
-              apply(checkbox_basenames,
-                    1,
-                    function(x, y)
-                      data.frame(
-                        field_name =
-                          y[grepl(paste0("^", x[1], "___((?!\\.factor).)+$"),
-                                  y, perl = TRUE)],
-                        form_name = x[2],
-                        stringsAsFactors = FALSE,
-                        row.names = NULL
-                      ),
-                    y = vars_in_data))
+      do.call(
+        "rbind",
+        apply(checkbox_basenames,
+          1,
+          function(x, y) {
+            data.frame(
+              field_name =
+                y[grepl(paste0("^", x[1], "___((?!\\.factor).)+$"),
+                  y,
+                  perl = TRUE
+                )],
+              form_name = x[2],
+              stringsAsFactors = FALSE,
+              row.names = NULL
+            )
+          },
+          y = vars_in_data
+        )
+      )
 
     fields <- rbind(fields, checkbox_fields)
-
   }
 
   # Process ".*\\.factor" fields supplied by REDCap's export data R script
   if (any(grepl("\\.factor$", vars_in_data))) {
     factor_fields <-
-      do.call("rbind",
-              apply(fields,
-                    1,
-                    function(x, y) {
-                      field_indices <- grepl(paste0("^", x[1], "\\.factor$"), y)
-                      if (any(field_indices))
-                        data.frame(
-                          field_name = y[field_indices],
-                          form_name = x[2],
-                          stringsAsFactors = FALSE,
-                          row.names = NULL
-                        )
-                    },
-                    y = vars_in_data))
+      do.call(
+        "rbind",
+        apply(fields,
+          1,
+          function(x, y) {
+            field_indices <- grepl(paste0("^", x[1], "\\.factor$"), y)
+            if (any(field_indices)) {
+              data.frame(
+                field_name = y[field_indices],
+                form_name = x[2],
+                stringsAsFactors = FALSE,
+                row.names = NULL
+              )
+            }
+          },
+          y = vars_in_data
+        )
+      )
 
     fields <- rbind(fields, factor_fields)
-
   }
 
   fields
-
 }
 
 #' Split a data frame into separate tables for each form
@@ -256,10 +291,12 @@ match_fields_to_form <- function(metadata, vars_in_data) {
 #'
 #' # Create the fields
 #' fields <- matrix(
-#'   c("form_a_name", "form_a",
+#'   c(
+#'     "form_a_name", "form_a",
 #'     "form_a_age", "form_a",
 #'     "form_b_name", "form_b",
-#'     "form_b_gender", "form_b"),
+#'     "form_b_gender", "form_b"
+#'   ),
 #'   ncol = 2, byrow = TRUE
 #' )
 #'
@@ -269,14 +306,17 @@ split_non_repeating_forms <-
   function(table, universal_fields, fields) {
     forms <- unique(fields[[2]])
 
-    x <- lapply(forms,
-                function (x) {
-                  table[names(table) %in% union(universal_fields,
-                                                fields[fields[, 2] == x, 1])]
-                })
+    x <- lapply(
+      forms,
+      function(x) {
+        table[names(table) %in% union(
+          universal_fields,
+          fields[fields[, 2] == x, 1]
+        )]
+      }
+    )
 
     structure(x, names = forms)
-
   }
 
 
@@ -295,7 +335,7 @@ split_non_repeating_forms <-
 #'
 #' @examples
 #' test <- c("12 months follow-up", "3 steps", "mRS 6 weeks", "Counting to 231 now")
-#' strsplitx(test,"[0-9]",type="around")
+#' strsplitx(test, "[0-9]", type = "around")
 strsplitx <- function(x,
                       split,
                       type = "classic",
@@ -306,26 +346,33 @@ strsplitx <- function(x,
     out <- base::strsplit(x = x, split = split, perl = perl, ...)
   } else if (type == "before") {
     # split before the delimiter and keep it
-    out <- base::strsplit(x = x,
-                          split = paste0("(?<=.)(?=", split, ")"),
-                          perl = TRUE,
-                          ...)
+    out <- base::strsplit(
+      x = x,
+      split = paste0("(?<=.)(?=", split, ")"),
+      perl = TRUE,
+      ...
+    )
   } else if (type == "after") {
     # split after the delimiter and keep it
-    out <- base::strsplit(x = x,
-                          split = paste0("(?<=", split, ")"),
-                          perl = TRUE,
-                          ...)
+    out <- base::strsplit(
+      x = x,
+      split = paste0("(?<=", split, ")"),
+      perl = TRUE,
+      ...
+    )
   } else if (type == "around") {
     # split around the defined delimiter
 
-    out <- base::strsplit(gsub("~~", "~", # Removes double ~
-                               gsub("^~", "", # Removes leading ~
-                                    gsub(
-                                      # Splits and inserts ~ at all delimiters
-                                      paste0("(", split, ")"), "~\\1~", x
-                                    ))), "~")
-
+    out <- base::strsplit(gsub(
+      "~~", "~", # Removes double ~
+      gsub(
+        "^~", "", # Removes leading ~
+        gsub(
+          # Splits and inserts ~ at all delimiters
+          paste0("(", split, ")"), "~\\1~", x
+        )
+      )
+    ), "~")
   } else {
     # wrong type input
     stop("type must be 'classic', 'after', 'before' or 'around'!")
@@ -345,37 +392,36 @@ strsplitx <- function(x,
 #' @export
 #'
 #' @examples
-#' d2w(c(2:8,21))
-#' d2w(data.frame(2:7,3:8,1),lang="da",neutrum=TRUE)
+#' d2w(c(2:8, 21))
+#' d2w(data.frame(2:7, 3:8, 1), lang = "da", neutrum = TRUE)
 #'
 #' ## If everything=T, also larger numbers are reduced.
 #' ## Elements in the list are same length as input
-#' d2w(list(2:8,c(2,6,4,23),2), everything=TRUE)
+#' d2w(list(2:8, c(2, 6, 4, 23), 2), everything = TRUE)
 #'
-d2w <- function(x, lang = "en", neutrum=FALSE, everything=FALSE) {
-
+d2w <- function(x, lang = "en", neutrum = FALSE, everything = FALSE) {
   # In Danish the written 1 depends on the counted word
   if (neutrum) nt <- "t" else nt <- "n"
 
   # A sapply() call with nested lapply() to handle vectors, data.frames and lists
   convert <- function(x, lang, neutrum) {
-    zero_nine = data.frame(
+    zero_nine <- data.frame(
       num = 0:9,
       en = c(
-        'zero',
-        'one',
-        'two',
-        'three',
-        'four',
-        'five',
-        'six',
-        'seven',
-        'eight',
-        'nine'
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine"
       ),
       da = c(
         "nul",
-        paste0("e",nt),
+        paste0("e", nt),
         "to",
         "tre",
         "fire",
@@ -401,15 +447,14 @@ d2w <- function(x, lang = "en", neutrum=FALSE, everything=FALSE) {
   # Also converts numbers >9 to single digits and writes out
   # Uses strsplitx()
   if (everything) {
-    out <- sapply(x,function(y){
-      do.call(c,lapply(y,function(z){
-        v <- strsplitx(z,"[0-9]",type="around")
-        Reduce(paste,sapply(v,convert,lang = lang, neutrum = neutrum))
+    out <- sapply(x, function(y) {
+      do.call(c, lapply(y, function(z) {
+        v <- strsplitx(z, "[0-9]", type = "around")
+        Reduce(paste, sapply(v, convert, lang = lang, neutrum = neutrum))
       }))
-
     })
   } else {
-  out <- sapply(x,convert,lang = lang, neutrum = neutrum)
+    out <- sapply(x, convert, lang = lang, neutrum = neutrum)
   }
 
   if (is.data.frame(x)) out <- data.frame(out)
@@ -426,19 +471,20 @@ d2w <- function(x, lang = "en", neutrum=FALSE, everything=FALSE) {
 #' @return logical
 #' @examples
 #' is.repeated_longitudinal(c("record_id", "age", "record_id", "gender"))
-#'
+#' is.repeated_longitudinal(redcapcast_data)
+#' is.repeated_longitudinal(list(redcapcast_data))
 is.repeated_longitudinal <- function(data, generics = c(
-  "redcap_event_name",
-  "redcap_repeat_instrument",
-  "redcap_repeat_instance"
-)) {
-  if (is.list(data)) {
+                                       "redcap_event_name",
+                                       "redcap_repeat_instrument",
+                                       "redcap_repeat_instance"
+                                     )) {
+  if ("list" %in% class(data)) {
     names <- data |>
       lapply(names) |>
       purrr::list_c()
-  } else if (is.data.frame(data)) {
+  } else if ("data.frame" %in% class(data)) {
     names <- names(data)
-  } else if (is.vector(data)) {
+  } else if ("character" %in% class(data)) {
     names <- data
   }
   any(generics %in% names)

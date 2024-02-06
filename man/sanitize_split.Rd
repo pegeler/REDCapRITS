@@ -6,7 +6,7 @@
 \usage{
 sanitize_split(
   l,
-  generic.names = c("record_id", "redcap_event_name", "redcap_repeat_instrument",
+  generic.names = c("redcap_event_name", "redcap_repeat_instrument",
     "redcap_repeat_instance")
 )
 }

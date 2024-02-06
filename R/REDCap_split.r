@@ -139,6 +139,8 @@ REDCap_split <- function(records,
     )
   )
 
+
+
   if ("redcap_repeat_instrument" %in% vars_in_data) {
     # Variables to be at the beginning of each repeating instrument
     repeat_instrument_fields <- grep("^redcap_repeat.*",
@@ -197,6 +199,5 @@ REDCap_split <- function(records,
   }
 
   out
-
 }
 
