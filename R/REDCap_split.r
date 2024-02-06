@@ -92,12 +92,12 @@ REDCap_split <- function(records,
   metadata <-
     as.data.frame(process_user_input(metadata))
 
-  # Process repeat instrument names to match the redcap naming
-  records$redcap_repeat_instrument <- clean_redcap_name(records$redcap_repeat_instrument)
-
-
   # Get the variable names in the dataset
   vars_in_data <- names(records)
+
+  # Process repeat instrument names to match the redcap naming
+  if (is.repeated_longitudinal(records)){
+  records$redcap_repeat_instrument <- clean_redcap_name(records$redcap_repeat_instrument)
 
   # Match arg for forms
   forms <- match.arg(forms, c("repeating", "all"))
@@ -115,6 +115,7 @@ REDCap_split <- function(records,
       "",
       as.character(records$redcap_repeat_instrument)
     )
+  }
   }
 
   # Standardize variable names for metadata
@@ -198,3 +199,4 @@ REDCap_split <- function(records,
   out
 
 }
+
