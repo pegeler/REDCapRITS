@@ -14,8 +14,6 @@
 #' @param raw_or_label raw or label tags
 #' @param split_forms Whether to split "repeating" or "all" forms, default is
 #' all.
-#' @param generics vector of auto-generated generic variable names to
-#' ignore when discarding empty rows
 #'
 #' @return list of instruments
 #' @importFrom REDCapR redcap_metadata_read redcap_read redcap_event_instruments
