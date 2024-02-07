@@ -26,6 +26,7 @@
 #'   \item{mrs_score}{Categorical score, numeric}
 #'   \item{mrs_complete}{Complete, numeric}
 #'   \item{event_datetime}{Event datetime, POSIXct}
+#'   \item{event_age}{Age at time of event, numeric}
 #'   \item{event_type}{Event type, character}
 #'   \item{new_event_complete}{Completed, character}
 #'
