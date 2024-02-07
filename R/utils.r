@@ -469,11 +469,12 @@ d2w <- function(x, lang = "en", neutrum = FALSE, everything = FALSE) {
 #' and "redcap_repeat_instance"
 #'
 #' @return logical
+#' @export
 #' @examples
-#' is.repeated_longitudinal(c("record_id", "age", "record_id", "gender"))
-#' is.repeated_longitudinal(redcapcast_data)
-#' is.repeated_longitudinal(list(redcapcast_data))
-is.repeated_longitudinal <- function(data, generics = c(
+#' is_repeated_longitudinal(c("record_id", "age", "record_id", "gender"))
+#' is_repeated_longitudinal(redcapcast_data)
+#' is_repeated_longitudinal(list(redcapcast_data))
+is_repeated_longitudinal <- function(data, generics = c(
                                        "redcap_event_name",
                                        "redcap_repeat_instrument",
                                        "redcap_repeat_instance"

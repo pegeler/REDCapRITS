@@ -32,9 +32,6 @@ read_redcap_tables(
 
 \item{split_forms}{Whether to split "repeating" or "all" forms, default is
 all.}
-
-\item{generics}{vector of auto-generated generic variable names to
-ignore when discarding empty rows}
 }
 \value{
 list of instruments

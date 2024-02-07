@@ -52,7 +52,7 @@ redcap_wider <-
            event.glue = "{.value}_{redcap_event_name}",
            inst.glue = "{.value}_{redcap_repeat_instance}") {
 
-    if (!is.repeated_longitudinal(data)) {
+    if (!is_repeated_longitudinal(data)) {
       if (is.list(data)) {
         if (length(data) == 1) {
           out <- data[[1]]

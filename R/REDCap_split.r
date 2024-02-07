@@ -96,7 +96,7 @@ REDCap_split <- function(records,
   vars_in_data <- names(records)
 
   # Process repeat instrument names to match the redcap naming
-  if (is.repeated_longitudinal(records)){
+  if (is_repeated_longitudinal(records)){
   records$redcap_repeat_instrument <- clean_redcap_name(records$redcap_repeat_instrument)
 
   # Match arg for forms
