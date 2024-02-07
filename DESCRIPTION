@@ -51,17 +51,13 @@ Imports:
     keyring,
     purrr,
     readr,
-    stats,
-    calendar,
-    lubridate,
-    glue
+    stats
 Collate: 
     'utils.r'
     'process_user_input.r'
     'REDCap_split.r'
     'ds2dd.R'
     'ds2dd_detailed.R'
-    'ds2ical.R'
     'easy_redcap.R'
     'read_redcap_instrument.R'
     'read_redcap_tables.R'

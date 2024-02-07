@@ -14,8 +14,6 @@
 
 * NEW: `read_redcap_instrument()` convenience function to retrieve complete instrument. Goes a little against the focused approach. DETAILED INSTRUCTION IS PENDING.
 
-* NEW: `ds2ical()` converts data set to ical format with easy glue string for summary and description. Export .ics file with `calendar::ic_write()`.
-
 ### Other
 
 I believe `renv` has now been added and runs correctly. After clone, do `renv::restore()` to install all necessary package to modify the package.
@@ -26,6 +24,7 @@ I believe `renv` has now been added and runs correctly. After clone, do `renv::r
 
 * Tests for `ds2dd_detailed()`
 
+* Tests for new functions.
 
 # REDCapCAST 24.1.1
 
