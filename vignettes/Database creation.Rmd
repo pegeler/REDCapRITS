@@ -1,0 +1,81 @@
+---
+title: "Database casting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Database casting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(REDCapCAST)
+```
+
+# Easy data set to data base workflow
+
+THe first iteration of a dataset to data dictionary function is the `ds2dd()`, which creates a very basic data dictionary with all variables stored as text. This is sufficient for just storing old datasets/spreadsheets securely in REDCap.
+
+```{r}
+mtcars |>
+  dplyr::mutate(record_id = seq_len(dplyr::n())) |>
+  ds2dd()
+```
+
+The more advanced `ds2dd_detailed()` is a natural development. It will try to apply the most common data classes for data validation and will assume that the first column is the id number. It outputs a list with the dataset with modified variable names to comply with REDCap naming conventions and a data dictionary. 
+
+The dataset should be correctly formatted for the data dictionary to preserve as much information as possible.
+
+```{r}
+dd_ls <- mtcars |>
+  dplyr::mutate(record_id = seq_len(dplyr::n())) |>
+  dplyr::select(record_id, dplyr::everything()) |>
+  ds2dd_detailed()
+dd_ls |> str()
+```
+
+Additional specifications to the DataDictionary can be made manually, or it can be uploaded and modified manually in the graphical user interface on the web page.
+
+## Step 3 - Meta data upload
+
+Now the DataDictionary can be exported as a spreadsheet and uploaded or it can be uploaded using the `REDCapR` package (only projects with "Development" status).
+
+Use one of the two approaches below:
+
+### Manual upload
+
+```{r eval=FALSE}
+write.csv(dd_ls$meta, "datadictionary.csv")
+```
+
+### Upload with `REDCapR`
+
+```{r eval=FALSE}
+REDCapR::redcap_metadata_write(
+  dd_ls$meta,
+  redcap_uri = keyring::key_get("DB_URI"),
+  token = keyring::key_get("DB_TOKEN")
+)
+```
+
+In the ["REDCap R Handbook"](https://agdamsbo.github.io/redcap-r-handbook/) more is written on interfacing with REDCap in R using the `library(keyring)`to store credentials in [chapter 1.1](https://agdamsbo.github.io/redcap-r-handbook/access.html#sec-getting-access).
+
+## Step 4 - Data upload
+
+The same two options are available for data upload as meta data upload: manual or through `REDCapR`.
+
+Only the latter is shown here.
+
+```{r eval=FALSE}
+REDCapR::redcap_write(
+  dd_ls$data,
+  redcap_uri = keyring::key_get("DB_URI"),
+  token = keyring::key_get("DB_TOKEN")
+)
+```

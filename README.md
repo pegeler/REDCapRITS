@@ -12,11 +12,11 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 # REDCapCAST package <img src="man/figures/logo.png" align="right" />
 
-REDCap Castellated data handling when using repeated instruments.
+REDCap database casting and handling of castellated data when using repeated instruments and longitudinal projects.
 
 This package is a fork of [pegeler/REDCapRITS](https://github.com/pegeler/REDCapRITS). The REDCapRITS represents great and extensive work to handle castellated REDCap data in different programming languages. This fork is purely minded on R usage and includes a few implementations of the main `REDCap_split` function.
 
-The main goal for this project was to allow for a "minimal data" approach by allowing to filter records, instruments and variables in the export to only download data needed. I think this approach is desireable for handling sensitive, clinical data. No similar functionality is available from similar tools (like `REDCapR` or `REDCapTidieR`). Please refer to [REDCap-Tools](https://redcap-tools.github.io/) for other great tools.
+THis package is very much to be seen as an attempt at a REDCap-R foundry for handling both the transition from dataset/variable list to database and the other way, from REDCap database to a tidy dataset. The goal was also to allow for a "minimal data" approach by allowing to filter records, instruments and variables in the export to only download data needed. I think this approach is desireable for handling sensitive, clinical data. No similar functionality is available from similar tools (like `REDCapR` or `REDCapTidieR`). Please refer to [REDCap-Tools](https://redcap-tools.github.io/) for other great tools.
 
 ## Use and immprovements
 
@@ -30,8 +30,7 @@ This package is primarily relevant for working with longitudinal projects and/or
 
 * `easy_redcap()`: combines secure API key storage with the `keyring`-package, focused data retrieval and optional widening. This is the recommended approach for easy data access and analysis.
 
-
-Compared to the original `REDCapRITS`, all matching functions are improved to accept column naming of REDCap data from manual download or API export.
+...
 
 ## Future
 
