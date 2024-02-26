@@ -6,6 +6,28 @@ server_factory <- function() {
   function(input, output, session) {
     require(REDCapCAST)
 
+
+    ## Trial and error testing
+    # dat <- read_input(file = here::here("data/mtcars_redcap.csv"))
+    #
+    # dd <- ds2dd_detailed(data = dat)
+    #
+    # write.csv(purrr::pluck(dd, "meta"),file = "dd_test.csv",row.names = FALSE,na = "")
+    #
+    # View(as.data.frame(purrr::pluck(dd, "meta")))
+    #
+    # REDCapR::redcap_metadata_write(
+    #   ds = as.data.frame(purrr::pluck(dd, "meta")),
+    #   redcap_uri = "https://redcap.au.dk/api/",
+    #   token = "21CF2C17EA1CA4F3688DF991C8FE3EBF"
+    # )
+    #
+    # REDCapR::redcap_write(
+    #   ds = as.data.frame(purrr::pluck(dd, "data")),
+    #   redcap_uri = "https://redcap.au.dk/api/",
+    #   token = "21CF2C17EA1CA4F3688DF991C8FE3EBF"
+    # )
+
     dat <- shiny::reactive({
       shiny::req(input$ds)
 
@@ -45,33 +67,46 @@ server_factory <- function() {
         write.csv(purrr::pluck(dd(), "meta"), file, row.names = FALSE)
       }
     )
-    output$upload.data.print <- shiny::renderPrint({
-      shiny::eventReactive(input$upload.meta, {
-        shiny::req(input$uri)
 
-        shiny::req(input$api)
+    output_staging <- shiny::reactiveValues()
+    output_staging$meta <- output_staging$data <- NA
 
-        REDCapR::redcap_metadata_write(
-          ds = purrr::pluck(dd(), "meta"),
-          redcap_uri = input$uri,
-          token = input$api
-        )
-      })
-    })
+    shiny::observeEvent(input$upload.meta,{  upload_meta()  })
 
-    output$upload.data.print <- shiny::renderPrint({
-      shiny::eventReactive(input$upload.data, {
-        shiny::req(input$uri)
+    shiny::observeEvent(input$upload.data,{  upload_data()  })
 
-        shiny::req(input$api)
+    upload_meta <- function(){
+      # output_staging$title <- paste0("random number ",runif(1))
 
-        REDCapR::redcap_write(
-          ds = purrr::pluck(dd(), "data"),
-          redcap_uri = input$uri,
-          token = input$api
-        )
-      })
-    })
+      shiny::req(input$uri)
+
+      shiny::req(input$api)
+
+      output_staging$meta <- REDCapR::redcap_metadata_write(
+        ds = purrr::pluck(dd(), "meta"),
+        redcap_uri = input$uri,
+        token = input$api
+      )|> purrr::pluck("success")
+    }
+
+    upload_data <- function(){
+      # output_staging$title <- paste0("random number ",runif(1))
+
+      shiny::req(input$uri)
+
+      shiny::req(input$api)
+
+      output_staging$data <- REDCapR::redcap_write(
+        ds = purrr::pluck(dd(), "data"),
+        redcap_uri = input$uri,
+        token = input$api
+      ) |> purrr::pluck("success")
+    }
+
+    output$upload.meta.print <- renderText(output_staging$meta)
+
+    output$upload.data.print <- renderText(output_staging$data)
+
   }
 }
 
@@ -126,22 +161,22 @@ ui_factory <- function() {
       shiny::textInput(
         inputId = "uri",
         label = "URI",
-        value = ""
+        value = "https://redcap.au.dk/api/"
       ),
       shiny::textInput(
         inputId = "api",
         label = "API key",
-        value = ""
+        value = "21CF2C17EA1CA4F3688DF991C8FE3EBF"
       ),
       shiny::actionButton(
         inputId = "upload.meta",
-        label = "Upload dictionary", icon = icon("book-bookmark")
+        label = "Upload dictionary", icon = shiny::icon("book-bookmark")
       ),
       shiny::h6("Please note, that before uploading any real data, put your project
          into production mode."),
       shiny::actionButton(
-        inputId = "upload.datata",
-        label = "Upload data", icon = icon("upload")
+        inputId = "upload.data",
+        label = "Upload data", icon = shiny::icon("upload")
       ),
 
       # Horizontal line ----
@@ -156,9 +191,19 @@ ui_factory <- function() {
         shiny::tabPanel(
           "Summary",
           shiny::h3("Data overview (first 20)"),
-          shiny::htmlOutput("data.tbl", container = span),
+          shiny::htmlOutput("data.tbl", container = shiny::span),
           shiny::h3("Dictionary overview"),
-          shiny::htmlOutput("meta.tbl", container = span)
+          shiny::htmlOutput("meta.tbl", container = shiny::span)
+        ),
+        ## -----------------------------------------------------------------------------
+        ## Upload tab
+        ## -----------------------------------------------------------------------------
+        shiny::tabPanel(
+          "Upload",
+          shiny::h3("Meta upload overview"),
+          shiny::htmlOutput("upload.meta.print", container = shiny::span),
+          shiny::h3("Data upload overview"),
+          shiny::htmlOutput("upload.data.print", container = shiny::span)
         )
       )
     )
@@ -181,3 +226,7 @@ shiny_cast <- function() {
     server_factory()
   )
 }
+
+shiny_cast()
+# ds <- REDCapR::redcap_metadata_read(redcap_uri = "https://redcap.au.dk/api/",
+#                                     token = "21CF2C17EA1CA4F3688DF991C8FE3EBF")
