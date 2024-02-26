@@ -37,7 +37,8 @@ Suggests:
     styler,
     devtools,
     roxygen2,
-    openxlsx2
+    openxlsx2,
+    rsconnect
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
