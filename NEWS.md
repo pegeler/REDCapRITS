@@ -18,15 +18,9 @@
 
 ### Other
 
-I believe `renv` has now been added and runs correctly. After clone, do `renv::restore()` to install all necessary package to modify the package.
+I believe `renv` has now been added and runs correctly. After clone, do `renv::restore()` to install all necessary package to modify the package. THis seems to alway sbe back and forth. renv may be on its way out again.
 
-### Whishes before CRAN release
-
-* Vignette for `ds2dd_detailed()`
-
-* Tests for `ds2dd_detailed()`
-
-* Tests for new functions.
+Added a Code of Conduct.
 
 # REDCapCAST 24.1.1
 
