@@ -16,8 +16,8 @@ Description: Originally forked from the R part of 'REDCapRITS' by Paul Egeler.
     1) an intuitive interface for validated data capture; 2) audit trails for
     tracking data manipulation and export procedures; 3) automated export
     procedures for seamless data downloads to common statistical packages; and
-    4) procedures for data integration and interoperability with external sources
-    (Harris et al (2009) <doi:10.1016/j.jbi.2008.08.010>; 
+    4) procedures for data integration and interoperability with external 
+    sources (Harris et al (2009) <doi:10.1016/j.jbi.2008.08.010>; 
     Harris et al (2019) <doi:10.1016/j.jbi.2019.103208>).
 Depends: R (>= 3.4.0)
 Suggests:

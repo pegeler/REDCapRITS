@@ -12,7 +12,9 @@
 
 * NEW: `ds2dd_detailed()`: extension of the `ds2dd()`, which serves to preserve as much metadata as possible automatically. Depends on a group of helper functions also introduced. Of special note is the `guess_time_only_filter()`, which will try to guess which columns/variables should be formatted as time only formats. Supports hms time format. DETAILED INSTRUCTION AND VIGNETTE IS PENDING.
 
-* NEW: `read_redcap_instrument()` convenience function to retrieve complete instrument. Goes a little against the focused approach. DETAILED INSTRUCTION IS PENDING.
+* NEW: `read_redcap_instrument()`: convenience function to retrieve complete instrument. Goes a little against the focused approach. With `REDCapR::redcap_read()` you can specify a form to download. You have to also specify the record id variable though. This is done for you with `read_redcap_instrument()`. Nothing fancy.
+
+* NEW: `shiny_cast()`: [Shiny](https://www.rstudio.com/products/shiny/) application to ease the process of converting a spreadsheet/data set to a REDCap database. The app runs locally and data is transferred securely. You can just create and upload the data dictionary, but you can also transfer the given data in the same process. I plan to host the app with shinyapps.io, but for now you can run it locally.
 
 ### Other
 

@@ -32,7 +32,7 @@ Here is just a short description of the main functions:
 
 * `ds2dd_detailed()`: Converts a data set to a data dictionary for upload to a new REDCap database. Variables (fields) and instruments in a REDCap data base are defined by this data dictionary.
 
-* `shiny_cast()`: [Shiny]() application to ease the process of converting a spreadsheet/data set to a REDCap database. The app runs locally and data is transferred securely. You can just create and upload the data dictionary, but you can also transfer the given data in the same process. 
+* `shiny_cast()`: [Shiny](https://www.rstudio.com/products/shiny/) application to ease the process of converting a spreadsheet/data set to a REDCap database. The app runs locally and data is transferred securely. You can just create and upload the data dictionary, but you can also transfer the given data in the same process. 
 
 ## Future
 
