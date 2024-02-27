@@ -33,5 +33,3 @@
 #' }
 #' @usage data(redcapcast_data)
 "redcapcast_data"
-
-

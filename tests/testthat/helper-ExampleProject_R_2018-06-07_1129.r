@@ -1,5 +1,5 @@
 REDCap_process_csv <- function(data) {
-  #Load Hmisc library
+  # Load Hmisc library
   if (!requireNamespace("Hmisc", quietly = TRUE)) {
     stop("This test requires the 'Hmisc' package")
   }
@@ -36,13 +36,13 @@ REDCap_process_csv <- function(data) {
   Hmisc::label(data$color) <- "Color"
   Hmisc::label(data$customer) <- "Customer Name"
   Hmisc::label(data$sale_complete) <- "Complete?"
-  #Setting Units
+  # Setting Units
 
 
-  #Setting Factors(will create new variable for factors)
+  # Setting Factors(will create new variable for factors)
   data$redcap_repeat_instrument.factor <-
     factor(data$redcap_repeat_instrument, levels <-
-             c("sale"))
+      c("sale"))
   data$cyl.factor <-
     factor(data$cyl, levels <- c("3", "4", "5", "6", "7", "8"))
   data$vs.factor <- factor(data$vs, levels <- c("1", "0"))
@@ -50,36 +50,36 @@ REDCap_process_csv <- function(data) {
   data$gear.factor <- factor(data$gear, levels <- c("3", "4", "5"))
   data$carb.factor <-
     factor(data$carb, levels <-
-             c("1", "2", "3", "4", "5", "6", "7", "8"))
+      c("1", "2", "3", "4", "5", "6", "7", "8"))
   data$color_available___red.factor <-
     factor(data$color_available___red, levels <-
-             c("0", "1"))
+      c("0", "1"))
   data$color_available___green.factor <-
     factor(data$color_available___green, levels <-
-             c("0", "1"))
+      c("0", "1"))
   data$color_available___blue.factor <-
     factor(data$color_available___blue, levels <-
-             c("0", "1"))
+      c("0", "1"))
   data$color_available___black.factor <-
     factor(data$color_available___black, levels <-
-             c("0", "1"))
+      c("0", "1"))
   data$motor_trend_cars_complete.factor <-
     factor(data$motor_trend_cars_complete, levels <-
-             c("0", "1", "2"))
+      c("0", "1", "2"))
   data$letter_group___a.factor <-
     factor(data$letter_group___a, levels <-
-             c("0", "1"))
+      c("0", "1"))
   data$letter_group___b.factor <-
     factor(data$letter_group___b, levels <-
-             c("0", "1"))
+      c("0", "1"))
   data$letter_group___c.factor <-
     factor(data$letter_group___c, levels <-
-             c("0", "1"))
+      c("0", "1"))
   data$choice.factor <-
     factor(data$choice, levels <- c("choice1", "choice2"))
   data$grouping_complete.factor <-
     factor(data$grouping_complete, levels <-
-             c("0", "1", "2"))
+      c("0", "1", "2"))
   data$color.factor <-
     factor(data$color, levels <- c("1", "2", "3", "4"))
   data$sale_complete.factor <-

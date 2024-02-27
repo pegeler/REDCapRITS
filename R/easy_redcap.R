@@ -1,4 +1,3 @@
-
 #' Retrieve project API key if stored, if not, set and retrieve
 #'
 #' @param key.name character vector of key name
@@ -26,7 +25,7 @@ get_api_key <- function(key.name) {
 #'
 #' @return data.frame or list depending on widen.data
 #' @export
-easy_redcap <- function(project.name, widen.data=TRUE, uri, ...) {
+easy_redcap <- function(project.name, widen.data = TRUE, uri, ...) {
   key <- get_api_key(key.name = paste0(project.name, "_REDCAP_API"))
 
   out <- read_redcap_tables(
@@ -35,7 +34,7 @@ easy_redcap <- function(project.name, widen.data=TRUE, uri, ...) {
     ...
   )
 
-  if (widen.data){
+  if (widen.data) {
     out <- out |> redcap_wider()
   }
 

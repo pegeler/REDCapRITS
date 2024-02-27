@@ -25,7 +25,8 @@ THe first iteration of a dataset to data dictionary function is the `ds2dd()`, w
 ```{r eval=FALSE}
 mtcars |>
   dplyr::mutate(record_id = seq_len(dplyr::n())) |>
-  ds2dd() |> str()
+  ds2dd() |>
+  str()
 ```
 
 The more advanced `ds2dd_detailed()` is a natural development. It will try to apply the most common data classes for data validation and will assume that the first column is the id number. It outputs a list with the dataset with modified variable names to comply with REDCap naming conventions and a data dictionary. 
@@ -37,7 +38,8 @@ dd_ls <- mtcars |>
   dplyr::mutate(record_id = seq_len(dplyr::n())) |>
   dplyr::select(record_id, dplyr::everything()) |>
   ds2dd_detailed()
-dd_ls |> str()
+dd_ls |> 
+  str()
 ```
 
 Additional specifications to the DataDictionary can be made manually, or it can be uploaded and modified manually in the graphical user interface on the web page.

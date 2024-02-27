@@ -38,7 +38,8 @@ read_redcap_tables <- function(uri,
     fields_test <- fields %in% unique(m$field_name)
 
     if (any(!fields_test)) {
-      print(paste0("The following field names are invalid: ", paste(fields[!fields_test], collapse = ", "), "."))
+      print(paste0("The following field names are invalid: ",
+                   paste(fields[!fields_test], collapse = ", "), "."))
       stop("Not all supplied field names are valid")
     }
   }
@@ -48,7 +49,8 @@ read_redcap_tables <- function(uri,
     forms_test <- forms %in% unique(m$form_name)
 
     if (any(!forms_test)) {
-      print(paste0("The following form names are invalid: ", paste(forms[!forms_test], collapse = ", "), "."))
+      print(paste0("The following form names are invalid: ",
+                   paste(forms[!forms_test], collapse = ", "), "."))
       stop("Not all supplied form names are valid")
     }
   }
@@ -62,7 +64,8 @@ read_redcap_tables <- function(uri,
     event_test <- events %in% unique(arm_event_inst$data$unique_event_name)
 
     if (any(!event_test)) {
-      print(paste0("The following event names are invalid: ", paste(events[!event_test], collapse = ", "), "."))
+      print(paste0("The following event names are invalid: ",
+                   paste(events[!event_test], collapse = ", "), "."))
       stop("Not all supplied event names are valid")
     }
   }
@@ -89,15 +92,12 @@ read_redcap_tables <- function(uri,
   m <- focused_metadata(m, names(d))
 
 
-    # Splitting
-    out <- REDCap_split(d,
-      m,
-      forms = split_forms,
-      primary_table_name = ""
-    )
+  # Splitting
+  out <- REDCap_split(d,
+    m,
+    forms = split_forms,
+    primary_table_name = ""
+  )
 
-    sanitize_split(out)
-
+  sanitize_split(out)
 }
-
-

@@ -2,8 +2,7 @@
 % Please edit documentation in R/ds2dd_detailed.R
 \name{time_only_correction}
 \alias{time_only_correction}
-\title{Correction based on time_only_filter function. Introduces new class for easier
-validation labelling.}
+\title{Correction based on time_only_filter function}
 \usage{
 time_only_correction(data, ...)
 }
@@ -16,8 +15,7 @@ time_only_correction(data, ...)
 tibble
 }
 \description{
-Dependens on the data class "hms" introduced with
-`guess_time_only_filter()` and converts these
+Correction based on time_only_filter function
 }
 \examples{
 data <- redcapcast_data

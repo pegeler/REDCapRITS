@@ -33,17 +33,23 @@ redcapcast_meta |> gt::gt()
 ```
 ```{r}
 list <-
-  REDCap_split(records = redcapcast_data,
-                           metadata = redcapcast_meta,
-                           forms = "repeating")|> sanitize_split()
+  REDCap_split(
+    records = redcapcast_data,
+    metadata = redcapcast_meta,
+    forms = "repeating"
+  ) |> 
+  sanitize_split()
 str(list)
 ```
 
 ```{r}
 list <-
-  REDCap_split(records = redcapcast_data,
-                           metadata = redcapcast_meta,
-                           forms = "all") |> sanitize_split()
+  REDCap_split(
+    records = redcapcast_data,
+    metadata = redcapcast_meta,
+    forms = "all"
+  ) |> 
+  sanitize_split()
 str(list)
 ```
 
@@ -62,5 +68,3 @@ The function works very similar to the `REDCapR::redcap_read()` in allowing to s
 ```{r}
 redcap_wider(list) |> str()
 ```
-
-

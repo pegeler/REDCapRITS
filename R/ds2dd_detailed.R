@@ -1,4 +1,9 @@
-utils::globalVariables(c(  "stats::setNames",  "field_name",  "field_type",  "select_choices_or_calculations"))
+utils::globalVariables(c(
+  "stats::setNames",
+  "field_name",
+  "field_type",
+  "select_choices_or_calculations"
+))
 #' Try at determining which are true time only variables
 #'
 #' @description
@@ -18,10 +23,15 @@ utils::globalVariables(c(  "stats::setNames",  "field_name",  "field_type",  "se
 #' @examples
 #' data <- redcapcast_data
 #' data |> guess_time_only_filter()
-#' data |> guess_time_only_filter(validate = TRUE) |> lapply(head)
-guess_time_only_filter <- function(data, validate = FALSE, sel.pos = "[Tt]i[d(me)]", sel.neg = "[Dd]at[eo]") {
+#' data |>
+#'   guess_time_only_filter(validate = TRUE) |>
+#'   lapply(head)
+guess_time_only_filter <- function(data,
+                                   validate = FALSE,
+                                   sel.pos = "[Tt]i[d(me)]",
+                                   sel.neg = "[Dd]at[eo]") {
   datetime_nms <- data |>
-    lapply(\(x)any(c("POSIXct","hms") %in% class(x))) |>
+    lapply(\(x) any(c("POSIXct", "hms") %in% class(x))) |>
     (\(x) names(data)[do.call(c, x)])()
 
   time_only_log <- datetime_nms |> (\(x) {
@@ -42,12 +52,8 @@ guess_time_only_filter <- function(data, validate = FALSE, sel.pos = "[Tt]i[d(me
   }
 }
 
-#' Correction based on time_only_filter function. Introduces new class for easier
-#' validation labelling.
+#' Correction based on time_only_filter function
 #'
-#' @description
-#' Dependens on the data class "hms" introduced with
-#' `guess_time_only_filter()` and converts these
 #'
 #' @param data data set
 #' @param ... arguments passed on to `guess_time_only_filter()`
@@ -119,8 +125,8 @@ hms2character <- function(data) {
 #' data set (imported .dta file with `haven::read_dta()`. Default is "label"
 #' @param field.validation manually specify field validation(s). Vector of
 #' length 1 or ncol(data). Default is NULL and `levels()` are used for factors
-#' or attribute `factor.labels.attr` for haven_labelled data set (imported .dta file with
-#' `haven::read_dta()`).
+#' or attribute `factor.labels.attr` for haven_labelled data set (imported .dta
+#' file with `haven::read_dta()`).
 #' @param metadata redcap metadata headings. Default is
 #' REDCapCAST:::metadata_names.
 #' @param validate.time Flag to validate guessed time columns
@@ -144,7 +150,7 @@ ds2dd_detailed <- function(data,
                            form.name = NULL,
                            field.type = NULL,
                            field.label = NULL,
-                           field.label.attr ="label",
+                           field.label.attr = "label",
                            field.validation = NULL,
                            metadata = metadata_names,
                            validate.time = FALSE,
@@ -164,7 +170,8 @@ ds2dd_detailed <- function(data,
   }
 
   if (lapply(data, haven::is.labelled) |> (\(x)do.call(c, x))() |> any()) {
-    message("Data seems to be imported with haven from a Stata (.dta) file and will be treated as such.")
+    message("Data seems to be imported with haven from a Stata (.dta) file and
+            will be treated as such.")
     data.source <- "dta"
   } else {
     data.source <- ""
@@ -172,18 +179,25 @@ ds2dd_detailed <- function(data,
 
   ## data classes
 
-  ### Only keeps the first class, as time fields (POSIXct/POSIXt) has two classes
+  ### Only keeps the first class, as time fields (POSIXct/POSIXt) has two
+  ### classes
   if (data.source == "dta") {
     data_classes <-
       data |>
       haven::as_factor() |>
-      time_only_correction(sel.pos = time.var.sel.pos, sel.neg = time.var.sel.neg) |>
+      time_only_correction(
+        sel.pos = time.var.sel.pos,
+        sel.neg = time.var.sel.neg
+      ) |>
       lapply(\(x)class(x)[1]) |>
       (\(x)do.call(c, x))()
   } else {
     data_classes <-
       data |>
-      time_only_correction(sel.pos = time.var.sel.pos, sel.neg = time.var.sel.neg) |>
+      time_only_correction(
+        sel.pos = time.var.sel.pos,
+        sel.neg = time.var.sel.neg
+      ) |>
       lapply(\(x)class(x)[1]) |>
       (\(x)do.call(c, x))()
   }
@@ -204,7 +218,7 @@ ds2dd_detailed <- function(data,
   if (is.null(form.name)) {
     dd$form_name <- "data"
   } else {
-    if (length(form.name) == 1 | length(form.name) == nrow(dd)) {
+    if (length(form.name) == 1 || length(form.name) == nrow(dd)) {
       dd$form_name <- form.name
     } else {
       stop("Length of supplied 'form.name' has to be one (1) or ncol(data).")
@@ -229,9 +243,11 @@ ds2dd_detailed <- function(data,
     }
 
     dd <-
-      dd |> dplyr::mutate(field_label = dplyr::if_else(is.na(label), field_name, label))
+      dd |> dplyr::mutate(field_label = dplyr::if_else(is.na(label),
+        field_name, label
+      ))
   } else {
-    if (length(field.label) == 1 | length(field.label) == nrow(dd)) {
+    if (length(field.label) == 1 || length(field.label) == nrow(dd)) {
       dd$field_label <- field.label
     } else {
       stop("Length of supplied 'field.label' has to be one (1) or ncol(data).")
@@ -245,9 +261,11 @@ ds2dd_detailed <- function(data,
     dd$field_type <- "text"
 
     dd <-
-      dd |> dplyr::mutate(field_type = dplyr::if_else(data_classes == "factor", "radio", field_type))
+      dd |> dplyr::mutate(field_type = dplyr::if_else(data_classes == "factor",
+        "radio", field_type
+      ))
   } else {
-    if (length(field.type) == 1 | length(field.type) == nrow(dd)) {
+    if (length(field.type) == 1 || length(field.type) == nrow(dd)) {
       dd$field_type <- field.type
     } else {
       stop("Length of supplied 'field.type' has to be one (1) or ncol(data).")
@@ -271,10 +289,11 @@ ds2dd_detailed <- function(data,
         )
       )
   } else {
-    if (length(field.validation) == 1 | length(field.validation) == nrow(dd)) {
+    if (length(field.validation) == 1 || length(field.validation) == nrow(dd)) {
       dd$text_validation_type_or_show_slider_number <- field.validation
     } else {
-      stop("Length of supplied 'field.validation' has to be one (1) or ncol(data).")
+      stop("Length of supplied 'field.validation'
+           has to be one (1) or ncol(data).")
     }
   }
 
@@ -300,7 +319,13 @@ ds2dd_detailed <- function(data,
           ## Re-factors to avoid confusion with missing levels
           ## Assumes alle relevant levels are represented in the data
           re_fac <- factor(x)
-          paste(paste(unique(as.numeric(re_fac)), levels(re_fac), sep = ", "), collapse = " | ")
+          paste(
+            paste(unique(as.numeric(re_fac)),
+              levels(re_fac),
+              sep = ", "
+            ),
+            collapse = " | "
+          )
         } else {
           NA
         }
@@ -319,7 +344,10 @@ ds2dd_detailed <- function(data,
 
   list(
     data = data |>
-      time_only_correction(sel.pos = time.var.sel.pos, sel.neg = time.var.sel.neg) |>
+      time_only_correction(
+        sel.pos = time.var.sel.pos,
+        sel.neg = time.var.sel.neg
+      ) |>
       hms2character() |>
       (\(x)stats::setNames(x, tolower(names(x))))(),
     meta = dd
@@ -333,11 +361,16 @@ ds2dd_detailed <- function(data,
 #' @param ls output list from `ds2dd_detailed()`
 #'
 #' @return list with `REDCapR::redcap_write()` results
-mark_complete <- function(upload, ls){
+mark_complete <- function(upload, ls) {
   data <- ls$data
   meta <- ls$meta
   forms <- unique(meta$form_name)
-  cbind(data[[1]][data[[1]] %in% upload$affected_ids],
-        data.frame(matrix(2,ncol=length(forms),nrow=upload$records_affected_count))) |>
-    stats::setNames(c(names(data)[1],paste0(forms,"_complete")))
+  cbind(
+    data[[1]][data[[1]] %in% upload$affected_ids],
+    data.frame(matrix(2,
+      ncol = length(forms),
+      nrow = upload$records_affected_count
+    ))
+  ) |>
+    stats::setNames(c(names(data)[1], paste0(forms, "_complete")))
 }

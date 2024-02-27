@@ -44,8 +44,8 @@ data set (imported .dta file with `haven::read_dta()`. Default is "label"}
 
 \item{field.validation}{manually specify field validation(s). Vector of
 length 1 or ncol(data). Default is NULL and `levels()` are used for factors
-or attribute `factor.labels.attr` for haven_labelled data set (imported .dta file with
-`haven::read_dta()`).}
+or attribute `factor.labels.attr` for haven_labelled data set (imported .dta
+file with `haven::read_dta()`).}
 
 \item{metadata}{redcap metadata headings. Default is
 REDCapCAST:::metadata_names.}

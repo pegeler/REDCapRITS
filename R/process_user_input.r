@@ -1,4 +1,4 @@
-process_user_input <- function (x) {
+process_user_input <- function(x) {
   UseMethod("process_user_input", x)
 }
 
@@ -30,10 +30,8 @@ process_user_input.character <- function(x, ...) {
   }
 
   jsonlite::fromJSON(x)
-
 }
 
 process_user_input.response <- function(x, ...) {
   process_user_input(rawToChar(x$content))
-
 }

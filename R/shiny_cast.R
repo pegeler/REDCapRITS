@@ -14,8 +14,7 @@ server_factory <- function() {
 #' @export
 ui_factory <- function() {
   # require(ggplot2)
-source(here::here("app/ui.R"))
-
+  source(here::here("app/ui.R"))
 }
 
 #' Launch the included Shiny-app for database casting and upload
@@ -46,7 +45,7 @@ shiny_cast <- function() {
 #' @examples
 #' # deploy_shiny
 #'
-deploy_shiny <- function(path=here::here("app/"), name.app="shiny_cast"){
+deploy_shiny <- function(path = here::here("app/"), name.app = "shiny_cast") {
   # Connecting
   rsconnect::setAccountInfo(
     name = "cognitiveindex",
@@ -55,5 +54,5 @@ deploy_shiny <- function(path=here::here("app/"), name.app="shiny_cast"){
   )
 
   # Deploying
-  rsconnect::deployApp(appDir = path,lint = TRUE,appName = name.app,)
+  rsconnect::deployApp(appDir = path, lint = TRUE, appName = name.app, )
 }

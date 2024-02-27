@@ -26,35 +26,59 @@ Handles longitudinal projects, but not yet repeated instruments.
 }
 \examples{
 # Longitudinal
-list1 <- list(data.frame(record_id = c(1,2,1,2),
-redcap_event_name = c("baseline", "baseline", "followup", "followup"),
-age = c(25,26,27,28)),
-data.frame(record_id = c(1,2),
-redcap_event_name = c("baseline", "baseline"),
-gender = c("male", "female")))
+list1 <- list(
+  data.frame(
+    record_id = c(1, 2, 1, 2),
+    redcap_event_name = c("baseline", "baseline", "followup", "followup"),
+    age = c(25, 26, 27, 28)
+  ),
+  data.frame(
+    record_id = c(1, 2),
+    redcap_event_name = c("baseline", "baseline"),
+    gender = c("male", "female")
+  )
+)
 redcap_wider(list1)
 # Simpel with two instruments
-list2 <- list(data.frame(record_id = c(1,2),
-age = c(25,26)),
-data.frame(record_id = c(1,2),
-gender = c("male", "female")))
+list2 <- list(
+  data.frame(
+    record_id = c(1, 2),
+    age = c(25, 26)
+  ),
+  data.frame(
+    record_id = c(1, 2),
+    gender = c("male", "female")
+  )
+)
 redcap_wider(list2)
 # Simple with single instrument
-list3 <- list(data.frame(record_id = c(1,2),
-age = c(25,26)))
+list3 <- list(data.frame(
+  record_id = c(1, 2),
+  age = c(25, 26)
+))
 redcap_wider(list3)
 # Longitudinal with repeatable instruments
-list4 <- list(data.frame(record_id = c(1,2,1,2),
-redcap_event_name = c("baseline", "baseline", "followup", "followup"),
-age = c(25,26,27,28)),
-data.frame(record_id = c(1,1,1,1,2,2,2,2),
-redcap_event_name = c("baseline", "baseline", "followup", "followup",
-"baseline", "baseline", "followup", "followup"),
-redcap_repeat_instrument = "walk",
-redcap_repeat_instance=c(1,2,1,2,1,2,1,2),
-dist = c(40, 32, 25, 33, 28, 24, 23, 36)),
-data.frame(record_id = c(1,2),
-redcap_event_name = c("baseline", "baseline"),
-gender = c("male", "female")))
+list4 <- list(
+  data.frame(
+    record_id = c(1, 2, 1, 2),
+    redcap_event_name = c("baseline", "baseline", "followup", "followup"),
+    age = c(25, 26, 27, 28)
+  ),
+  data.frame(
+    record_id = c(1, 1, 1, 1, 2, 2, 2, 2),
+    redcap_event_name = c(
+      "baseline", "baseline", "followup", "followup",
+      "baseline", "baseline", "followup", "followup"
+    ),
+    redcap_repeat_instrument = "walk",
+    redcap_repeat_instance = c(1, 2, 1, 2, 1, 2, 1, 2),
+    dist = c(40, 32, 25, 33, 28, 24, 23, 36)
+  ),
+  data.frame(
+    record_id = c(1, 2),
+    redcap_event_name = c("baseline", "baseline"),
+    gender = c("male", "female")
+  )
+)
 redcap_wider(list4)
 }

@@ -32,5 +32,7 @@ has to be converted to character class before REDCap upload.
 \examples{
 data <- redcapcast_data
 data |> guess_time_only_filter()
-data |> guess_time_only_filter(validate = TRUE) |> lapply(head)
+data |>
+  guess_time_only_filter(validate = TRUE) |>
+  lapply(head)
 }

@@ -50,19 +50,19 @@ library(RCurl)
 
 # Get the records
 records <- postForm(
-  uri = api_url,     # Supply your site-specific URI
+  uri = api_url, # Supply your site-specific URI
   token = api_token, # Supply your own API token
-  content = 'record',
-  format = 'json',
-  returnFormat = 'json'
+  content = "record",
+  format = "json",
+  returnFormat = "json"
 )
 
 # Get the metadata
 metadata <- postForm(
-  uri = api_url,     # Supply your site-specific URI
+  uri = api_url, # Supply your site-specific URI
   token = api_token, # Supply your own API token
-  content = 'metadata',
-  format = 'json'
+  content = "metadata",
+  format = "json"
 )
 
 # Convert exported JSON strings into a list of data.frames
@@ -75,7 +75,8 @@ records <- read.csv("/path/to/data/ExampleProject_DATA_2018-06-03_1700.csv")
 
 # Get the metadata
 metadata <- read.csv(
-"/path/to/data/ExampleProject_DataDictionary_2018-06-03.csv")
+  "/path/to/data/ExampleProject_DataDictionary_2018-06-03.csv"
+)
 
 # Split the tables
 REDCapRITS::REDCap_split(records, metadata)

@@ -128,9 +128,11 @@ sanitize_split <- function(l,
                              "redcap_repeat_instrument",
                              "redcap_repeat_instance"
                            )) {
-  generic.names <- c(get_id_name(l),
-                     generic.names,
-                     paste0(names(l), "_complete"))
+  generic.names <- c(
+    get_id_name(l),
+    generic.names,
+    paste0(names(l), "_complete")
+  )
 
   lapply(l, function(i) {
     if (ncol(i) > 2) {
@@ -334,7 +336,8 @@ split_non_repeating_forms <-
 #' @export
 #'
 #' @examples
-#' test <- c("12 months follow-up", "3 steps", "mRS 6 weeks", "Counting to 231 now")
+#' test <- c("12 months follow-up", "3 steps", "mRS 6 weeks",
+#' "Counting to 231 now")
 #' strsplitx(test, "[0-9]", type = "around")
 strsplitx <- function(x,
                       split,
@@ -403,7 +406,8 @@ d2w <- function(x, lang = "en", neutrum = FALSE, everything = FALSE) {
   # In Danish the written 1 depends on the counted word
   if (neutrum) nt <- "t" else nt <- "n"
 
-  # A sapply() call with nested lapply() to handle vectors, data.frames and lists
+  # A sapply() call with nested lapply() to handle vectors, data.frames
+  # and lists
   convert <- function(x, lang, neutrum) {
     zero_nine <- data.frame(
       num = 0:9,
@@ -503,7 +507,9 @@ is_repeated_longitudinal <- function(data, generics = c(
 #' @examples
 #' file_extension(list.files(here::here(""))[[2]])[[1]]
 file_extension <- function(filenames) {
-  sub(pattern = "^(.*\\.|[^.]+)(?=[^.]*)", replacement = "", filenames, perl = TRUE)
+  sub(pattern = "^(.*\\.|[^.]+)(?=[^.]*)", replacement = "",
+      filenames,
+      perl = TRUE)
 }
 
 #' Flexible file import based on extension
@@ -516,17 +522,16 @@ file_extension <- function(filenames) {
 #'
 #' @examples
 #' read_input("https://raw.githubusercontent.com/agdamsbo/cognitive.index.lookup/main/data/sample.csv")
-read_input <- function(file, consider.na= c("NA", '""',"")){
-
+read_input <- function(file, consider.na = c("NA", '""', "")) {
   ext <- file_extension(file)
 
   tryCatch(
     {
       if (ext == "csv") {
-        df <- readr::read_csv(file = file,na = consider.na)
+        df <- readr::read_csv(file = file, na = consider.na)
       } else if (ext %in% c("xls", "xlsx")) {
         df <- openxlsx2::read_xlsx(file = file, na.strings = consider.na)
-      } else if (ext == "dta"){
+      } else if (ext == "dta") {
         df <- haven::read_dta(file = file)
       } else {
         stop("Input file format has to be either '.csv', '.xls' or '.xlsx'")

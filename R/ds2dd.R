@@ -41,7 +41,7 @@ ds2dd <-
     dd <- data.frame(matrix(ncol = length(metadata), nrow = ncol(ds)))
     colnames(dd) <- metadata
 
-    if (is.character(record.id) & !record.id %in% colnames(ds)) {
+    if (is.character(record.id) && !record.id %in% colnames(ds)) {
       stop("Provided record.id is not a variable name in provided data set.")
     }
 
@@ -59,7 +59,7 @@ ds2dd <-
     dd[, "field_name"] <-
       c(field.name[colsel], field.name[!colsel])
 
-    if (length(form.name) > 1 & length(form.name) != ncol(ds)) {
+    if (length(form.name) > 1 && length(form.name) != ncol(ds)) {
       stop(
         "Provided form.name should be of length 1 (value is reused) or equal
         length as number of variables in data set."
@@ -67,7 +67,7 @@ ds2dd <-
     }
     dd[, "form_name"] <- form.name
 
-    if (length(field.type) > 1 & length(field.type) != ncol(ds)) {
+    if (length(field.type) > 1 && length(field.type) != ncol(ds)) {
       stop(
         "Provided field.type should be of length 1 (value is reused) or equal
         length as number of variables in data set."

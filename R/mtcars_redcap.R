@@ -20,4 +20,3 @@
 #' }
 #' @usage data(mtcars_redcap)
 "mtcars_redcap"
-

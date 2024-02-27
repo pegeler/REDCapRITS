@@ -2,7 +2,8 @@
 % Please edit documentation in R/read_redcap_instrument.R
 \name{read_redcap_instrument}
 \alias{read_redcap_instrument}
-\title{Convenience function to download complete instrument, using token storage in keyring.}
+\title{Convenience function to download complete instrument, using token storage
+in keyring.}
 \usage{
 read_redcap_instrument(
   key,
@@ -24,11 +25,13 @@ read_redcap_instrument(
 
 \item{id_name}{id variable name. Default is "record_id".}
 
-\item{records}{specify the records to download. Index numbers. Numeric vector.}
+\item{records}{specify the records to download. Index numbers.
+Numeric vector.}
 }
 \value{
 data.frame
 }
 \description{
-Convenience function to download complete instrument, using token storage in keyring.
+Convenience function to download complete instrument, using token storage
+in keyring.
 }
