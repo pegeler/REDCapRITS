@@ -12,11 +12,9 @@ A data frame with 22 variables:
   \item{section_header}{section_header, character}
   \item{field_type}{field_type, character}
   \item{field_label}{field_label, character}
-  \item{select_choices_or_calculations}
-  {select_choices_or_calculations, character}
+  \item{select_choices_or_calculations}{select_choices_or_calculations, character}
   \item{field_note}{field_note, character}
-  \item{text_validation_type_or_show_slider_number}
-  {text_validation_type_or_show_slider_number, character}
+  \item{text_validation_type_or_show_slider_number}{text_validation_type_or_show_slider_number, character}
   \item{text_validation_min}{text_validation_min, character}
   \item{text_validation_max}{text_validation_max, character}
   \item{identifier}{identifier, character}

@@ -30,14 +30,10 @@ Suggests:
     gt,
     usethis,
     ggplot2,
-    haven,
     here,
     styler,
     devtools,
     roxygen2,
-    openxlsx2,
-    rsconnect,
-    shiny,
     spelling
 License: GPL (>= 3)
 Encoding: UTF-8
@@ -53,7 +49,11 @@ Imports:
     keyring,
     purrr,
     readr,
-    stats
+    stats,
+    shiny,
+    openxlsx2,
+    rsconnect,
+    haven
 Collate: 
     'utils.r'
     'process_user_input.r'
