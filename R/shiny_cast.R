@@ -1,3 +1,4 @@
+utils::globalVariables(c("server"))
 #' Shiny server factory
 #'
 #' @return shiny server
@@ -36,6 +37,9 @@ shiny_cast <- function() {
 
 #' Deploy the Shiny app with rsconnect
 #'
+#' @param path app folder path
+#' @param name.app name of deployed app
+#'
 #' @return deploy
 #' @export
 #'
@@ -43,9 +47,6 @@ shiny_cast <- function() {
 #' # deploy_shiny
 #'
 deploy_shiny <- function(path=here::here("app/"), name.app="shiny_cast"){
-  # Ensure to install latest package version
-  renv::install("agdamsbo/REDCapCAST")
-
   # Connecting
   rsconnect::setAccountInfo(
     name = "cognitiveindex",

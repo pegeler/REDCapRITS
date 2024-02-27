@@ -16,25 +16,27 @@ REDCap database casting and handling of castellated data when using repeated ins
 
 This package is a fork of [pegeler/REDCapRITS](https://github.com/pegeler/REDCapRITS). The REDCapRITS represents great and extensive work to handle castellated REDCap data in different programming languages. This fork is purely minded on R usage and includes a few implementations of the main `REDCap_split` function.
 
-THis package is very much to be seen as an attempt at a REDCap-R foundry for handling both the transition from dataset/variable list to database and the other way, from REDCap database to a tidy dataset. The goal was also to allow for a "minimal data" approach by allowing to filter records, instruments and variables in the export to only download data needed. I think this approach is desireable for handling sensitive, clinical data. No similar functionality is available from similar tools (like `REDCapR` or `REDCapTidieR`). Please refer to [REDCap-Tools](https://redcap-tools.github.io/) for other great tools.
+This package is very much to be seen as an attempt at a R-to-REDCap-to-R foundry for handling both the transition from dataset/variable list to database and the other way, from REDCap database to a tidy dataset. The goal was also to allow for a "minimal data" approach by allowing to filter records, instruments and variables in the export to only download data needed. I think this approach is desirable for handling sensitive, clinical data. Please refer to [REDCap-Tools](https://redcap-tools.github.io/) for other great tools for working with REDCap in R.
 
 ## Use and immprovements
 
-This package is primarily relevant for working with longitudinal projects and/or projects using repeated instruments. Here is just a short descirption of the main functions:
+Here is just a short description of the main functions:
 
 * `REDcap_split()`: Works largely as the original `REDCapRITS::REDCap_split()`. It takes a REDCap dataset and metadata (data dictionary) to split the data set into a list of dataframes of instruments.
 
-* `read_redcap_tables()`: wraps the use of [`REDCapR::redcap_read()`](https://github.com/OuhscBbmc/REDCapR) with `REDCap_split()` to ease the export of REDCap data.
+* `read_redcap_tables()`: wraps the use of [`REDCapR::redcap_read()`](https://github.com/OuhscBbmc/REDCapR) with `REDCap_split()` to ease the export of REDCap data. Default output is a list of data frames with one data frame for each REDCap instrument.
 
-* `redcap_wider()`: pivots each data frame with repeated instruments to a wide format utilizing the [`tidyr::pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) from the [tidyverse](https://www.tidyverse.org/).
+* `redcap_wider()`: joins and pivots a list of data frames with repeated instruments to a wide format utilizing the [`tidyr::pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) from the [tidyverse](https://www.tidyverse.org/).
 
 * `easy_redcap()`: combines secure API key storage with the `keyring`-package, focused data retrieval and optional widening. This is the recommended approach for easy data access and analysis.
 
-...
+* `ds2dd_detailed()`: Converts a data set to a data dictionary for upload to a new REDCap database. Variables (fields) and instruments in a REDCap data base are defined by this data dictionary.
+
+* `shiny_cast()`: [Shiny]() application to ease the process of converting a spreadsheet/data set to a REDCap database. The app runs locally and data is transferred securely. You can just create and upload the data dictionary, but you can also transfer the given data in the same process. 
 
 ## Future
 
-The plan with this package is to be bundled with a Handbook on working with REDCap from R. I plan to also include functionality to assist in casting (yes, pun intended) the initial REDCap database.
+The plan with this package is to be bundled with a Handbook on working with REDCap from R. This work is in progress but is limited by the time available. Please feel free to contact me or create and issue with ideas for future additions.
 
 ## Installation
 

@@ -40,12 +40,12 @@ ui <- shiny::fluidPage(
     shiny::textInput(
       inputId = "uri",
       label = "URI",
-      value = "https://redcap.au.dk/api/"
+      value = "https://redcap.your.institution/api/"
     ),
     shiny::textInput(
       inputId = "api",
       label = "API key",
-      value = "21CF2C17EA1CA4F3688DF991C8FE3EBF"
+      value = ""
     ),
     shiny::actionButton(
       inputId = "upload.meta",

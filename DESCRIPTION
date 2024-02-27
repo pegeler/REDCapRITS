@@ -8,10 +8,9 @@ Authors@R: c(
     comment = c(ORCID = "0000-0001-6948-9498")))
 Description: Originally forked from the R part of 'REDCapRITS' by Paul Egeler. 
     See <https://github.com/pegeler/REDCapRITS>.
-    Handles castellated datasets from 'REDCap' projects with repeating instruments. 
-    Assists in casting tidy tables from raw 'REDCap' data exports for each 
-    repeated instrument. Keeps a focused data export approach, by allowing to 
-    only export required data from the database.
+    'REDCap' database casting and handling of castellated data when using 
+    repeated instruments and longitudinal projects. Keeps a focused data export 
+    approach, by allowing to only export required data from the database.
     'REDCap' (Research Electronic Data Capture) is a secure, web-based software
     platform designed to support data capture for research studies, providing
     1) an intuitive interface for validated data capture; 2) audit trails for
@@ -22,7 +21,6 @@ Description: Originally forked from the R part of 'REDCapRITS' by Paul Egeler.
     Harris et al (2019) <doi:10.1016/j.jbi.2019.103208>).
 Depends: R (>= 3.4.0)
 Suggests:
-    spelling,
     httr,
     jsonlite,
     testthat,
@@ -38,7 +36,9 @@ Suggests:
     devtools,
     roxygen2,
     openxlsx2,
-    rsconnect
+    rsconnect,
+    shiny,
+    spelling
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -61,6 +61,7 @@ Collate:
     'ds2dd.R'
     'ds2dd_detailed.R'
     'easy_redcap.R'
+    'mtcars_redcap.R'
     'read_redcap_instrument.R'
     'read_redcap_tables.R'
     'redcap_wider.R'
