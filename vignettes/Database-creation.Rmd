@@ -1,8 +1,8 @@
 ---
-title: "Database casting"
+title: "Database-creation"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Database casting}
+  %\VignetteIndexEntry{Database-creation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,17 +22,17 @@ library(REDCapCAST)
 
 THe first iteration of a dataset to data dictionary function is the `ds2dd()`, which creates a very basic data dictionary with all variables stored as text. This is sufficient for just storing old datasets/spreadsheets securely in REDCap.
 
-```{r}
+```{r eval=FALSE}
 mtcars |>
   dplyr::mutate(record_id = seq_len(dplyr::n())) |>
-  ds2dd()
+  ds2dd() |> str()
 ```
 
 The more advanced `ds2dd_detailed()` is a natural development. It will try to apply the most common data classes for data validation and will assume that the first column is the id number. It outputs a list with the dataset with modified variable names to comply with REDCap naming conventions and a data dictionary. 
 
 The dataset should be correctly formatted for the data dictionary to preserve as much information as possible.
 
-```{r}
+```{r eval=FALSE}
 dd_ls <- mtcars |>
   dplyr::mutate(record_id = seq_len(dplyr::n())) |>
   dplyr::select(record_id, dplyr::everything()) |>

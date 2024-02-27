@@ -1,8 +1,8 @@
 ---
-title: "Introduction"
+title: "Shiny-app"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction}
+  %\VignetteIndexEntry{Shiny-app}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,7 +20,7 @@ library(REDCapCAST)
 
 To make the easiest possible transistion from spreadsheet/dataset to REDCap, I have created a small Shiny app, which adds a graphical interface to the casting of a data dictionary and data upload. Install the package and run the app as follows:
 
-```{r}
+```{r eval=FALSE}
 require(REDCapCAST)
 shiny_cast()
 ```
