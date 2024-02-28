@@ -18,7 +18,7 @@
 
 ### Other
 
-I believe `renv` has now been added and runs correctly. After clone, do `renv::restore()` to install all necessary package to modify the package. THis seems to alway sbe back and forth. renv may be on its way out again.
+I believe `renv` has now been added and runs correctly. After clone, do `renv::restore()` to install all necessary package to modify the package. This seems to always be back and forth. `renv` may be on its way out again.
 
 Added a Code of Conduct.
 
