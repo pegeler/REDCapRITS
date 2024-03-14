@@ -1,3 +1,10 @@
+# REDCapCAST 24.3.1
+
+### Documentation and more
+
+* Dependencies: In order to deploy `shiny_cast()` with `shinylive`, I need to remove `curl` as a dependency. To accomplish this, the `shiny_deploy()` helper functions has been moved to the package [`pacakge.aid`](https://github.com/agdamsbo/package.aid). This is for a rainy day: https://r-wasm.github.io/rwasm/.
+
+
 # REDCapCAST 24.2.1
 
 ### Functions

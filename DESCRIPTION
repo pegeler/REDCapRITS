@@ -1,6 +1,6 @@
 Package: REDCapCAST
 Title: REDCap Castellated Data Handling
-Version: 24.2.1
+Version: 24.3.1
 Authors@R: c(
     person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", 
     role = c("aut", "cre"),comment = c(ORCID = "0000-0002-7559-1154")), 
@@ -28,7 +28,6 @@ Suggests:
     knitr,
     rmarkdown,
     gt,
-    usethis,
     ggplot2,
     here,
     styler,
@@ -52,7 +51,6 @@ Imports:
     stats,
     shiny,
     openxlsx2,
-    rsconnect,
     haven
 Collate: 
     'utils.r'
