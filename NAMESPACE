@@ -3,7 +3,6 @@
 export(REDCap_split)
 export(clean_redcap_name)
 export(d2w)
-export(deploy_shiny)
 export(ds2dd)
 export(ds2dd_detailed)
 export(easy_redcap)
