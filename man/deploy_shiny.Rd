@@ -2,22 +2,32 @@
 % Please edit documentation in R/shiny_cast.R
 \name{deploy_shiny}
 \alias{deploy_shiny}
-\title{Deploy the Shiny app with rsconnect}
+\title{Deploy the Shiny app with rsconnect to shinyapps.io}
 \usage{
-deploy_shiny(path = here::here("app/"), name.app = "shiny_cast")
+deploy_shiny(
+  path = here::here("app/"),
+  account.name,
+  name.app = "shiny_cast",
+  name.token,
+  name.secret
+)
 }
 \arguments{
 \item{path}{app folder path}
 
 \item{name.app}{name of deployed app}
+
+\item{name.token}{stored name of token}
+
+\item{name.secret}{stored name of secret}
 }
 \value{
 deploy
 }
 \description{
-Deploy the Shiny app with rsconnect
+This is really just a simple wrapper
 }
 \examples{
-# deploy_shiny
+# deploy_shiny()
 
 }

@@ -1,0 +1,10 @@
+name: shiny_cast
+title:
+username: cognitiveindex
+account: cognitiveindex
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 11351378
+bundleId: 8306502
+url: https://cognitiveindex.shinyapps.io/shiny_cast/
+version: 1
