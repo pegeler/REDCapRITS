@@ -103,11 +103,11 @@ ui <- shiny::shinyUI(
 
     # close sidebarLayout
 
-    br(),
-    br(),
-    br(),
-    br(),
-    hr(),
+    shiny::br(),
+    shiny::br(),
+    shiny::br(),
+    shiny::br(),
+    shiny::hr(),
     shiny::tags$footer(shiny::strong("Disclaimer: "),
                        "This tool is aimed at demonstrating use of REDCapCAST. No responsibility for data loss or any other problems will be taken. Please contact me for support.",
                        shiny::br(),
