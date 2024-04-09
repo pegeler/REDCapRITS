@@ -35,7 +35,7 @@ read_redcap_tables <- function(uri,
     REDCapR::redcap_metadata_read(redcap_uri = uri, token = token)[["data"]]
 
   if (!is.null(fields)) {
-    fields_test <- fields %in% c(m$field_name,paste(unique(m$form_name),"_complete"))
+    fields_test <- fields %in% c(m$field_name,paste0(unique(m$form_name),"_complete"))
 
     if (any(!fields_test)) {
       print(paste0("The following field names are invalid: ",
