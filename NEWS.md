@@ -1,4 +1,8 @@
-# REDCapCAST 24.3.1 - in development
+# REDCapCAST 24.4.1 - in development
+
+### Functions
+
+* Fix: `read_redcap_tables()`: field names testing allows to include "[form_name]_complete" fields.
 
 ### Documentation and more
 
