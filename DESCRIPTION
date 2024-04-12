@@ -33,7 +33,8 @@ Suggests:
     styler,
     devtools,
     roxygen2,
-    spelling
+    spelling,
+    glue
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -52,11 +53,13 @@ Imports:
     shiny,
     openxlsx2,
     haven,
-    readODS
+    readODS,
+    zip
 Collate: 
     'utils.r'
     'process_user_input.r'
     'REDCap_split.r'
+    'create_instrument_meta.R'
     'ds2dd.R'
     'ds2dd_detailed.R'
     'easy_redcap.R'

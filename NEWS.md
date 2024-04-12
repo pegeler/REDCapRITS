@@ -4,6 +4,10 @@
 
 * Fix: `read_redcap_tables()`: field names testing allows to include "[form_name]_complete" fields.
 
+* Fix: `ds2dd_detailed()`: default record ID name is now "record_id", the REDCap default. Default is still to use the first column name. Support was added to interpret column name prefix or suffix as instrument names. See the examples.
+
+* New: `create_instrument_meta()`: creates zip with instrument files to allow adding new instruments to project in production. Takes data dictionary as input and creates a zip for each instrument specified by the `form_name` column.
+
 ### Documentation and more
 
 * Dependencies: In order to deploy `shiny_cast()` with `shinylive`, I need to remove `curl` as a dependency. To accomplish this, the `shiny_deploy()` helper functions has been moved to the package [`pacakge.aid`](https://github.com/agdamsbo/package.aid). This is for a rainy day: https://r-wasm.github.io/rwasm/. The whole shiny part may be migrated to its own project to try to separate things and be easy on dependencies. Time will tell.

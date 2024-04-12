@@ -2,6 +2,7 @@
 
 export(REDCap_split)
 export(clean_redcap_name)
+export(create_instrument_meta)
 export(d2w)
 export(ds2dd)
 export(ds2dd_detailed)
