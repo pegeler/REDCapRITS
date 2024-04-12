@@ -9,11 +9,13 @@ ds2dd_detailed(
   add.auto.id = FALSE,
   date.format = "dmy",
   form.name = NULL,
+  form.sep = NULL,
+  form.prefix = TRUE,
   field.type = NULL,
   field.label = NULL,
   field.label.attr = "label",
   field.validation = NULL,
-  metadata = metadata_names,
+  metadata = names(REDCapCAST::redcapcast_meta),
   validate.time = FALSE,
   time.var.sel.pos = "[Tt]i[d(me)]",
   time.var.sel.neg = "[Dd]at[eo]"
@@ -29,6 +31,13 @@ dmy.}
 
 \item{form.name}{manually specify form name(s). Vector of length 1 or
 ncol(data). Default is NULL and "data" is used.}
+
+\item{form.sep}{If supplied dataset has form names as suffix or prefix to the
+column/variable names, the seperator can be specified. If supplied, the
+form.sep is ignored. Default is NULL.}
+
+\item{form.prefix}{Flag to set if form is prefix (TRUE) or suffix (FALSE) to
+the column names. Assumes all columns have pre- or suffix if specified.}
 
 \item{field.type}{manually specify field type(s). Vector of length 1 or
 ncol(data). Default is NULL and "text" is used for everything but factors,
@@ -74,9 +83,15 @@ Ensure, that the data set is formatted with as much information as possible.
 `field.type` can be supplied
 }
 \examples{
-data <- redcapcast_data
+data <- REDCapCAST::redcapcast_data
 data |> ds2dd_detailed(validate.time = TRUE)
 data |> ds2dd_detailed()
 iris |> ds2dd_detailed(add.auto.id = TRUE)
 mtcars |> ds2dd_detailed(add.auto.id = TRUE)
+data <- iris |>
+  ds2dd_detailed(add.auto.id = TRUE) |>
+  purrr::pluck("data")
+names(data) <- glue::glue("{sample(x = c('a','b'),size = length(names(data)),
+replace=TRUE,prob = rep(x=.5,2))}__{names(data)}")
+data |> ds2dd_detailed(form.sep="__")
 }

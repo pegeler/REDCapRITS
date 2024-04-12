@@ -2,7 +2,8 @@ utils::globalVariables(c(
   "stats::setNames",
   "field_name",
   "field_type",
-  "select_choices_or_calculations"
+  "select_choices_or_calculations",
+  "field_label"
 ))
 #' Try at determining which are true time only variables
 #'
@@ -114,6 +115,11 @@ hms2character <- function(data) {
 #' @param add.auto.id flag to add id column
 #' @param form.name manually specify form name(s). Vector of length 1 or
 #' ncol(data). Default is NULL and "data" is used.
+#' @param form.sep If supplied dataset has form names as suffix or prefix to the
+#' column/variable names, the seperator can be specified. If supplied, the
+#' form.sep is ignored. Default is NULL.
+#' @param form.prefix Flag to set if form is prefix (TRUE) or suffix (FALSE) to
+#' the column names. Assumes all columns have pre- or suffix if specified.
 #' @param field.type manually specify field type(s). Vector of length 1 or
 #' ncol(data). Default is NULL and "text" is used for everything but factors,
 #' which wil get "radio".
@@ -139,27 +145,35 @@ hms2character <- function(data) {
 #' @export
 #'
 #' @examples
-#' data <- redcapcast_data
+#' data <- REDCapCAST::redcapcast_data
 #' data |> ds2dd_detailed(validate.time = TRUE)
 #' data |> ds2dd_detailed()
 #' iris |> ds2dd_detailed(add.auto.id = TRUE)
 #' mtcars |> ds2dd_detailed(add.auto.id = TRUE)
+#' data <- iris |>
+#'   ds2dd_detailed(add.auto.id = TRUE) |>
+#'   purrr::pluck("data")
+#' names(data) <- glue::glue("{sample(x = c('a','b'),size = length(names(data)),
+#' replace=TRUE,prob = rep(x=.5,2))}__{names(data)}")
+#' data |> ds2dd_detailed(form.sep="__")
 ds2dd_detailed <- function(data,
                            add.auto.id = FALSE,
                            date.format = "dmy",
                            form.name = NULL,
+                           form.sep = NULL,
+                           form.prefix = TRUE,
                            field.type = NULL,
                            field.label = NULL,
                            field.label.attr = "label",
                            field.validation = NULL,
-                           metadata = metadata_names,
+                           metadata = names(REDCapCAST::redcapcast_meta),
                            validate.time = FALSE,
                            time.var.sel.pos = "[Tt]i[d(me)]",
                            time.var.sel.neg = "[Dd]at[eo]") {
   ## Handles the odd case of no id column present
   if (add.auto.id) {
     data <- dplyr::tibble(
-      default_trial_id = seq_len(nrow(data)),
+      record_id = seq_len(nrow(data)),
       data
     )
     message("A default id column has been added")
@@ -212,10 +226,24 @@ ds2dd_detailed <- function(data,
     stats::setNames(metadata) |>
     dplyr::tibble()
 
-  dd$field_name <- gsub(" ", "_", tolower(colnames(data)))
+  ## form_name and field_name
 
-  ## form_name
-  if (is.null(form.name)) {
+  if (!is.null(form.sep)) {
+    if (form.sep!=""){
+    suppressMessages(nms <- strsplit(names(data), split = form.sep) |>
+      dplyr::bind_cols())
+    ## Assumes form.sep only occurs once and form.prefix defines if form is prefix or suffix
+    dd$form_name <- clean_redcap_name(dplyr::slice(nms,ifelse(form.prefix, 1, 2)))
+    ## The other split part is used as field names
+    dd$field_name <- dplyr::slice(nms,ifelse(!form.prefix, 1, 2)) |> as.character()
+    } else {
+      dd$form_name <- "data"
+      dd$field_name <- gsub(" ", "_", tolower(colnames(data)))
+    }
+  } else if (is.null(form.sep)) {
+    ## if no form name prefix, the colnames are used as field_names
+    dd$field_name <- gsub(" ", "_", tolower(colnames(data)))
+  } else if (is.null(form.name)) {
     dd$form_name <- "data"
   } else {
     if (length(form.name) == 1 || length(form.name) == nrow(dd)) {
@@ -229,7 +257,7 @@ ds2dd_detailed <- function(data,
 
   if (is.null(field.label)) {
     if (data.source == "dta") {
-      label <- data |>
+      dd$field_label <- data |>
         lapply(function(x) {
           if (haven::is.labelled(x)) {
             attributes(x)[[field.label.attr]]
@@ -238,13 +266,11 @@ ds2dd_detailed <- function(data,
           }
         }) |>
         (\(x)do.call(c, x))()
-    } else {
-      label <- data |> colnames()
     }
 
     dd <-
-      dd |> dplyr::mutate(field_label = dplyr::if_else(is.na(label),
-        field_name, label
+      dd |> dplyr::mutate(field_label = dplyr::if_else(is.na(field_label),
+        field_name, field_label
       ))
   } else {
     if (length(field.label) == 1 || length(field.label) == nrow(dd)) {
@@ -349,7 +375,7 @@ ds2dd_detailed <- function(data,
         sel.neg = time.var.sel.neg
       ) |>
       hms2character() |>
-      (\(x)stats::setNames(x, tolower(names(x))))(),
+      stats::setNames(dd$field_name),
     meta = dd
   )
 }
