@@ -21,12 +21,14 @@ al
 api
 attr
 charater
+cond
 da
 dafault
 datetime
 demonstrational
 dir
 dmy
+docx
 doi
 dplyr
 ds
@@ -61,10 +63,10 @@ shinylive
 stRoke
 stata
 strsplit
+subheader
 thorugh
 tibble
 tidyverse
-transistion
 ui
 uri
 wil

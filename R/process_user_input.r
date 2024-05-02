@@ -1,7 +1,20 @@
+#' User input processing
+#'
+#' @param x input
+#'
+#' @return processed input
+#' @export
 process_user_input <- function(x) {
   UseMethod("process_user_input", x)
 }
 
+#' User input processing default
+#'
+#' @param x input
+#' @param ... ignored
+#'
+#' @return processed input
+#' @export
 process_user_input.default <- function(x, ...) {
   stop(
     deparse(substitute(x)),
@@ -12,10 +25,25 @@ process_user_input.default <- function(x, ...) {
   )
 }
 
+
+#' User input processing data.frame
+#'
+#' @param x input
+#' @param ... ignored
+#'
+#' @return processed input
+#' @export
 process_user_input.data.frame <- function(x, ...) {
   x
 }
 
+#' User input processing character
+#'
+#' @param x input
+#' @param ... ignored
+#'
+#' @return processed input
+#' @export
 process_user_input.character <- function(x, ...) {
   if (!requireNamespace("jsonlite", quietly = TRUE)) {
     stop(
@@ -32,6 +60,14 @@ process_user_input.character <- function(x, ...) {
   jsonlite::fromJSON(x)
 }
 
+
+#' User input processing response
+#'
+#' @param x input
+#' @param ... ignored
+#'
+#' @return processed input
+#' @export
 process_user_input.response <- function(x, ...) {
   process_user_input(rawToChar(x$content))
 }

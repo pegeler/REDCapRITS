@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 library(REDCapCAST)
 ```
 
-To make the easiest possible transistion from spreadsheet/dataset to REDCap, I have created a small Shiny app, which adds a graphical interface to the casting of a data dictionary and data upload. Install the package and run the app as follows:
+To make the easiest possible transition from spreadsheet/dataset to REDCap, I have created a small Shiny app, which adds a graphical interface to the casting of a data dictionary and data upload. Install the package and run the app as follows:
 
 ```{r eval=FALSE}
 require(REDCapCAST)

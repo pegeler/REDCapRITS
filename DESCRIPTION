@@ -1,6 +1,6 @@
 Package: REDCapCAST
 Title: REDCap Castellated Data Handling
-Version: 24.4.1
+Version: 24.5.1
 Authors@R: c(
     person("Andreas Gammelgaard", "Damsbo", email = "agdamsbo@clin.au.dk", 
     role = c("aut", "cre"),comment = c(ORCID = "0000-0002-7559-1154")), 
@@ -35,7 +35,8 @@ Suggests:
     roxygen2,
     spelling,
     glue,
-    rhub
+    rhub,
+    shinythemes
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -55,15 +56,18 @@ Imports:
     openxlsx2,
     haven,
     readODS,
-    zip
+    zip,
+    assertthat
 Collate: 
     'utils.r'
     'process_user_input.r'
     'REDCap_split.r'
     'create_instrument_meta.R'
+    'doc2dd.R'
     'ds2dd.R'
     'ds2dd_detailed.R'
     'easy_redcap.R'
+    'html_styling.R'
     'mtcars_redcap.R'
     'read_redcap_instrument.R'
     'read_redcap_tables.R'

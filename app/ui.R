@@ -1,5 +1,6 @@
 ui <- shiny::shinyUI(
   shiny::fluidPage(
+    theme = shinythemes::shinytheme("united"),
 
     ## -----------------------------------------------------------------------------
     ## Application title
