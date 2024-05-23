@@ -16,7 +16,9 @@ REDCap database casting and handling of castellated data when using repeated ins
 
 This package is a fork of [pegeler/REDCapRITS](https://github.com/pegeler/REDCapRITS). The REDCapRITS represents great and extensive work to handle castellated REDCap data in different programming languages. This fork is purely minded on R usage and includes a few implementations of the main `REDCap_split` function.
 
-This package is very much to be seen as an attempt at a R-to-REDCap-to-R foundry for handling both the transition from dataset/variable list to database and the other way, from REDCap database to a tidy dataset. The goal was also to allow for a "minimal data" approach by allowing to filter records, instruments and variables in the export to only download data needed. I think this approach is desirable for handling sensitive, clinical data. Please refer to [REDCap-Tools](https://redcap-tools.github.io/) for other great tools for working with REDCap in R.
+I started working on this project as the castellated longitudinal data set was a little challenging. Later, I have come to learn of the [`redcapAPI`](https://github.com/vubiostat/redcapAPI) package, which would also cover this functionality. I find the `redcapAPI`package quite advanced and a little difficult to work with. This have led to the continued work on this package, as an easy-to-use approach for data migration, data base creation and data handling. This package is very much to be seen as an attempt at a R-to-REDCap-to-R foundry for handling both the transition from dataset/variable list to database and the other way, from REDCap database to a tidy dataset. The goal was also to allow for a "minimal data" approach by allowing to filter records, instruments and variables in the export to only download data needed. I think this approach is desirable for handling sensitive, clinical data. Please refer to [REDCap-Tools](https://redcap-tools.github.io/) for other great tools for working with REDCap in R.
+
+For any more advanced uses, consider using the `redcapAPI` package.
 
 ## Use and immprovements
 
