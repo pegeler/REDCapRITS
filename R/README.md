@@ -151,13 +151,13 @@ Such a join can be accomplished numerous ways. Just to name a few:
 ### Installation
 
 First you must install the package. To do so, execute the following in your R console:
-
+<!-- Still not on CRAN
 ```r
 install.packages("REDCapRITS")
 ```
 
 To install the development version, run the following code:
-
+-->
 ```r
 if (!requireNamespace(remotes, quietly = TRUE)) install.packages("remotes")
 remotes::install_github("SpectrumHealthResearch/REDCapRITS/R")
